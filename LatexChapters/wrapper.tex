@@ -1,0 +1,56 @@
+% beginning
+\documentclass[11pt]{report}
+
+% Other fonts using xelatex
+\usepackage{fontspec,xunicode}
+
+% upright greek letters
+\usepackage{textcomp}
+
+% set the page margins
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+% for color figures
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{graphicx}
+
+% Better and richer math environment
+\usepackage{amsmath}
+
+% More flexible figure legends
+\usepackage[labelfont=bf]{caption}
+
+% citations
+\usepackage[backend=biber, style=nature, sorting=none]{biblatex}
+\addbibresource{bmc/bmc.bib}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryCitekey{\clearfield{issn}}
+
+% hyperlinks
+\usepackage[colorlinks=true,
+            urlcolor=blue,
+            linkcolor=blue,
+            citecolor=blue]{hyperref}
+
+% my custom fonts
+%\setmainfont[Ligatures=TeX]{Adobe Caslon Pro}
+\newfontfamily\myfont[Ligatures=TeX]{Adobe Caslon Pro}
+\newenvironment{caslonpro}{\myfont}{\par}
+
+
+\begin{document}
+
+%\include{TitlePage/TitlePage2}
+%\include{ApprovalSheet/ApprovalSheet}
+
+%\tableofcontents
+%\listoffigures
+%\listoftables
+
+\include{bmc/bmc}
+
+\printbibliography
+
+\end{document}
