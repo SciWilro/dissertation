@@ -16,6 +16,7 @@
 \usepackage{import}
 \usepackage{graphicx}
 \usepackage{sidecap} % side captions enabled
+\usepackage{rotating} % adds \begin{sidewaysfigure}
 
 % Better and richer math environment
 \usepackage{amsmath}
@@ -40,6 +41,19 @@
 \newfontfamily\myfont[Ligatures=TeX]{Adobe Caslon Pro}
 \newenvironment{caslonpro}{\myfont}{\par}
 
+% A nice package for chemical formulas
+\usepackage{mhchem}
+
+% Change the numbering for supplemental figures and tables
+\newcommand{\beginsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+
+% A package that allows \doublespacing and \onehalfspacing
+\usepackage{setspace}
 
 \begin{document}
 
@@ -50,8 +64,11 @@
 %\listoffigures
 %\listoftables
 
+\doublespacing
 \include{bmc/bmc}
+\include{ini/ini}
 
+\singlespacing
 \printbibliography
 
 \end{document}
