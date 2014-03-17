@@ -1,2 +1,8 @@
 wrapper.pdf
 .texpadtmp
+*.bbl
+*.bcf
+*.blg
+wrapper.log
+wrapper.out
+wrapper.run.xml

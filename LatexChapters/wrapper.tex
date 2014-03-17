@@ -4,8 +4,23 @@
 % Other fonts using xelatex
 \usepackage{fontspec,xunicode}
 
+% For tables with multirow rows
+\usepackage{multirow}
+
+% For the adjustwidth environment temporarily adjusting margins
+\usepackage{changepage}
+
 % upright greek letters
 \usepackage{textcomp}
+
+% for placement of tables and figures
+\usepackage{float}
+
+% To be able to make a FloatBarrier to force images to appear within a section
+\usepackage{placeins}
+
+% To be able to wrap figures
+\usepackage{wrapfig}
 
 % set the page margins
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
@@ -25,7 +40,8 @@
 \usepackage[labelfont=bf]{caption}
 
 % citations
-\usepackage[backend=biber, style=nature, sorting=none]{biblatex}
+\usepackage[style=nature, sorting=none, refsection=chapter, maxbibnames=99, backref=true]{biblatex}
+\addbibresource{ini/ini.bib}
 \addbibresource{bmc/bmc.bib}
 \AtEveryBibitem{\clearfield{issn}}
 \AtEveryCitekey{\clearfield{issn}}
@@ -59,16 +75,16 @@
 
 %\include{TitlePage/TitlePage2}
 %\include{ApprovalSheet/ApprovalSheet}
-
 %\tableofcontents
 %\listoffigures
 %\listoftables
 
-\doublespacing
-\include{bmc/bmc}
-\include{ini/ini}
 
-\singlespacing
-\printbibliography
+%\include{bmc/bmc}
+\include{ini/ini}
+\include{ini/supplement/supplement}
+
+
+
 
 \end{document}
