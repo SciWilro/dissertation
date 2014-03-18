@@ -1,17 +1,11 @@
 % beginning
 \documentclass[11pt]{report}
 
-% Other fonts using xelatex
-\usepackage{fontspec,xunicode}
-
 % For tables with multirow rows
 \usepackage{multirow}
 
 % For the adjustwidth environment temporarily adjusting margins
 \usepackage{changepage}
-
-% upright greek letters
-\usepackage{textcomp}
 
 % for placement of tables and figures
 \usepackage{float}
@@ -52,6 +46,12 @@
             linkcolor=blue,
             citecolor=blue]{hyperref}
 
+% upright greek letters
+\usepackage{textgreek}
+
+% Other fonts using xelatex
+\usepackage{fontspec}
+
 % my custom fonts
 %\setmainfont[Ligatures=TeX]{Adobe Caslon Pro}
 \newfontfamily\myfont[Ligatures=TeX]{Adobe Caslon Pro}
@@ -67,22 +67,27 @@
         \setcounter{figure}{0}
         \renewcommand{\thefigure}{S\arabic{chapter}.\arabic{figure}}%
      }
+\newcommand{\finishsupplement}{%
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}%
+    \setcounter{figure}{0}
+    \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}%
+}
 
 % A package that allows \doublespacing and \onehalfspacing
 \usepackage{setspace}
 
 \begin{document}
 
-%\include{TitlePage/TitlePage2}
-%\include{ApprovalSheet/ApprovalSheet}
-%\tableofcontents
-%\listoffigures
-%\listoftables
+\include{TitlePage/TitlePage2}
+\include{ApprovalSheet/ApprovalSheet}
+\tableofcontents
+\listoffigures
+\listoftables
 
 
-%\include{bmc/bmc}
+\include{bmc/bmc}
 \include{ini/ini}
-\include{ini/supplement/supplement}
 
 
 

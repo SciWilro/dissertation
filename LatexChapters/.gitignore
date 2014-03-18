@@ -6,3 +6,7 @@ wrapper.pdf
 wrapper.log
 wrapper.out
 wrapper.run.xml
+*.lof
+*.lot
+*.toc
+*.aux
