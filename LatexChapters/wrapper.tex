@@ -21,11 +21,21 @@
 
 % for color figures
 \usepackage{color}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{import}
 \usepackage{graphicx}
 \usepackage{sidecap} % side captions enabled
 \usepackage{rotating} % adds \begin{sidewaysfigure}
+
+% Adds \sidewaystable
+\usepackage{rotate}
+
+% Adds \cmidrule for tables
+\usepackage{booktabs}
+
+% makes a table within the cell of a table
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
 % Better and richer math environment
 \usepackage{amsmath}

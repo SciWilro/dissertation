@@ -27,7 +27,8 @@ the predictive power of computational modeling and systems analysis,
 wideranging questions related to pathogen virulence, disease 
 progression and host response can be explored to generate hypotheses 
 for more thorough experimental investigation.
-The increasing availability of high-quality genome-scale 
+
+The increasing availability of high-quality genome-scale 
 metabolic reconstructions [4] presents an opportunity for the 
 rational and systematic identification of metabolic drug 
 targets in a pathogen of interest. Built bottom-up from functional 
@@ -50,7 +51,104 @@ organisms (Table 1). Indeed, the study of pathogen metabolism–for the
 elucidation of highpriority drug targets and metabolic factors 
 contributing to pathogenicity—is an exciting application for 
 metabolic network modeling and systems biology.
-In this review, we explore several techniques and approaches 
+
+\begin{sidewaystable}
+\begin{tabular}{ l  c  c  c  c  c  c  c  c | c  c | c l l }%14 columns
+\multicolumn{1}{l}{} & \multicolumn{8}{c}{\textbf{Drug target-related analysis}} & 
+                     \multicolumn{2}{c}{\textbf{\specialcell{Valid-\\ation}}} & \multicolumn{1}{c}{}
+                      &  & \\ \cmidrule(r){2-9} \cmidrule(r){10-11}
+     \multicolumn{1}{l}{\textbf{Pathogen}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Gene/reaction essentiality}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Minimal media prediction}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Conditional essentiality}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Synthetic lethality}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Flux variability analysis}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Enzyme robustness}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Metabolite essentiality}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Correlated reaction sets}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Literature derived}} & 
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Novel experimental validation~}} &
+     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Novel compounds identified}} & 
+     \multicolumn{1}{l}{\textbf{Disease}} & \textbf{Refs} \\ %\cline{2-12}
+\textit{Acinetobacter baumannii} &
+     \cellcolor[gray]{0.8} & & & & & & \cellcolor[gray]{0.8} &  
+     & \cellcolor[gray]{0.8} & & & Opportunistic; cepacia syndrome & [24] \\ \cline{2-12}
+\textit{Burkholderia cenocepacia} &
+     \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & & & & &  
+     & \cellcolor[gray]{0.8} & & & Opportunistic; nosocomial infection & [55] \\ \cline{2-12}
+\textit{Francisella tularensis} &
+     \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
+     & &  & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
+     & & Tularemia & [21] \\ \cline{2-12}
+\textit{Haemophilus influenzae} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
+     & & & & \cellcolor[gray]{0.8} & & 
+     & Otitis media and respiratory infections & [8,9] \\ \cline{2-12}
+\textit{Helicobacter pylori} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & 
+     & & & & \cellcolor[gray]{0.8} & & 
+     & Gastritis; peptic ulceration; gastric cancer & [56,57] \\ \cline{2-12}
+\textit{Klebsiella pneumoniae} & 
+      & & & & & & & & & \cellcolor[gray]{0.8} 
+      & & Klebsiella pneumonia; urinary tract infection & [58] \\ \cline{2-12}
+\textit{Mycobacterium tuberculosis} & 
+     \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} 
+     & \cellcolor[gray]{0.8} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
+     & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
+     & & Meningitis; meningococcal septicemia & [1,2,19] \\ \cline{2-12}
+\textit{Neisseria meningitidis} & 
+      & \cellcolor[gray]{0.8} & & & & 
+      & & & & \cellcolor[gray]{0.8} & 
+      & Opportunistic; cepacia syndrome & [59] \\ \cline{2-12}
+\textit{Porphyromonas gingivalis} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & & 
+     & & & & \cellcolor[gray]{0.8}  & & 
+     & Periodontal disease & [17] \\ \cline{2-12}
+\textit{Pseudomonas aeruginosa} &
+     \cellcolor[gray]{0.8} & & & & & & &  
+     & \cellcolor[gray]{0.8} & & & Opportunistic; nosocomial infection & [47] \\ \cline{2-12}
+\textit{Salmonella} Typhimurium &
+     \cellcolor[gray]{0.8} & & & \cellcolor[gray]{0.8} & 
+     \cellcolor[gray]{0.8} & & &  
+     & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
+     & & Gastroenteritis; diarrhea & [60-62] \\ \cline{2-12}
+\textit{Staphylococcus aureus} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
+     & & & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & 
+     & Opportunistic; nosocomial infection & [63-65] \\ \cline{2-12}
+\textit{Vibrio vulnificus} & 
+      & & & & & & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
+      & \cellcolor[gray]{0.8} & Bubonic, pneumonic, and septicemic plague & [25] \\ \cline{2-12}
+\textit{Yersinia pestis} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
+     & & & & \cellcolor[gray]{0.8} & & 
+     & Opportunistic; nosocomial infection & [66] \\ \cline{2-12}
+\textit{Cryptosporidium hominis} & 
+     \cellcolor[gray]{0.8} & & & & 
+     & & & & \cellcolor[gray]{0.8} & & 
+     & Cryptosporidiosis & [67] \\ \cline{2-12}
+\textit{Leishmania major} & 
+     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
+     & \cellcolor[gray]{0.8} & & & \cellcolor[gray]{0.8} & & 
+     & Leishmaniasis & [18] \\ \cline{2-12}
+\textit{Plasmodium falciparum} & 
+     \cellcolor[gray]{0.8} & & & \cellcolor[gray]{0.8} & 
+     & & & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8}
+     & Malaria & [37,68] \\ \cline{2-12}
+\textit{Trypanosoma cruzi} & 
+     \cellcolor[gray]{0.8} & & & & \cellcolor[gray]{0.8}
+     & & & & \cellcolor[gray]{0.8} & &
+     & Chagas disease & [69] \\ %\cline{2-12}
+\end{tabular}
+\label{trends:table1}
+\caption[Drug targeting-related analysis of pathogen metabolic networks]{
+          Drug targeting-related analysis of pathogen metabolic networks}
+\end{sidewaystable}
+
+In this review, we explore several techniques and approaches 
 used to predict antimicrobial drug targets from metabolic network 
 modeling using FBA. Where possible we present examples that have 
 led to novel data, drug targets, or drugs. Metabolic network 
@@ -83,7 +181,9 @@ strict accounting for the underlying biochemistry and allows a
 quantitative description of complex interactions between metabolites 
 that are responsible for driving a cellular phenotype. This matrix 
 formalism facilitates interrogation of the structural and functional 
-properties of the network.The application of FBA to a network reconstruction results in the 
+properties of the network.
+
+The application of FBA to a network reconstruction results in the 
 identification of combinations of reaction fluxes that correspond 
 to a maximum flux through a targeted reaction (an objective) while 
 requiring that constraints are satisfied, for example that the 
@@ -101,7 +201,9 @@ goal of identifying antimicrobial drug targets (and associated
 drugs) to slow or stop the growth of a pathogen, a biomass objective 
 is often very appropriate for computational modeling efforts. 
 Network reconstructions of most pathogenic organisms have incorporated 
-biomass reactions as their objectives (Table 1).The inability of the metabolic network model to synthesize even one 
+biomass reactions as their objectives (Table 1).
+
+The inability of the metabolic network model to synthesize even one 
 metabolite of the biomass reaction will result in a predicted value 
 of zero for the objective (biomass) flux, and analogously no growth. 
 Therefore, growth predictions are sensitive to metabolites that are 
@@ -172,7 +274,9 @@ different constraints provides a detailed view of possibly non-lethal
 reactions whose change in flux has a strong effect on the objective 
 of a network under different environmental conditions, therefore 
 suggesting important reactions during an infection or perturbations 
-for drug targeting.Alternatively, the objective function could be constrained to a fixed 
+for drug targeting.
+
+Alternatively, the objective function could be constrained to a fixed 
 percentage of its wild-type flux and the allowable range of flux 
 for each reaction can be determined using an approach termed flux 
 variability analysis (FVA; Box 4) [22]. A recognized shortcoming 
@@ -348,7 +452,8 @@ primarily using network analyses to identify and prioritize drug
 targets. Additional constraints such as enzyme druggability and 
 elevated gene expression can also be used to prioritize drug 
 targets, which can then guide the screening and selection of compounds.
-A common approach in proposing drug targets using metabolic 
+
+A common approach in proposing drug targets using metabolic 
 networks has been to rule out targets that overlap with host 
 cell metabolism – the idea being that offtargets can be minimized 
 and drug interference plus subsequent complications with the host 
@@ -378,7 +483,8 @@ threonine [35]. Consequently, identifying the particular
 niche of nutrients and resources in the host cell required 
 by a pathogen is vital to discovering treatment options 
 that specifically target host–pathogen interactions [36].
-A systems-level analysis of pathogen metabolism interfaced 
+
+A systems-level analysis of pathogen metabolism interfaced 
 with cell type-specific host metabolic networks can also 
 be conducted. Because P. falciparum invades mature erythrocytes 
 to establish infection in its human host, a metabolic model 
@@ -398,7 +504,8 @@ of host-specific factors into pathogen metabolic-network
 reconstructions or developing systems-level models of host and 
 pathogen networks will continue to enable investigations into 
 the complexities of the host–pathogen interplay.
-Finally, inhibiting host pathways and perturbing the flux of 
+
+Finally, inhibiting host pathways and perturbing the flux of 
 metabolites in the host cell may alter the ambient environment 
 and require pathogens to adapt their metabolic needs. Therefore, 
 targeting the machinery of a host cell at the host–pathogen 
@@ -435,7 +542,8 @@ differing pathogenic organisms, have broad implications
 for understanding and investigating infectious diseases. 
 Below, we highlight several future directions in this 
 realm and provide a few examples of efforts already underway.
-The recent completion of metabolic reconstructions of the 
+
+The recent completion of metabolic reconstructions of the 
 pathogen Pseudomonas aeruginosa [47] and the related nonpathogen 
 Pseudomonas putida [48] creates new opportunities for 
 investigating species-specific differences in metabolism 
@@ -457,7 +565,8 @@ P. putida in many metabolic pathways. This computational
 analysis paves the way for future modeling efforts of other 
 infectious disease-causing agents and their basis for establishing 
 virulence.
-As another example, syntrophic mutualism between a sulfate-reducing 
+
+As another example, syntrophic mutualism between a sulfate-reducing 
 bacterium, Desulfovibrio vulgaris, and a methanogen, Methanococcus 
 maripaludis, was investigated by performing FBA on a compartment-based 
 model involving the metabolic reconstructions of both organisms 
@@ -469,7 +578,8 @@ a systems-level view of bacterial adaptations in a cystic fibrotic
 lung environment over time. Subsequent studies can shed light on 
 the interactions between multiple organisms over the time course 
 of an infection.
-Finally, automated reconstruction platforms such as ModelSEED 
+
+Finally, automated reconstruction platforms such as ModelSEED 
 permit the rapid reconstruction of hundreds of draft bacterial 
 metabolic networks [52,53]. Integration of many such reconstructed 
 networks may help elucidate interactions within the host 
@@ -534,7 +644,22 @@ Grant to the University of Virginia Division of Infectious
 Diseases and International Health (5T32 AI0070465).
 
 \section{Glossary}
-Biomass: an objective reaction consisting of important metabolites that the cell needs in order to grow (e.g. amino acids, lipids and carbohydrates). Correlated reaction sets: groups of reactions whose fluxes always change in relation to one another.Exchange reaction: a reaction that transports metabolites into or out of the system.Feasible flux space: the possible combination of allowable fluxes given a defined set of constraints which bound reaction fluxes, for example reversible and irreversible reactions.Flux balance analysis (FBA): a linear programming problem formulated to maximize the flux through an objective reaction, which the analyst defines, under steady-state flux constraints that are derived from the stoichiometric matrix of the metabolic network.Flux distribution: the set of all reaction fluxes within a metabolic network.Flux variability analysis (FVA): a linear programming-based method which determines the minimum and maximum reaction fluxes that allow for optimal or near-optimal flux through the objective reaction.Gene–protein–reaction (GPR) relationship: the combination of proteins or protein components sufficient to carry out an enzymatic reaction and the combination of genes sufficient to express each of the protein components.In silico: in contrast to in vivo or in vitro, the term indicates a computational process in a simulated environment.Linear programming: also termed linear optimization, an area of mathematics developed for maximizing a linear combination of variables (e.g. A v1 + B v2 + C v3), such that the variables are constrained by many linear equalities and inequalities (e.g. the constraint v1 - v2 = 0 implies that flux v1 is constrained to be twice flux v2).Mass balance: a requirement that the mass entering the system or any pathway within the system equals the mass exiting the system or pathway; a crucial characteristic of metabolic reconstructions from which functional mathematical models can be derived.Metabolic network reconstruction: a manually-curated computational network of the metabolism of an organism with all the GPRs assembled from a functionally annotated genome, biochemical data, and literature, that are compiled into a stoichiometric matrix, which serves as the framework for further computational analysis.Objective flux: the flux through the objective reactionObjective reaction: a reaction which sets a demand for particular metabolites in the network. The typical goal in formulating this reaction is to simulate a biological objective, whether it be growth, energy, virulence, or a combination of other factors.Reaction flux: moles consumed in a reaction per unit time.Steady state: with respect to flux, a key assumption in FBA that the reaction fluxes within the system, and therefore the amounts of each metabolite, do not change over time, an assumption often justified by the very short time-scale of metabolic reactions compared to the time necessary for changes in cell phenotype.Stoichiometric matrix (S matrix): a mathematical formalization of a metabolic reconstruction; a matrix in which each element contains the stoichiometric coefficient for a metabolite (row) participating in the corresponding reaction (column).
+Biomass: an objective reaction consisting of important metabolites that the cell needs in order to grow (e.g. amino acids, lipids and carbohydrates). Correlated reaction sets: groups of reactions whose fluxes always change in relation to one another.
+Exchange reaction: a reaction that transports metabolites into or out of the system.
+Feasible flux space: the possible combination of allowable fluxes given a defined set of constraints which bound reaction fluxes, for example reversible and irreversible reactions.
+Flux balance analysis (FBA): a linear programming problem formulated to maximize the flux through an objective reaction, which the analyst defines, under steady-state flux constraints that are derived from the stoichiometric matrix of the metabolic network.
+Flux distribution: the set of all reaction fluxes within a metabolic network.
+Flux variability analysis (FVA): a linear programming-based method which determines the minimum and maximum reaction fluxes that allow for optimal or near-optimal flux through the objective reaction.
+Gene–protein–reaction (GPR) relationship: the combination of proteins or protein components sufficient to carry out an enzymatic reaction and the combination of genes sufficient to express each of the protein components.
+In silico: in contrast to in vivo or in vitro, the term indicates a computational process in a simulated environment.
+Linear programming: also termed linear optimization, an area of mathematics developed for maximizing a linear combination of variables (e.g. A v1 + B v2 + C v3), such that the variables are constrained by many linear equalities and inequalities (e.g. the constraint v1 - v2 = 0 implies that flux v1 is constrained to be twice flux v2).
+Mass balance: a requirement that the mass entering the system or any pathway within the system equals the mass exiting the system or pathway; a crucial characteristic of metabolic reconstructions from which functional mathematical models can be derived.
+Metabolic network reconstruction: a manually-curated computational network of the metabolism of an organism with all the GPRs assembled from a functionally annotated genome, biochemical data, and literature, that are compiled into a stoichiometric matrix, which serves as the framework for further computational analysis.
+Objective flux: the flux through the objective reaction
+Objective reaction: a reaction which sets a demand for particular metabolites in the network. The typical goal in formulating this reaction is to simulate a biological objective, whether it be growth, energy, virulence, or a combination of other factors.
+Reaction flux: moles consumed in a reaction per unit time.
+Steady state: with respect to flux, a key assumption in FBA that the reaction fluxes within the system, and therefore the amounts of each metabolite, do not change over time, an assumption often justified by the very short time-scale of metabolic reactions compared to the time necessary for changes in cell phenotype.
+Stoichiometric matrix (S matrix): a mathematical formalization of a metabolic reconstruction; a matrix in which each element contains the stoichiometric coefficient for a metabolite (row) participating in the corresponding reaction (column).
 
 \section{Box 1. A brief primer on FBA}
 Nutrient availability, restrictions on surrounding 
@@ -549,7 +674,8 @@ topological, environmental and regulatory) restrict
 the number of possible phenotypes, which then allows 
 the function of the biochemical network to be 
 characterized [12,14].
-Flux balance analysis (FBA) is one constraint-based 
+
+Flux balance analysis (FBA) is one constraint-based 
 method that has been extensively applied in the study 
 of prokaryotic and eukaryotic metabolic networks [47,70]. 
 First, reactions of a metabolic network are assembled 
@@ -561,34 +687,46 @@ description of the complex interactions between metabolites.
 Following network reconstruction, the concentrations of 
 metabolites and fluxes through reactions can be represented 
 as follows (Equation I):
-dC/dt =Sv
-Here, C is a vector of concentrations of metabolites, t is 
+
+dC/dt =Sv
+
+Here, C is a vector of concentrations of metabolites, t is 
 time, S is the stoichiometric matrix consisting of m rows 
 of metabolites and n columns of reactions, and v is a 
 vector of fluxes through the corresponding reactions. 
 Invoking the steady-state assumption so that the rate 
 of production of every metabolite equals its rate of 
 consumption yields the following (Equation II):
-Sv = 0
-Limits can be applied to individual fluxes as follows:
-vmin ≤ v ≤ vmax
-Particular reactions can have set upper limits (vmax) that 
+
+Sv = 0
+
+Limits can be applied to individual fluxes as follows:
+
+vmin ≤ v ≤ vmax
+
+Particular reactions can have set upper limits (vmax) that 
 may align closely with experimental enzyme capacity measurements, 
 whereas other irreversible reactions will have vmin set to 0.
-The principle physicochemical constraint in Equation II 
+
+The principle physicochemical constraint in Equation II 
 represents a set of linear equations. The number of 
 equations is usually less than the number of unknown 
 fluxes [12], and a linear programming optimization can be 
 used to generate a single flux distribution for the entire 
 network by choosing an appropriate objective (or goal): 
-Max vbiomass
-Traditionally, maximization of biomass has been 
+
+Max vbiomass
+
+Traditionally, maximization of biomass has been 
 chosen as the objective of choice in FBA [12]. A set 
 of metabolites (e.g. amino acids, lipids, nucleotides and 
 carbohydrates) that are necessary for the cell or organism 
 to grow are typically included in the biomass reaction. 
 Therefore, the optimization problem can be summarized as simply:
-Max vbiomassSubject to	Sv = 0vmin ≤ vi ≤ vmax	 for all i
+
+Max vbiomass
+Subject to	Sv = 0
+vmin ≤ vi ≤ vmax	 for all i
 
 \section{Box 2. Cellular objectives of pathogenic organisms}
 A biomass objective reaction is not applicable under 
@@ -597,7 +735,8 @@ a realistic objective. Other objectives such as maximizing
 or minimizing ATP or maximizing the production of 
 particular cellular by-products (e.g. lactate or pyruvate) 
 can also be used.
-The metabolism of an organism may be adapted for increased 
+
+The metabolism of an organism may be adapted for increased 
 virulence or pathogenicity. Pathogens and host cells may 
 also temporarily opt for alternative objectives while under 
 selective pressures (e.g. changes in nutrients or 
@@ -608,7 +747,8 @@ stage in humans) may be characterized by varying metabolic
 requirements. Consequently, the objective function must be 
 appropriately defined to find relevant enzyme targets crucial 
 in particular stages of infection and/or environmental conditions.
-To explore the effects of targeted perturbations 
+
+To explore the effects of targeted perturbations 
 (pharmacological or genetic), different objectives 
 can be explored. It may be that the evolutionary 
 pressures that dictate wild-type cells are different 
@@ -634,7 +774,8 @@ supporting literature evidence. MOMA yielded a suboptimal
 flux distribution for a knockout mutant that would not 
 necessarily equal the optimum as dictated by traditional 
 FBA [71].
-Approaches such as MOMA that consider alternate hypotheses 
+
+Approaches such as MOMA that consider alternate hypotheses 
 for the objective of metabolic networks provide a basis 
 for understanding a potential biological goal for pathogenic 
 organisms, especially considering the complexity of the 
@@ -657,7 +798,8 @@ Below we discuss more of the particular difficulties and
 limitations encountered when using metabolic models to 
 identify drug targets.
 
-\subsection{Genome annotation}In any metabolic reconstruction, there may be 
+\subsection{Genome annotation}
+In any metabolic reconstruction, there may be 
 hundreds of putative metabolic enzymes with no 
 experimentally identified function. These reactions 
 and associated GPR relationships may be assembled 
@@ -675,7 +817,8 @@ the assembly of metabolic networks, and the inclusion of
 more refined enzyme annotations will directly improve 
 drug target predictions [73,74].
 
-\subsection{Nutrient availability}An important challenge in reconstructing and modeling 
+\subsection{Nutrient availability}
+An important challenge in reconstructing and modeling 
 metabolic networks is determining the composition of 
 in silico media. Nutrients available in host environments 
 are poorly characterized. In addition, for any nutrients 
@@ -690,7 +833,9 @@ transport reactions are added for proper functioning
 of the computational model. Because model predictions are 
 dependent on the media environment, nutrients and 
 transporters must be carefully defined.
-\subsection{Objective function}As stated previously, in FBA-based modeling of microbial organisms, 
+
+\subsection{Objective function}
+As stated previously, in FBA-based modeling of microbial organisms, 
 a biomass objective reaction has often been used. The purpose of 
 the reaction is to ensure a drain of metabolites that 
 are deemed essential to support the growth of the 
@@ -708,7 +853,8 @@ directly by metabolic flux analysis, which tracks
 the movement of 13C from an initial 13C-labeled 
 substrate, may also help to define the objective 
 function [76,77].
-An objective function is most likely to cause 
+
+An objective function is most likely to cause 
 errors if metabolites are entirely missing or 
 incorrectly included; the relative amounts of each 
 metabolite in the objective reaction (i.e. the 
@@ -743,13 +889,20 @@ cellular network, there may be several alternative
 optimal phenotypes [14]. FBA calculates one of many 
 feasible solutions that result in the same optimal 
 value of the cellular objective.
-Flux variability analysis (FVA) calculates the range of 
+
+Flux variability analysis (FVA) calculates the range of 
 flux in each reaction that allows for the same optimal 
 flux through the objective reaction. The objective 
 flux of the reaction is specified as an additional 
 constraint and multiple optimizations are performed 
 to compute the maximum and minimum flux for every reaction in the network:
-Max/Min viSubject to	Sv = 0		vbiomass = Zobj		vmin ≤ vi ≤ vmax	for i = 1…nHere, n refers to the number of reactions in the 
+
+Max/Min vi
+Subject to	Sv = 0
+		vbiomass = Zobj
+		vmin ≤ vi ≤ vmax	for i = 1…n
+
+Here, n refers to the number of reactions in the 
 biochemical network, and Zobj is the optimal value 
 of the cellular objective (vbiomass) as obtained by FBA [22].
 
