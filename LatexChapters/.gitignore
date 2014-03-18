@@ -10,3 +10,5 @@ wrapper.run.xml
 *.lot
 *.toc
 *.aux
+*.glo
+*.ist
