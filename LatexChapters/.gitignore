@@ -12,3 +12,4 @@ wrapper.run.xml
 *.aux
 *.glo
 *.ist
+*.glsdefs

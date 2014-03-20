@@ -1,0 +1,26 @@
+\begin{pabox}[label=trends:box:fva]{A brief primer on FVA}
+After the application of various constraints on the 
+biochemical network, the number of allowable network 
+states (or possible phenotypes) is typically large. 
+Depending on the size and interconnectedness of the 
+cellular network, there may be several alternative 
+optimal phenotypes [14]. \gls{fba} calculates one of many 
+feasible solutions that result in the same optimal 
+value of the cellular \glssymbol{objectivereaction}.
+
+~~~~~~\gls{fva} calculates the range of 
+\gls{flux} in each reaction that allows for the same optimal 
+\gls{flux} through the \gls{objectivereaction}. The \gls{objectiveflux} 
+of the reaction is specified as an additional 
+constraint and multiple optimizations are performed 
+to compute the maximum and minimum flux for every reaction in the network:
+\begin{alignat*}{2}
+\text{Max/Min  }   & v_{i}  \\
+\text{subject to  } & Sv=0 \\
+                    & v_{biomass} = Z_{obj} \\
+                    & v_{min} \leq v_i \leq v_{max}
+\end{alignat*}
+Here, n refers to the number of reactions in the 
+biochemical network, and Zobj is the optimal value 
+of the cellular \glssymbol{objectivereaction} ($v_{biomass}$) as obtained by \gls{fba} [22].
+\end{pabox}

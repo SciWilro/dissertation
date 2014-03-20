@@ -1,0 +1,93 @@
+%%%%%% BOX 1 %%%%%%%%%
+\begin{pabox}[label=trends:box:fba]{A brief primer on \glsentrytext{fba}}
+Nutrient availability, restrictions on surrounding 
+environmental pH, and temperature are examples of basic 
+constraints that, when imposed upon cells, can affect 
+the resulting phenotypes [12]. Such constraints can 
+be mathematically described, and they serve to narrow 
+the operating range of the cell and yield a set of feasible 
+reaction \glspl{flux} for a metabolic network. In other words, 
+the constraints (which can be physicochemical, 
+topological, environmental and regulatory) restrict 
+the number of possible phenotypes, which then allows 
+the function of the biochemical network to be 
+characterized [12,14].
+
+~~~~~~\gls{fba} is one constraint-based 
+method that has been extensively applied in the study 
+of prokaryotic and eukaryotic metabolic networks [47,70]. 
+First, reactions of a metabolic network are assembled 
+into a \gls{smatrix}, whose elements 
+correspond to the stoichiometric coefficients describing 
+the conversions from reactants to products (Figure I) [5,12]. 
+This simple matrix formalism permits quantitative 
+description of the complex interactions between metabolites. 
+Following network \glssymbol{reconstruction}, the concentrations of 
+metabolites and \glspl{flux} through reactions can be represented 
+as follows:
+
+\begin{equation} \label{trends:eq:massbalance}
+\frac{dC}{dt} = S v
+\end{equation}
+
+Here, $C$ is a vector of concentrations of metabolites, $t$ is 
+time, $S$ is the \gls{smatrix} consisting of $m$ rows 
+of metabolites and $n$ columns of reactions, and $v$ is a 
+vector of \glspl{flux} through the corresponding reactions. 
+Invoking the \gls{steadystate} assumption so that the rate 
+of production of every metabolite equals its rate of 
+consumption yields the following:
+
+\begin{equation} \label{trends:eq:steadystate}
+Sv = 0
+\end{equation}
+
+Limits can be applied to individual \glspl{flux} as follows:
+
+\begin{equation*}
+v_{min} \leq v \leq v_{max}
+\end{equation*}
+
+Particular reactions can have set upper limits ($v_{max}$) that 
+may align closely with experimental enzyme capacity measurements, 
+whereas other irreversible reactions will have $v_{min}$ set to 0.
+
+~~~~~~The principle physicochemical constraints in \autoref{trends:eq:steadystate} 
+represents a set of $m$ linear equations. 
+Because there are typically more unknown variables ($m$ reaction \glspl{flux}) than equations ($n$ steady state
+equations for each metabolite), the system of equations is ``indeterminate'' [12].
+In other words, there may be many sets of \glspl{flux} (many \glspl{fluxdistribution}) that 
+can satisfy the steady state constraints as well as the $v_{min}$ and $v_{max}$ of each reaction.
+The goal then is to use \gls{linearprogramming} to identify which of these feasible \glspl{fluxdistribution}
+allow for the greatest \gls{flux} through the \gls{objectivereaction}.
+
+~~~~~~Traditionally, maximization of \glssymbol{biomass} has been 
+chosen as the \glssymbol{objectivereaction} of choice in \gls{fba} [12]. A set 
+of metabolites (e.g.\ amino acids, lipids, nucleotides and 
+carbohydrates) that are necessary for the cell or organism 
+to grow are typically included in the \gls{biomass}. 
+Therefore, the optimization problem can be summarized as simply:
+\begin{alignat*}{2}
+\text{maximize  }   & v_{biomass}  \\
+\text{subject to  } & Sv=0 \\
+                   & v_{min} \leq v_i \leq v_{max} \text{ for } i=1...n
+\end{alignat*}
+Even with these constraints, \gls{linearprogramming} does not guarantee that the set of \glspl{flux} that
+allow for the maximal \gls{objectiveflux} are unique. What is 
+guaranteed is that the \gls{objectiveflux} ($v_{biomass}$) found is the
+highest possible \gls{flux} through the \gls{objectivereaction} that the network can allow, under any state.
+There are often are many possible \glspl{fluxdistribution} that achieve
+the maximal \gls{objectiveflux}. See \hyperref[trends:box:fva]{Box \ref{trends:box:fva}} for
+a method that helps investigate the many possible solutions.
+
+
+%\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{trends/FigureBox}
+  %\caption[A generic metabolic model]{
+  %     \textbf{A generic metabolic model}
+  %}
+  \label{trends:figbox}
+%\end{figure}
+
+\end{pabox}

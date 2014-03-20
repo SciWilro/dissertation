@@ -86,12 +86,31 @@
 % A package that allows \doublespacing and \onehalfspacing
 \usepackage{setspace}
 
-% Make glossaries
-\usepackage{glossaries}
+% Allow for special text boxes
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,listings,theorems,breakable,hooks}
+\tcbset{enhanced,breakable,autoparskip,flushleft title}
 
-% Change glossary link color
-\renewcommand*{\glstextformat}[1]{\textcolor{blue}{#1}} % MidnightBlue or black
+% Define a text box environment
+\newtcolorbox[auto counter]{pabox}[2][]{%
+   colframe=brown!20!white,
+   colback=yellow!20!brown!10!white,
+   fonttitle=\bfseries\Large,
+   enlarge top by=5mm,
+   parbox=true,
+   coltitle=black,
+   coltext=black,
+   title=Box~\thetcbcounter. #2,#1}
+
+% Make glossaries
+\usepackage[style=altlist,section,numberedsection=autolabel,toc]{glossaries}
+\renewcommand*{\glstextformat}[1]{\textcolor{black}{#1}} % MidnightBlue or black
 \makeglossaries
+
+% packages for stating a linear program
+\usepackage{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
 
 \begin{document}
 
@@ -105,7 +124,6 @@
 %\include{bmc/bmc}
 %\include{ini/ini}
 \include{trends/trends}
-
 
 
 

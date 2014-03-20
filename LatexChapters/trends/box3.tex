@@ -1,0 +1,98 @@
+\begin{pabox}[label=trends:box:caveats]{Knowledge gaps and caveats to metabolic network analysis}
+Multiple steps in the model-building process and subsequent 
+analyses are prone to errors that may greatly affect \gls{flux} 
+and growth predictions and, consequently, predicted drug 
+targets. \gls{fba} provides a quality-assurance check that ensures 
+\gls{massbalance}. Growth rates and gene essentiality predictions 
+are validated against experimental data to ensure the 
+model truly reflects biological processes. Gene essentiality 
+predictions (commonly between 55\% and 90\%) provide 
+confidence that downstream analyses are based on a 
+high-quality model [1,72]. To ensure the usefulness of 
+any computational pipeline, drug target predictions 
+should be compared to known targets from the literature. 
+Below we discuss more of the particular difficulties and 
+limitations encountered when using metabolic models to 
+identify drug targets.
+
+\subsection*{Genome annotation}
+In any metabolic \glssymbol{reconstruction}, there may be 
+hundreds of putative metabolic enzymes with no 
+experimentally identified function. These reactions 
+and associated \glspl{gpr} may be assembled 
+strictly based on existing functional annotations 
+of the genome or based on evidence from related 
+organisms. Even some very well characterized enzymes 
+may have other unexpected activities. In such cases, 
+misannotated enzymes may yield incorrect model 
+predictions leading to errors in drug targeting. For 
+instance, an enzyme may be incorrectly predicted to be 
+essential if the activity of another enzyme, which is 
+not included in the network, can account for the same function. 
+Therefore, this represents one important knowledge gap in 
+the assembly of metabolic networks, and the inclusion of 
+more refined enzyme annotations will directly improve 
+drug target predictions [73,74].
+
+\subsection*{Nutrient availability}
+An important challenge in reconstructing and modeling 
+metabolic networks is determining the composition of 
+\gls{insilico} media. Nutrients available in host environments 
+are poorly characterized. In addition, for any nutrients 
+that are identified, quantitative data on uptake rates 
+are unavailable. Knowledge of the transporters of an 
+organism elucidates which metabolites are transported 
+into the cell. However, information on transporters 
+is particularly limited and, in general, transport 
+reactions lack any experimental evidence or gene 
+associations supporting their presence. Instead, 
+transport reactions are added for proper functioning 
+of the computational model. Because model predictions are 
+dependent on the media environment, nutrients and 
+transporters must be carefully defined.
+
+\subsection*{Objective function}
+As stated previously, in \gls{fba}-based modeling of microbial organisms, 
+a \gls{biomass} has often been used. The purpose of 
+the reaction is to ensure a drain of metabolites that 
+are deemed essential to support the growth of the 
+organism. Starting with the estimated weight fraction 
+of important macromolecular components of the cell 
+(e.g.\ protein, lipid, RNA, DNA and carbohydrate), the 
+relative abundance of metabolites comprised in each 
+group (e.g.\ amino acids, phospholipids, nucleotides) 
+can be computed [15]. Among several available, a few 
+experimental methods to measure \glssymbol{biomass} components 
+include chloroform–methanol extraction (lipids), 
+colorimetric protein assays, and gas chromatography–mass 
+spectrometry (protein content) [75]. \Glspl{flux} measured 
+directly by metabolic flux analysis, which tracks 
+the movement of 13C from an initial 13C-labeled 
+substrate, may also help to define the \glssymbol{objectivereaction} 
+function [76,77].
+
+~~~~~~An \glssymbol{objectivereaction} function is most likely to cause 
+errors if metabolites are entirely missing or 
+incorrectly included; the relative amounts of each 
+metabolite in the \gls{objectivereaction} (i.e.\ the 
+stoichiometric coefficients) do not greatly affect 
+\gls{fba} results [16,78]. Therefore, logically 
+deducing a \gls{biomass} is often adequate 
+to estimate the growth of an organism. However, 
+additional experimental data can reveal interesting 
+peculiarities that may be used to design a specific 
+\gls{biomass} for a particular organism. 
+Data on growth- and non-growth-associated ATP 
+maintenance can be included in the \gls{biomass} [79]. Under in vivo conditions when a 
+pathogen is interacting with its host, an aspect 
+that is often unclear is which \glssymbol{biomass} component(s) 
+to include in the reaction. The composition of the 
+\gls{biomass} is likely to vary under different 
+physiological conditions, and the choice of metabolites 
+can directly influence model predictions regarding 
+drug targets. For example, failure to include a 
+particular cell-wall component will not necessarily 
+direct \gls{flux} through reactions that may be crucial in 
+vivo, and therefore the associated enzymes will not 
+be targeted.
+\end{pabox}

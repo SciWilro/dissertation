@@ -4,119 +4,7 @@
 
 
 %Term definitions
-\newglossaryentry{biomass}{
-  name={biomass}, 
-  text={biomass reaction},
-  symbol={biomass},
-  description={an objective 
-  reaction consisting of important metabolites that the cell 
-  needs in order to grow (e.g.\ amino acids, lipids and 
-  carbohydrates). Correlated reaction sets: groups of reactions 
-  whose \glspl{flux} always change in relation to one another}}
-\newglossaryentry{exchangereaction}{
-  name={exchange reaction}, 
-  description={a reaction that transports metabolites 
-  into or out of the system}}
-\newglossaryentry{fluxspace}{
-  name={feasible flux space}, 
-  description={the possible combination of allowable 
-  \glspl{flux} given a defined set of constraints which bound 
-  reaction \glspl{flux}, for example reversible and irreversible 
-  reactions}}
-\newacronym
-  [description={the possible combination of allowable 
-  \glspl{flux} given a defined set of constraints which bound 
-  reaction \glspl{flux}, for example reversible and irreversible 
-  reactions},
-  name={flux balance analysis (FBA)}]
-  {fba}{FBA}{flux balance analysis}
-\newglossaryentry{fluxdistribution}{%
-  name={flux distribution}, 
-  description={the set of all reaction 
-  \glspl{flux} within a metabolic network}}
-\newacronym
-  [description={a \gls{linearprogramming}-based method which 
-  determines the minimum and maximum reaction \glspl{flux} that 
-  allow for optimal or near-optimal \gls{flux} through the objective 
-  reaction},
-  name={flux variability analysis (FVA)},
-  symbol={flux variability}]
-  {fva}{FVA}{flux variance analysis}
-\newacronym
-  [description={the combination of proteins or protein 
-  components sufficient to carry out an enzymatic reaction and 
-  the combination of genes sufficient to express each of 
-  the protein components},
-  name={gene-protein-reaction relationship (GPR)}]
-  {gpr}{GPR}{gene-protein-reaction relationship}
-\newglossaryentry{insilico}{%
-  name={in silico}, 
-  description={in contrast to in vivo or in vitro, 
-  the term indicates a computational process in a 
-  simulated environment}}
-\newglossaryentry{linearprogramming}{%
-  name={linear programming}, 
-  description={also termed linear optimization, an area 
-  of mathematics developed for maximizing a linear 
-  combination of variables (e.g.\ $A v_1 + B v_2 + C v_3$), 
-  such that the variables are constrained by many linear 
-  equalities and inequalities (e.g.\ the constraint $v_1 - v_2 = 0$ 
-  implies that \gls{flux} $v_1$ is constrained to be twice \gls{flux} $v_2$)}}
-\newglossaryentry{massbalance}{%
-  name={mass balance}, 
-  description={a requirement that the mass entering 
-  the system or any pathway within the system equals 
-  the mass exiting the system or pathway; a crucial 
-  characteristic of metabolic \glssymbol{reconstruction}s from which 
-  functional mathematical models can be derived}}
-\newglossaryentry{reconstruction}{%
-  name={metabolic network reconstruction},
-  symbol={reconstruction},
-  description={a manually-curated computational network 
-  of the metabolism of an organism with all the \glspl{gpr} 
-  assembled from a functionally annotated genome, biochemical 
-  data, and literature, that are compiled into a 
-  \gls{smatrix}, which serves as the framework 
-  for further computational analysis}}
-\newglossaryentry{objectiveflux}{%
-  name={objective flux},
-  description={the \gls{flux} through the \gls{objectivereaction}}}
-\newglossaryentry{objectivereaction}{%
-  name={objective reaction},
-  symbol={objective},
-  description={a reaction which sets a demand for 
-  particular metabolites in the network. The typical 
-  goal in formulating this reaction is to simulate 
-  a biological objective, whether it be growth, 
-  energy, virulence, or a combination of other factors}}
-\newglossaryentry{flux}{%
-  name={reaction flux},
-  text={flux},
-  plural={fluxes},
-  description={moles consumed in a reaction per unit time}}
-\newglossaryentry{steadystate}{%
-  name={steady state},
-  description={with respect to \gls{flux}, a key assumption 
-  in FBA that the reaction \glspl{flux} within the system, and 
-  therefore the amounts of each metabolite, do not change 
-  over time, an assumption often justified by the very short 
-  time-scale of metabolic reactions compared to the time 
-  necessary for changes in cell phenotype}}
-\newglossaryentry{smatrix}{%
-  name={stoichiometric matrix (S matrix)},
-  text={stoichiometric matrix},
-  description={a mathematical formalization of a 
-  metabolic \glssymbol{reconstruction}; a matrix in which each 
-  element contains the stoichiometric coefficient 
-  for a metabolite (row) participating in the 
-  corresponding reaction (column)}}
-
-
-Glossary terms within the chapter are clickable, linking back to the glossary.
-
-%Print the glossary
-\printglossaries
-
+\input{trends/glossaryDefs}
 
 \section{Abstract}
 For many infectious diseases, novel treatment options are needed 
@@ -132,6 +20,11 @@ discuss how accounting for the host environment and even targeting the
 host may offer new therapeutic options. These systems-level approaches 
 are beginning to provide novel avenues for drug targeting against 
 infectious agents.
+
+% Make a glossary section
+\printglossary
+Clicking on a glossary term within this chapter returns you to its definition in this section.
+
 
 \section{Systems biology and pathogen metabolism}
 Systems biology methods have been applied extensively to the 
@@ -198,101 +91,7 @@ metabolic network modeling and systems biology.
   \label{trends:fig1}
 \end{figure}
 
-\begin{sidewaystable}
-\begin{tabular}{ l  c  c  c  c  c  c  c  c | c  c | c l l }%14 columns
-\multicolumn{1}{l}{} & \multicolumn{8}{c}{\textbf{Drug target-related analysis}} & 
-                     \multicolumn{2}{c}{\textbf{\specialcell{Valid-\\ation}}} & \multicolumn{1}{c}{}
-                      &  & \\ \cmidrule(r){2-9} \cmidrule(r){10-11}
-     \multicolumn{1}{l}{\textbf{Pathogen}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Gene/reaction essentiality}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Minimal media prediction}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Conditional essentiality}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Synthetic lethality}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Flux variability analysis}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Enzyme robustness}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Metabolite essentiality}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Correlated reaction sets}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Literature derived}} & 
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Novel experimental validation~}} &
-     \multicolumn{1}{c}{\rotatebox[origin=l]{90}{Novel compounds identified}} & 
-     \multicolumn{1}{l}{\textbf{Disease}} & \textbf{Refs} \\ %\cline{2-12}
-\textit{Acinetobacter baumannii} &
-     \cellcolor[gray]{0.8} & & & & & & \cellcolor[gray]{0.8} &  
-     & \cellcolor[gray]{0.8} & & & Opportunistic; cepacia syndrome & [24] \\ \cline{2-12}
-\textit{Burkholderia cenocepacia} &
-     \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & & & & &  
-     & \cellcolor[gray]{0.8} & & & Opportunistic; nosocomial infection & [55] \\ \cline{2-12}
-\textit{Francisella tularensis} &
-     \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
-     & &  & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
-     & & Tularemia & [21] \\ \cline{2-12}
-\textit{Haemophilus influenzae} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
-     & & & & \cellcolor[gray]{0.8} & & 
-     & Otitis media and respiratory infections & [8,9] \\ \cline{2-12}
-\textit{Helicobacter pylori} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & 
-     & & & & \cellcolor[gray]{0.8} & & 
-     & Gastritis; peptic ulceration; gastric cancer & [56,57] \\ \cline{2-12}
-\textit{Klebsiella pneumoniae} & 
-      & & & & & & & & & \cellcolor[gray]{0.8} 
-      & & Klebsiella pneumonia; urinary tract infection & [58] \\ \cline{2-12}
-\textit{Mycobacterium tuberculosis} & 
-     \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} 
-     & \cellcolor[gray]{0.8} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
-     & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
-     & & Meningitis; meningococcal septicemia & [1,2,19] \\ \cline{2-12}
-\textit{Neisseria meningitidis} & 
-      & \cellcolor[gray]{0.8} & & & & 
-      & & & & \cellcolor[gray]{0.8} & 
-      & Opportunistic; cepacia syndrome & [59] \\ \cline{2-12}
-\textit{Porphyromonas gingivalis} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & & 
-     & & & & \cellcolor[gray]{0.8}  & & 
-     & Periodontal disease & [17] \\ \cline{2-12}
-\textit{Pseudomonas aeruginosa} &
-     \cellcolor[gray]{0.8} & & & & & & &  
-     & \cellcolor[gray]{0.8} & & & Opportunistic; nosocomial infection & [47] \\ \cline{2-12}
-\textit{Salmonella} Typhimurium &
-     \cellcolor[gray]{0.8} & & & \cellcolor[gray]{0.8} & 
-     \cellcolor[gray]{0.8} & & &  
-     & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
-     & & Gastroenteritis; diarrhea & [60-62] \\ \cline{2-12}
-\textit{Staphylococcus aureus} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
-     & & & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & 
-     & Opportunistic; nosocomial infection & [63-65] \\ \cline{2-12}
-\textit{Vibrio vulnificus} & 
-      & & & & & & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} 
-      & \cellcolor[gray]{0.8} & Bubonic, pneumonic, and septicemic plague & [25] \\ \cline{2-12}
-\textit{Yersinia pestis} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
-     & & & & \cellcolor[gray]{0.8} & & 
-     & Opportunistic; nosocomial infection & [66] \\ \cline{2-12}
-\textit{Cryptosporidium hominis} & 
-     \cellcolor[gray]{0.8} & & & & 
-     & & & & \cellcolor[gray]{0.8} & & 
-     & Cryptosporidiosis & [67] \\ \cline{2-12}
-\textit{Leishmania major} & 
-     \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & & \cellcolor[gray]{0.8} & 
-     & \cellcolor[gray]{0.8} & & & \cellcolor[gray]{0.8} & & 
-     & Leishmaniasis & [18] \\ \cline{2-12}
-\textit{Plasmodium falciparum} & 
-     \cellcolor[gray]{0.8} & & & \cellcolor[gray]{0.8} & 
-     & & & & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8} & \cellcolor[gray]{0.8}
-     & Malaria & [37,68] \\ \cline{2-12}
-\textit{Trypanosoma cruzi} & 
-     \cellcolor[gray]{0.8} & & & & \cellcolor[gray]{0.8}
-     & & & & \cellcolor[gray]{0.8} & &
-     & Chagas disease & [69] \\ %\cline{2-12}
-\end{tabular}
-\label{trends:table1}
-\caption[Drug targeting-related analysis of pathogen metabolic networks]{
-          Drug targeting-related analysis of pathogen metabolic networks}
-\end{sidewaystable}
+\input{trends/table1}
 
 In this review, we explore several techniques and approaches 
 used to predict antimicrobial drug targets from metabolic network 
@@ -349,6 +148,8 @@ is often very appropriate for computational modeling efforts.
 Network \glssymbol{reconstruction}s of most pathogenic organisms have incorporated 
 \glspl{biomass} as their \glssymbol{objectivereaction}s (Table 1).
 
+\input{trends/box1}
+
 The inability of the metabolic network model to synthesize even one 
 metabolite of the \gls{biomass} will result in a predicted value 
 of zero for the \gls{objectiveflux} (\glssymbol{biomass}), and analogously no growth. 
@@ -375,6 +176,10 @@ metabolites and their influence on growth. Therefore, defining an
 appropriate \gls{biomass} (Boxes 2 and 3) is crucial for useful 
 predictions and identification of vulnerable parts of the metabolism 
 of a pathogen.
+
+\input{trends/box2}
+
+\input{trends/box3}
 
 \section{The quest for drug targets in metabolic networks of pathogens}
 
@@ -475,6 +280,8 @@ be greater in slow-growing cells of the closely related
 Mycobacterium bovis [19]. Hence, \glssymbol{fva} and enzyme 
 robustness aid in further prioritizing drug targets identified 
 from other methods such as gene essentiality.
+
+\input{trends/box4}
 
 \subsection{Metabolite essentiality}
 Many current drugs have high similarity to natural metabolites and 
@@ -812,250 +619,6 @@ Cystic Fibrosis Research Foundation (grant 1060 to J.P.).
 K.M.D. is a trainee on the Infectious Diseases Training 
 Grant to the University of Virginia Division of Infectious 
 Diseases and International Health (5T32 AI0070465).
-
-\section{Box 1. A brief primer on \glsentrytext{fba}}
-Nutrient availability, restrictions on surrounding 
-environmental pH, and temperature are examples of basic 
-constraints that, when imposed upon cells, can affect 
-the resulting phenotypes [12]. Such constraints can 
-be mathematically described, and they serve to narrow 
-the operating range of the cell and yield a set of feasible 
-reaction \glspl{flux} for a metabolic network. In other words, 
-the constraints (which can be physicochemical, 
-topological, environmental and regulatory) restrict 
-the number of possible phenotypes, which then allows 
-the function of the biochemical network to be 
-characterized [12,14].
-
-\gls{fba} is one constraint-based 
-method that has been extensively applied in the study 
-of prokaryotic and eukaryotic metabolic networks [47,70]. 
-First, reactions of a metabolic network are assembled 
-into a \gls{smatrix}, whose elements 
-correspond to the stoichiometric coefficients describing 
-the conversions from reactants to products (Figure I) [5,12]. 
-This simple matrix formalism permits quantitative 
-description of the complex interactions between metabolites. 
-Following network \glssymbol{reconstruction}, the concentrations of 
-metabolites and \glspl{flux} through reactions can be represented 
-as follows (Equation I):
-
-dC/dt =Sv
-
-Here, C is a vector of concentrations of metabolites, t is 
-time, S is the \gls{smatrix} consisting of m rows 
-of metabolites and n columns of reactions, and v is a 
-vector of \glspl{flux} through the corresponding reactions. 
-Invoking the \gls{steadystate} assumption so that the rate 
-of production of every metabolite equals its rate of 
-consumption yields the following (Equation II):
-
-Sv = 0
-
-Limits can be applied to individual \glspl{flux} as follows:
-
-vmin ≤ v ≤ vmax
-
-Particular reactions can have set upper limits (vmax) that 
-may align closely with experimental enzyme capacity measurements, 
-whereas other irreversible reactions will have vmin set to 0.
-
-The principle physicochemical constraint in Equation II 
-represents a set of linear equations. The number of 
-equations is usually less than the number of unknown 
-\glspl{flux} [12], and a \gls{linearprogramming} optimization can be 
-used to generate a single \gls{fluxdistribution} for the entire 
-network by choosing an appropriate \glssymbol{objectivereaction} (or goal): 
-
-Max vbiomass
-
-Traditionally, maximization of \glssymbol{biomass} has been 
-chosen as the \glssymbol{objectivereaction} of choice in \gls{fba} [12]. A set 
-of metabolites (e.g.\ amino acids, lipids, nucleotides and 
-carbohydrates) that are necessary for the cell or organism 
-to grow are typically included in the \gls{biomass}. 
-Therefore, the optimization problem can be summarized as simply:
-
-Max vbiomass
-Subject to	Sv = 0
-vmin ≤ vi ≤ vmax	 for all i
-
-\section{Box 2. Cellular objectives of pathogenic organisms}
-A \gls{biomass} is not applicable under 
-all conditions, and very often growth alone may not be 
-a realistic objective. Other \glssymbol{objectivereaction} such as maximizing 
-or minimizing ATP or maximizing the production of 
-particular cellular by-products (e.g.\ lactate or pyruvate) 
-can also be used.
-
-The metabolism of an organism may be adapted for increased 
-virulence or pathogenicity. Pathogens and host cells may 
-also temporarily opt for alternative objectives while under 
-selective pressures (e.g.\ changes in nutrients or 
-environmental influences of secreted toxins). In addition, 
-different morphological stages of a pathogen (e.g.\ the sporozoite 
-stage of Plasmodium falciparum in mosquitoes vs the merozoite 
-stage in humans) may be characterized by varying metabolic 
-requirements. Consequently, the \glssymbol{objectivereaction} function must be 
-appropriately defined to find relevant enzyme targets crucial 
-in particular stages of infection and/or environmental conditions.
-
-To explore the effects of targeted perturbations 
-(pharmacological or genetic), different \glssymbol{objectivereaction}s 
-can be explored. It may be that the evolutionary 
-pressures that dictate wild-type cells are different 
-for knockout mutants. Additionally, mutants may 
-not have the ability for immediate regulation of 
-\glspl{flux} that allow for optimal growth. Based on these 
-ideas, an approach termed minimization of metabolic 
-adjustment (MOMA) was developed. The requirement for 
-optimal growth is relaxed for gene deletions in MOMA. 
-Instead, MOMA assumes that the overall \gls{fluxdistribution} 
-of a gene-knockout mutant will probably not change 
-significantly from that of the corresponding wild type [71]. 
-In terms of \gls{flux} values, the gene-knockout mutant will 
-remain as close as possible (in Euclidean distance) to 
-the wild-type optimal \gls{fluxdistribution}. MOMA aided in correcting 
-gene essentiality predictions associated with knockouts 
-of fructose-1,6-bisphosphatate aldolase, triosephosphate 
-isomerase and phosphofructokinase in the E. coli 
-central metabolic model [71]. These genes were predicted 
-to be nonessential when \glssymbol{biomass} was used as the \glssymbol{objectivereaction} 
-for E. coli growth on glucose, which was inconsistent with 
-supporting literature evidence. MOMA yielded a suboptimal 
-\gls{fluxdistribution} for a knockout mutant that would not 
-necessarily equal the optimum as dictated by traditional 
-\gls{fba} [71].
-
-Approaches such as MOMA that consider alternate hypotheses 
-for the objective of metabolic networks provide a basis 
-for understanding a potential biological goal for pathogenic 
-organisms, especially considering the complexity of the 
-environment surrounding the pathogen of interest.
-
-\section{Box 3. Knowledge gaps and caveats to metabolic network analysis}
-Multiple steps in the model-building process and subsequent 
-analyses are prone to errors that may greatly affect \gls{flux} 
-and growth predictions and, consequently, predicted drug 
-targets. \gls{fba} provides a quality-assurance check that ensures 
-\gls{massbalance}. Growth rates and gene essentiality predictions 
-are validated against experimental data to ensure the 
-model truly reflects biological processes. Gene essentiality 
-predictions (commonly between 55\% and 90\%) provide 
-confidence that downstream analyses are based on a 
-high-quality model [1,72]. To ensure the usefulness of 
-any computational pipeline, drug target predictions 
-should be compared to known targets from the literature. 
-Below we discuss more of the particular difficulties and 
-limitations encountered when using metabolic models to 
-identify drug targets.
-
-\subsection{Genome annotation}
-In any metabolic \glssymbol{reconstruction}, there may be 
-hundreds of putative metabolic enzymes with no 
-experimentally identified function. These reactions 
-and associated \glspl{gpr} may be assembled 
-strictly based on existing functional annotations 
-of the genome or based on evidence from related 
-organisms. Even some very well characterized enzymes 
-may have other unexpected activities. In such cases, 
-misannotated enzymes may yield incorrect model 
-predictions leading to errors in drug targeting. For 
-instance, an enzyme may be incorrectly predicted to be 
-essential if the activity of another enzyme, which is 
-not included in the network, can account for the same function. 
-Therefore, this represents one important knowledge gap in 
-the assembly of metabolic networks, and the inclusion of 
-more refined enzyme annotations will directly improve 
-drug target predictions [73,74].
-
-\subsection{Nutrient availability}
-An important challenge in reconstructing and modeling 
-metabolic networks is determining the composition of 
-\gls{insilico} media. Nutrients available in host environments 
-are poorly characterized. In addition, for any nutrients 
-that are identified, quantitative data on uptake rates 
-are unavailable. Knowledge of the transporters of an 
-organism elucidates which metabolites are transported 
-into the cell. However, information on transporters 
-is particularly limited and, in general, transport 
-reactions lack any experimental evidence or gene 
-associations supporting their presence. Instead, 
-transport reactions are added for proper functioning 
-of the computational model. Because model predictions are 
-dependent on the media environment, nutrients and 
-transporters must be carefully defined.
-
-\subsection{Objective function}
-As stated previously, in \gls{fba}-based modeling of microbial organisms, 
-a \gls{biomass} has often been used. The purpose of 
-the reaction is to ensure a drain of metabolites that 
-are deemed essential to support the growth of the 
-organism. Starting with the estimated weight fraction 
-of important macromolecular components of the cell 
-(e.g.\ protein, lipid, RNA, DNA and carbohydrate), the 
-relative abundance of metabolites comprised in each 
-group (e.g.\ amino acids, phospholipids, nucleotides) 
-can be computed [15]. Among several available, a few 
-experimental methods to measure \glssymbol{biomass} components 
-include chloroform–methanol extraction (lipids), 
-colorimetric protein assays, and gas chromatography–mass 
-spectrometry (protein content) [75]. \Glspl{flux} measured 
-directly by metabolic flux analysis, which tracks 
-the movement of 13C from an initial 13C-labeled 
-substrate, may also help to define the \glssymbol{objectivereaction} 
-function [76,77].
-
-An \glssymbol{objectivereaction} function is most likely to cause 
-errors if metabolites are entirely missing or 
-incorrectly included; the relative amounts of each 
-metabolite in the \gls{objectivereaction} (i.e. the 
-stoichiometric coefficients) do not greatly affect 
-\gls{fba} results [16,78]. Therefore, logically 
-deducing a \gls{biomass} is often adequate 
-to estimate the growth of an organism. However, 
-additional experimental data can reveal interesting 
-peculiarities that may be used to design a specific 
-\gls{biomass} for a particular organism. 
-Data on growth- and non-growth-associated ATP 
-maintenance can be included in the \gls{biomass} [79]. Under in vivo conditions when a 
-pathogen is interacting with its host, an aspect 
-that is often unclear is which \glssymbol{biomass} component(s) 
-to include in the reaction. The composition of the 
-\gls{biomass} is likely to vary under different 
-physiological conditions, and the choice of metabolites 
-can directly influence model predictions regarding 
-drug targets. For example, failure to include a 
-particular cell-wall component will not necessarily 
-direct \gls{flux} through reactions that may be crucial in 
-vivo, and therefore the associated enzymes will not 
-be targeted.
-
-\section{Box 4. A brief primer on FVA}
-After the application of various constraints on the 
-biochemical network, the number of allowable network 
-states (or possible phenotypes) is typically large. 
-Depending on the size and interconnectedness of the 
-cellular network, there may be several alternative 
-optimal phenotypes [14]. \gls{fba} calculates one of many 
-feasible solutions that result in the same optimal 
-value of the cellular \glssymbol{objectivereaction}.
-
-\gls{fva} calculates the range of 
-\gls{flux} in each reaction that allows for the same optimal 
-\gls{flux} through the \gls{objectivereaction}. The \gls{objectiveflux} 
-of the reaction is specified as an additional 
-constraint and multiple optimizations are performed 
-to compute the maximum and minimum flux for every reaction in the network:
-
-Max/Min vi
-Subject to	Sv = 0
-		vbiomass = Zobj
-		vmin ≤ vi ≤ vmax	for i = 1…n
-
-Here, n refers to the number of reactions in the 
-biochemical network, and Zobj is the optimal value 
-of the cellular \glssymbol{objectivereaction} (vbiomass) as obtained by \gls{fba} [22].
 
 
 \singlespacing
