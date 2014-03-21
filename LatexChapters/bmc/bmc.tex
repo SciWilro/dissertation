@@ -5,143 +5,741 @@
 \section{Abstract}
 
 \subsection{Background}
-Toxins A and B (TcdA and TcdB) are \textit{Clostridium difficile}'s principal virulence factors, yet the pathways by which they lead to inflammation and severe diarrhea remain unclear. Also, the relative role of either toxin during infection and the differences in their effects across cell lines is still poorly understood. To better understand their effects in a susceptible cell line, we analyzed the transciptome-wide gene expression response of human ileocecal epithelial cells (HCT-8) after 2, 6, and 24 hr of toxin exposure. 
+Toxins A and B (TcdA and TcdB) are \textit{Clostridium difficile}'s 
+principal virulence factors, yet the pathways by which they lead 
+to inflammation and severe diarrhea remain unclear. Also, the 
+relative role of either toxin during infection and the differences 
+in their effects across cell lines is still poorly understood. 
+To better understand their effects in a susceptible cell line, 
+we analyzed the transciptome-wide gene expression response of human 
+ileocecal epithelial cells (HCT-8) after 2, 6, and 24 hr of toxin exposure. 
 
 \subsection{Results}
-We show that toxins elicit very similar changes in the gene expression of HCT-8 cells, with the TcdB response occurring sooner. The high similarity suggests differences between toxins are due to events beyond transcription of a single cell-type and that their relative potencies during infection may depend on differential effects across cell types within the intestine. We next performed an enrichment analysis to determine biological functions associated with changes in transcription. Differentially expressed genes were associated with response to external stimuli and apoptotic mechanisms and, at 24 hr, were predominately associated with cell-cycle control and DNA replication. To validate our systems approach, we subsequently verified a novel G$_{\text{1}}$/S and known G$_{\text{2}}$/M cell-cycle block and increased apoptosis as predicted from our enrichment analysis. 
+We show that toxins elicit very similar changes in the gene 
+expression of HCT-8 cells, with the TcdB response occurring sooner. 
+The high similarity suggests differences between toxins are due 
+to events beyond transcription of a single cell-type and that 
+their relative potencies during infection may depend on differential 
+effects across cell types within the intestine. We next performed an 
+enrichment analysis to determine biological functions associated with 
+changes in transcription. Differentially expressed genes were 
+associated with response to external stimuli and apoptotic 
+mechanisms and, at 24 hr, were predominately associated with 
+cell-cycle control and DNA replication. To validate our systems 
+approach, we subsequently verified a novel G$_{\text{1}}$/S and 
+known G$_{\text{2}}$/M cell-cycle block and increased apoptosis 
+as predicted from our enrichment analysis. 
 
 \subsection{Conclusions}
-This study shows a successful example of a workflow deriving novel biological insight from transcriptome-wide gene expression. Importantly, we do not find any significant difference between TcdA and TcdB besides potency or kinetics. The role of each toxin in the inhibition of cell growth and proliferation, an important function of cells in the intestinal epithelium, is characterized.
+This study shows a successful example of a workflow 
+deriving novel biological insight from transcriptome-wide 
+gene expression. Importantly, we do not find any significant 
+difference between TcdA and TcdB besides potency or kinetics. 
+The role of each toxin in the inhibition of cell growth and 
+proliferation, an important function of cells in the 
+intestinal epithelium, is characterized.
 
 \subsection{Keywords}
-\textit{Clostridium difficile}, Toxin A, Toxin B, gene expression, epithelial cell, cell-cycle
+\textit{Clostridium difficile}, Toxin A, Toxin B, gene 
+expression, epithelial cell, cell-cycle
 
 \section{Background}
-\textit{C. difficile}, a Gram-positive, spore-forming anaerobe, colonizes the human gut and causes infections leading to pseudomembranous colitis.  This opportunistic pathogen flourishes in antibiotic-treated and immunocompromised patients and is frequently spread in hospitals, although community-acquired \textit{Clostridium difficile} infection (CDI) cases have also increased \cite{Freeman:2010bv}. The emergence of hypervirulent strains that possess more robust toxin production and increased sporulation has been correlated with outbreaks across Europe and North America \cite{Warny:2005kd}. In most areas, the number of cases has increased in the past decade. The number of patients hospitalized in the US with CDI doubled to approximately 250,000/year (from year 2000 to 2003) and fatalities increased at a similar rate \cite{Zilberberg:2008gd}. The US healthcare costs for CDI are estimated to be over \$1 billion/year \cite{Dubberke:2009ic}. As TcdA and TcdB appear to be responsible for many of the clinical manifestations of CDI, understanding the intracellular and systemic effects of each toxin is critical to developing and improving strategies for treatment and prevention.
+\textit{C. difficile}, a Gram-positive, spore-forming 
+anaerobe, colonizes the human gut and causes infections 
+leading to pseudomembranous colitis.  This opportunistic 
+pathogen flourishes in antibiotic-treated and immunocompromised 
+patients and is frequently spread in hospitals, although 
+community-acquired \textit{Clostridium difficile} 
+infection (CDI) cases have also increased \cite{Freeman:2010bv}. 
+The emergence of hypervirulent strains that possess more 
+robust toxin production and increased sporulation has been 
+correlated with outbreaks across Europe and North 
+America \cite{Warny:2005kd}. In most areas, the number 
+of cases has increased in the past decade. The number 
+of patients hospitalized in the US with CDI doubled to 
+approximately 250,000/year (from year 2000 to 2003) and 
+fatalities increased at a similar rate \cite{Zilberberg:2008gd}. 
+The US healthcare costs for CDI are estimated to be over \$1 
+billion/year \cite{Dubberke:2009ic}. As TcdA and TcdB appear 
+to be responsible for many of the clinical manifestations of 
+CDI, understanding the intracellular and systemic effects 
+of each toxin is critical to developing and improving strategies 
+for treatment and prevention.
 
-In light of the multiple events and pathways involved in the development of CDI, we chose to examine the toxins’ effects from a systems perspective, focusing on epithelial cells in vitro. Both TcdA and TcdB bind to cells \cite{Frisch:2003jo}, enter an endosome by clathrin-mediated endocytosis \cite{Papatheodorou:2010io}, translocate and then cleave their catalytic domain into the cytosol which glucosylates and so inactivates Rho family proteins \cite{Egerer:2007fy}. The disruption of these crucial signaling regulators begins to explain cytotoxic effects such as deregulation of the cytoskeleton and the breakdown of the epithelial barrier \cite{Nusrat:2001cs}. However, other processes are likely affected by the trafficking and processing of these toxins. In addition, secondary effects of Rho glucosylation in relation to pathologies of CDI have not been fully elucidated.
+In light of the multiple events and pathways involved in 
+the development of CDI, we chose to examine the toxins’ 
+effects from a systems perspective, focusing on epithelial 
+cells in vitro. Both TcdA and TcdB bind to 
+cells \cite{Frisch:2003jo}, enter an endosome by clathrin-mediated 
+endocytosis \cite{Papatheodorou:2010io}, translocate and then 
+cleave their catalytic domain into the cytosol which 
+glucosylates and so inactivates Rho family 
+proteins \cite{Egerer:2007fy}. The disruption of these crucial 
+signaling regulators begins to explain cytotoxic effects 
+such as deregulation of the cytoskeleton and the breakdown 
+of the epithelial barrier \cite{Nusrat:2001cs}. However, 
+other processes are likely affected by the trafficking 
+and processing of these toxins. In addition, secondary 
+effects of Rho glucosylation in relation to pathologies 
+of CDI have not been fully elucidated.
 
-We therefore investigated the transcriptional profile of HCT-8 \cite{Tompkins:1974ud} cells treated with TcdA or TcdB and identified pathways and cellular functions associated with differentially expressed genes. With respect to toxins, in vitro analyses of gene expression in host cells have been performed with type A botulinum neurotoxin, lethal toxin \cite{Comer:2005iza} and edema toxin \cite{Comer:2006wta} from \textit{Bacillus anthracis}, pertussis toxin \cite{Lu:2008cr}, Shiga toxin type 1 \cite{LeyvaIllades:2010fv}, and several others. Such studies provide lists of differentially expressed genes or classes of genes that serve as a resource for the generation of new hypotheses. In this regard, we used bioinformatics analyses to identify cellular functions altered by TcdA and TcdB that are relevant to pathogenicity. The correct identification of the majority of functions found to be affected in previous research regarding TcdA and TcdB confirmed our analysis and experimental design, and experiments reported herein validated changes in cell function that were suggested by altered gene expression.
+We therefore investigated the transcriptional profile of 
+HCT-8 \cite{Tompkins:1974ud} cells treated with TcdA or 
+TcdB and identified pathways and cellular functions 
+associated with differentially expressed genes. With 
+respect to toxins, in vitro analyses of gene expression in 
+host cells have been performed with type A botulinum 
+neurotoxin, lethal toxin \cite{Comer:2005iza} and edema 
+toxin \cite{Comer:2006wta} from \textit{Bacillus anthracis}, 
+pertussis toxin \cite{Lu:2008cr}, Shiga toxin type 
+1 \cite{LeyvaIllades:2010fv}, and several others. Such 
+studies provide lists of differentially expressed genes or 
+classes of genes that serve as a resource for the 
+generation of new hypotheses. In this regard, we used 
+bioinformatics analyses to identify cellular functions 
+altered by TcdA and TcdB that are relevant to pathogenicity. 
+The correct identification of the majority of functions 
+found to be affected in previous research regarding TcdA 
+and TcdB confirmed our analysis and experimental design, 
+and experiments reported herein validated changes in cell 
+function that were suggested by altered gene expression.
 
-Among the genes that TcdA and TcdB affect, many are involved in the regulation of the cell cycle and induction of apoptosis. Bacterial factors such as cytotoxic necrotizing factor and cytolethal distending toxins that disrupt normal cell cycle progression have been described as ``cyclomodulins'' \cite{Nougayrede:2005dm}. In addition to effects of TcdA and TcdB on cells in the G$_{\text{2}}$/M phase which have been described previously \cite{Fiorentini:1998uh,Kim:2005jk,Gerhard:2008wz,Nottrott:2007ep}, we found that TcdA and TcdB affect expression of cyclins and cyclin-dependent kinase (CDK) inhibitors controlling the G$_{\text{1}}$--\,S transition. Our experiments establish that alterations of cell cycle implicated in our analysis of gene expression do, in fact, occur in toxin-treated cells. In addition to effects on cell cycle, we also present the other cellular functions associated with differentially expressed genes, some of which enable novel hypotheses on the cellular activity and function of these toxins.
+Among the genes that TcdA and TcdB affect, many are 
+involved in the regulation of the cell cycle and induction 
+of apoptosis. Bacterial factors such as cytotoxic necrotizing 
+factor and cytolethal distending toxins that disrupt normal 
+cell cycle progression have been described as ``cyclomodulins'' 
+\cite{Nougayrede:2005dm}. In addition to effects of TcdA and 
+TcdB on cells in the G$_{\text{2}}$/M phase which have been 
+described previously 
+\cite{Fiorentini:1998uh,Kim:2005jk,Gerhard:2008wz,Nottrott:2007ep}, 
+we found that TcdA and TcdB affect expression of cyclins and 
+cyclin-dependent kinase (CDK) inhibitors controlling the 
+G$_{\text{1}}$--\,S transition. Our experiments establish 
+that alterations of cell cycle implicated in our analysis 
+of gene expression do, in fact, occur in toxin-treated cells. 
+In addition to effects on cell cycle, we also present the 
+other cellular functions associated with differentially 
+expressed genes, some of which enable novel hypotheses 
+on the cellular activity and function of these toxins.
 
 \section{Methods}\label{bmc:s:methods}
 
 \subsection{Cell Culture}
-HCT-8 cells were cultured in RPMI-1640 supplemented with 10\% heat-inactivated fetal bovine serum (Gibco) and 1mM sodium pyruvate (Gibco).  The cultures were maintained at 37\textdegree{}C/5\% \ce{CO2} up to passage 35. Toxin A and Toxin B, isolated from strain VPI-10643, were a generous gift from David Lyerly (TECHLAB Inc., Blacksburg, VA).
+HCT-8 cells were cultured in RPMI-1640 supplemented 
+with 10\% heat-inactivated fetal bovine serum (Gibco) 
+and 1mM sodium pyruvate (Gibco).  The cultures were 
+maintained at 37\textdegree{}C/5\% \ce{CO2} up to 
+passage 35. Toxin A and Toxin B, isolated from strain 
+VPI-10643, were a generous gift from David 
+Lyerly (TECHLAB Inc., Blacksburg, VA).
 
 \subsection{Microarrays}
-HCT-8 cells (5 x 106/flask) were grown overnight at 37\textdegree{}C/5\% \ce{CO2}.  Media were replaced with 2.5 ml fresh media and  toxin was added (100 ng/ml). At the end of the indicated incubation period, cells were washed with 5 ml PBS (Sigma) and total RNA was isolated using the QIAshredder and RNeasy mini kits (Qiagen), according to the manufacturer’s instructions. An RNase inhibitor was added (RNasin, Promega) and samples were stored at -80\textdegree{}C. RNA integrity was assessed using an Agilent 2100 BioAnalyzer prior to cDNA synthesis and RNA labeling using either the 3$'$ IVT expression or one-cycle target labeling methods (Affymetrix). Biotin-labeled RNA was hybridized to Human Genome U133 Plus 2.0 chips, washed, stained and scanned using a GeneChip System 3000 7G (Affymetrix). Data from three independent microarray experiments were deposited into the NCBI Gene Expression Omnibus repository (GSE29008).
+HCT-8 cells (5 x 106/flask) were grown overnight at 
+37\textdegree{}C/5\% \ce{CO2}.  Media were replaced 
+with 2.5 ml fresh media and  toxin was added (100 ng/ml). 
+At the end of the indicated incubation period, cells 
+were washed with 5 ml PBS (Sigma) and total RNA was isolated 
+using the QIAshredder and RNeasy mini kits (Qiagen), 
+according to the manufacturer’s instructions. An RNase 
+inhibitor was added (RNasin, Promega) and samples were 
+stored at -80\textdegree{}C. RNA integrity was assessed 
+using an Agilent 2100 BioAnalyzer prior to cDNA 
+synthesis and RNA labeling using either the 3$'$ IVT 
+expression or one-cycle target labeling methods (Affymetrix). 
+Biotin-labeled RNA was hybridized to Human Genome U133 Plus 
+2.0 chips, washed, stained and scanned using a GeneChip 
+System 3000 7G (Affymetrix). Data from three independent 
+microarray experiments were deposited into the NCBI Gene 
+Expression Omnibus repository (GSE29008).
 
 \phantomsection
 \label{bmc:methods:informatics}
 
-Microarray signal intensities were normalized using the gcrma package \cite{Wu:2004ha}. Treatment and control groups were contrasted with linear models; a Benjamini-Hochberg correction was applied across all the probes and the nestedF method within the limma software package was used for multiple testing across all contrasts \cite{Smyth:2004gh,Smyth:2005ht}. The Gene Ontology (GO) annotation database was used to map gene symbols to GO categories \cite{Barrell:2009br}. A gene symbol was considered differentially expressed if at least one of the probe sets annotated to it was significant. A probe set was considered significant if the p<0.1 and the magnitude of the fold change was above 1.5. Enriched GO categories were identified with the topGO package using Fisher’s exact test to calculate p-values and the elim algorithm \cite{Alexa:2006hg}.
+Microarray signal intensities were normalized using the gcrma 
+package \cite{Wu:2004ha}. Treatment and control groups were 
+contrasted with linear models; a Benjamini-Hochberg 
+correction was applied across all the probes and the nestedF 
+method within the limma software package was used for multiple 
+testing across all contrasts \cite{Smyth:2004gh,Smyth:2005ht}. 
+The Gene Ontology (GO) annotation database was used to map gene 
+symbols to GO categories \cite{Barrell:2009br}. A gene symbol 
+was considered differentially expressed if at least one of the 
+probe sets annotated to it was significant. A probe set was 
+considered significant if the p<0.1 and the magnitude of the 
+fold change was above 1.5. Enriched GO categories were identified 
+with the topGO package using Fisher’s exact test to calculate 
+p-values and the elim algorithm \cite{Alexa:2006hg}.
 
 \subsection{Flow Cytometry}
-HCT-8 cells were grown overnight to 50\% confluence, media were removed and replaced with fresh media, and toxin was added at the concentrations denoted in the text and figures. At 24h and 48h, non-adherent cells were removed and saved on ice. Adherent cells were treated with 1mL of 0.25\% trypsin and 1 mL of Accutase with EDTA for 30 min at room temperature and joined with the non-adherent cells in 5 mL PBS. After centrifugation, resuspension for counting cells, and another round of centrifugation, the dissociated cells were resuspended to 2×106 cells/mL and 0.5 mL was added to 5mL of 70\% ice-cold ethanol for fixation. Afterward, the fixed cells were resuspended in 5 ml PBS with 2\% Bovine Serum Albumin and then resuspended and incubated for 30 min in a solution to stain DNA (PBS with 10\% Triton X-100, 2\% DNasefree RNase, 0.02\% propidium iodide(PI)). Single-cell fluorescence was measured with a Becton Dickinson FACSCalibur flow cytometer. The proportion of cells in each stage of the cell cycle was calculated using ModFit cell cycle analyzer. The 24h-samples were imaged with an Amnis Imagestream imaging flow cytometer, which photographs the bright field and fluorescent channels from every cell individually \cite{George:2004jj}. Using Amnis software, a bivariate gate—based on the contrast of the brightfield image and the area of nuclear stain—differentiated apoptotic and non-apoptotic cells \cite{Henery:2008jz}. All other image features were taken from the Amnis software.
+HCT-8 cells were grown overnight to 50\% confluence, media 
+were removed and replaced with fresh media, and toxin was added 
+at the concentrations denoted in the text and figures. At 24h 
+and 48h, non-adherent cells were removed and saved on ice. Adherent 
+cells were treated with 1mL of 0.25\% trypsin and 1 mL of 
+Accutase with EDTA for 30 min at room temperature and joined 
+with the non-adherent cells in 5 mL PBS. After centrifugation, 
+resuspension for counting cells, and another round of centrifugation, 
+the dissociated cells were resuspended to 2$\times10^{6}$ cells/mL and 
+0.5 mL was added to 5mL of 70\% ice-cold ethanol for fixation. 
+Afterward, the fixed cells were resuspended in 5 ml PBS with 
+2\% Bovine Serum Albumin and then resuspended and incubated 
+for 30 min in a solution to stain DNA (PBS with 10\% Triton 
+X-100, 2\% DNasefree RNase, 0.02\% propidium iodide(PI)). 
+Single-cell fluorescence was measured with a Becton Dickinson 
+FACSCalibur flow cytometer. The proportion of cells in each 
+stage of the cell cycle was calculated using ModFit cell 
+cycle analyzer. The 24h-samples were imaged with an Amnis 
+Imagestream imaging flow cytometer, which photographs the 
+bright field and fluorescent channels from every cell 
+individually \cite{George:2004jj}. Using Amnis software, a 
+bivariate gate—based on the contrast of the brightfield image 
+and the area of nuclear stain—differentiated apoptotic and 
+non-apoptotic cells \cite{Henery:2008jz}. All other image 
+features were taken from the Amnis software.
 
 \subsection{Quantitative real time PCR }
-For each gene examined, primers were designed from the target sequences retrieved from the RefSeq Sequence Database, using the Primer Express 3.0 software (Applied Biosystems). Primers were then custom made through Invitrogen Oligo Program. RNA quality control was carries out using an Agilent 2100 BioAnalyzer. Approximately 2 \textmu{}g of each RNA sample was converted to cDNA. Quantitative PCRs were carried out in triplicates using equal amounts of each cDNA sample approximately equivalent to 50 ng of starting total RNA. Power SYBR Green Master Mix (Applied Biosystems, PN 4367660) was used with the respective forward and reverse primers at the optimized concentrations. Amplifying PCR and monitoring of the fluorescent emission in real time were performed in the ABI Prism 7900HT Sequence Detection System (Applied Biosystems) as described (ABI SYBR Green Protocol).  To verify that only a single PCR product was amplified per transcript, dissociation curve data was analyzed through the 7900HT Sequence Detection Software (SDS).  To account for differences in starting material, quantitative PCR was also carried out for each cDNA sample using housekeeping genes synthesized in-house, human glyceraldehyde-3-phosphate dehydrogenase (GAPDH) and hypoxanthine phosphoribosyltransferase I (HPRT1).  The data collected from these quantitative PCRs defined a threshold cycle number (Ct) of detection for the target or housekeeping genes in each cDNA sample. The relative quantity (RQ) of target, normalized to geometric means of the housekeeping genes and relative to a calibrator (the Rox reference dye in this case), is given by $RQ = 2 –\Delta \Delta Ct$ where $\Delta \Delta Ct$ represents the difference in Ct between the transcript and the housekeeping gene for the same RNA sample. The ratio of the RQs for the treated sample and the experiment sample was used to derive the fold change.
+For each gene examined, primers were designed from the target 
+sequences retrieved from the RefSeq Sequence Database, using the 
+Primer Express 3.0 software (Applied Biosystems). Primers were 
+then custom made through Invitrogen Oligo Program. RNA quality 
+control was carries out using an Agilent 2100 BioAnalyzer. 
+Approximately 2 \textmu{}g of each RNA sample was converted 
+to cDNA. Quantitative PCRs were carried out in triplicates 
+using equal amounts of each cDNA sample approximately equivalent 
+to 50 ng of starting total RNA. Power SYBR Green Master 
+Mix (Applied Biosystems, PN 4367660) was used with the 
+respective forward and reverse primers at the optimized 
+concentrations. Amplifying PCR and monitoring of the 
+fluorescent emission in real time were performed in the ABI 
+Prism 7900HT Sequence Detection System (Applied Biosystems) 
+as described (ABI SYBR Green Protocol).  To verify that only 
+a single PCR product was amplified per transcript, dissociation 
+curve data was analyzed through the 7900HT Sequence Detection 
+Software (SDS).  To account for differences in starting 
+material, quantitative PCR was also carried out for each 
+cDNA sample using housekeeping genes synthesized in-house, 
+human glyceraldehyde-3-phosphate dehydrogenase (GAPDH) and 
+hypoxanthine phosphoribosyltransferase I (HPRT1).  The data 
+collected from these quantitative PCRs defined a threshold 
+cycle number (Ct) of detection for the target or housekeeping 
+genes in each cDNA sample. The relative quantity (RQ) of 
+target, normalized to geometric means of the housekeeping 
+genes and relative to a calibrator (the Rox reference dye 
+in this case), is given by $RQ = 2 –\Delta \Delta Ct$ 
+where $\Delta \Delta Ct$ represents the difference in 
+Ct between the transcript and the housekeeping gene for the 
+same RNA sample. The ratio of the RQs for the treated 
+sample and the experiment sample was used to derive the fold change.
  
 \subsection{Western Blots}
-After toxin treatment, non-adherent cells were removed and centrifuged. The adherent cells were then treated with 200 \textmu{}L of homogenization buffer: 10 mM HEPES pH 7.4, 150 mM \ce{NaCl}, 10 mM sodium pyrophosphate, 10 mM \ce{NaF}, 10 mM EDTA, 4mM EGTA, 0.1 mM PMSF, 2 μg/mL CLAP (Chymostatin, Leupeptin, Antipain, and Pepstatin), and 1\% Triton X-100. Each well was scraped and the sample with homogenization buffer was added to the resuspended non-adherent cells. This was centrifuged at 15,000 rpm for 5 min at 4\textdegree{}C and the supernatant was boiled for 5 min, placed on ice for 5 min, boiled again for 5 min, and stored at -20\textdegree{}C. Samples containing equal amounts of protein were loaded into each lane of a 12.5\% polyacrylamide gel.  Gels were electrophoresed, transferred to PVDF, and the membranes were blocked with 5\% skim milk in PBS, 0.1\% Tween-20 for 2h. Primary antibodies (Cyclin D1 \#2922, Cyclin E2 \#4132, p57 Kip2 \#2557, p27 Kip1 \#2552 from Cell Signaling and Cyclin A sc-751 from Santa Cruz Biotechnology) were added to the blocking solution and membranes were incubated overnight at 4\textdegree{}C on a platform shaker. The membranes were then washed six times in PBS-Tween 20. The appropriate secondary antibodies, either anti-mouse or anti-rabbit HRP-linked antibodies (\#7076, \#7074, Cell Signaling), were added and the membranes were incubated for 2h on a platform shaker. The membranes were subsequently washed 6 times and proteins were detected by chemiluminescence with ECL reagents (Amersham). To strip antibodies, the membranes were incubated in 50 mM Tris, 2\% SDS, 0.7\% \textbeta{}-mercaptoethanol at 50\textdegree{}C for 30 min. The membranes were then washed 6 times, blocked, and reprobed with a GAPDH antibody (ab8245 from Abcam) as described above.
+After toxin treatment, non-adherent cells were removed 
+and centrifuged. The adherent cells were then treated 
+with 200 \textmu{}L of homogenization buffer: 10 mM HEPES 
+pH 7.4, 150 mM \ce{NaCl}, 10 mM sodium pyrophosphate, 10 
+mM \ce{NaF}, 10 mM EDTA, 4mM EGTA, 0.1 mM PMSF, 2 μg/mL 
+CLAP (Chymostatin, Leupeptin, Antipain, and Pepstatin), 
+and 1\% Triton X-100. Each well was scraped and the 
+sample with homogenization buffer was added to the resuspended 
+non-adherent cells. This was centrifuged at 15,000 rpm 
+for 5 min at 4\textdegree{}C and the supernatant was 
+boiled for 5 min, placed on ice for 5 min, boiled 
+again for 5 min, and stored at -20\textdegree{}C. Samples 
+containing equal amounts of protein were loaded 
+into each lane of a 12.5\% polyacrylamide gel. Gels were 
+electrophoresed, transferred to PVDF, and the membranes were 
+blocked with 5\% skim milk in PBS, 0.1\% Tween-20 for 2h. 
+Primary antibodies (Cyclin D1 \#2922, Cyclin E2 \#4132, p57 
+Kip2 \#2557, p27 Kip1 \#2552 from Cell Signaling and Cyclin A 
+sc-751 from Santa Cruz Biotechnology) were added to the 
+blocking solution and membranes were incubated overnight 
+at 4\textdegree{}C on a platform shaker. The membranes were 
+then washed six times in PBS-Tween 20. The appropriate 
+secondary antibodies, either anti-mouse or anti-rabbit 
+HRP-linked antibodies (\#7076, \#7074, Cell Signaling), 
+were added and the membranes were incubated for 2h on a 
+platform shaker. The membranes were subsequently washed 
+6 times and proteins were detected by chemiluminescence 
+with ECL reagents (Amersham). To strip antibodies, the 
+membranes were incubated in 50 mM Tris, 2\% SDS, 0.7\% 
+\textbeta{}-mercaptoethanol at 50\textdegree{}C for 30 min. 
+The membranes were then washed 6 times, blocked, and reprobed 
+with a GAPDH antibody (ab8245 from Abcam) as described above.
 
 
 \section{Results}
 
 \subsection{Transcriptional Responses}
 
-Overall, the changes in gene expression are consistent as time progresses, but the number of differentially expressed genes increases (\autoref{bmc:fig1}A). Specifically, at 2h and 6h, there are 4 and 134 probe sets differentially expressed (relative to control) for TcdA and 57 and 294 for TcdB, respectively (\autoref{bmc:fig1}C).  Many more are differentially expressed by 24h—1,155 and 1,205 in TcdA- and TcdB-treated cells, respectively. In order to validate these data, qRT-PCR was performed on 10 representative genes (r=0.89 by Pearson correlation; \autoref{bmc:figs1}A). Since the glucosylation of Rho family proteins occurs within one hour of toxin treatment \cite{ChavesOlarte:1997cs}, many of the differentially expressed genes at 24h may reflect secondary effects from the initial toxin action or possibly other unknown activities and processing of the toxin.
+Overall, the changes in gene expression are consistent as 
+time progresses, but the number of differentially expressed 
+genes increases (\autoref{bmc:fig1}A). Specifically, at 2h 
+and 6h, there are 4 and 134 probe sets differentially 
+expressed (relative to control) for TcdA and 57 and 294 for 
+TcdB, respectively (\autoref{bmc:fig1}C).  Many more are 
+differentially expressed by 24h—1,155 and 1,205 in TcdA- and 
+TcdB-treated cells, respectively. In order to validate these 
+data, qRT-PCR was performed on 10 representative genes 
+(r=0.89 by Pearson correlation; \autoref{bmc:figs1}A). Since 
+the glucosylation of Rho family proteins occurs within one hour 
+of toxin treatment \cite{ChavesOlarte:1997cs}, many of the 
+differentially expressed genes at 24h may reflect secondary 
+effects from the initial toxin action or possibly other unknown 
+activities and processing of the toxin.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{bmc/Figure1}
-  \caption[Overall transcriptional response of HCT-8 cells to TcdA and TcdB]{
-       \textbf{Overall transcriptional response of HCT-8 cells to TcdA and TcdB.}
-       \textbf{(A)} A heatmap shows the number of differentially expressed probe sets at 2h, 6h, and 24h. The color scale represents the fold change (binary log scale) of genes relative to untreated cells at the same time point. ``A, 2hr'' indicates the gene expression of cells after 2h of TcdA treatment. TcdA and TcdB concentration is 100 ng/ml.
-       \textbf{(B)} The correlation of transcriptional profiles between TcdA and TcdB at the indicated time points are displayed in a correlation matrix. The values represent the Pearson correlation coefficient calculated from the fold change of all the probe sets within the microarray.
-       \textbf{(C)} The number of differentially expressed genes used to identify enriched GO categories was determined from a linear model (see \ref{bmc:methods:informatics}).
+  \caption[Overall transcriptional response of HCT-8 
+  cells to TcdA and TcdB]{
+       \textbf{Overall transcriptional response of 
+       HCT-8 cells to TcdA and TcdB.}
+       \textbf{(A)} A heatmap shows the number of differentially 
+       expressed probe sets at 2h, 6h, and 24h. The color scale 
+       represents the fold change (binary log scale) of genes 
+       relative to untreated cells at the same time point. 
+       ``A, 2hr'' indicates the gene expression of cells 
+       after 2h of TcdA treatment. TcdA and TcdB concentration 
+       is 100 ng/ml.
+       \textbf{(B)} The correlation of transcriptional 
+       profiles between TcdA and TcdB at the indicated 
+       time points are displayed in a correlation matrix. 
+       The values represent the Pearson correlation 
+       coefficient calculated from the fold change of 
+       all the probe sets within the microarray.
+       \textbf{(C)} The number of differentially expressed 
+       genes used to identify enriched GO categories was 
+       determined from a linear model 
+       (see \ref{bmc:methods:informatics}).
 }
   \label{bmc:fig1}
 \end{figure}
 
-Though the transcriptional responses to the two toxins are similar overall, a notable difference between the two toxins is that TcdB-induced changes occur more rapidly (\autoref{bmc:fig1}A). At the later time points, however, the overall transcriptional response induced by TcdA becomes more similar to the TcdB-induced transcriptional changes (see correlations in \autoref{bmc:fig1}B). Among the most affected genes, immediate early-response genes such as JUN, KLF2, and RHOB are upregulated 2h after toxin treatment and remain increased compared to untreated cells through 24 hr (\autoref{bmc:figs1}B). While identification of the most-affected genes provides important insight, focusing on a small subset risks overlooking other toxin effects key to the disease process. We therefore analyzed the expression data in the context of broad functional categories.
+Though the transcriptional responses to the two toxins 
+are similar overall, a notable difference between the 
+two toxins is that TcdB-induced changes occur more 
+rapidly (\autoref{bmc:fig1}A). At the later time points, 
+however, the overall transcriptional response induced by 
+TcdA becomes more similar to the TcdB-induced transcriptional 
+changes (see correlations in \autoref{bmc:fig1}B). Among 
+the most affected genes, immediate early-response genes 
+such as JUN, KLF2, and RHOB are upregulated 2h after toxin 
+treatment and remain increased compared to untreated cells 
+through 24 hr (\autoref{bmc:figs1}B). While identification 
+of the most-affected genes provides important insight, 
+focusing on a small subset risks overlooking other toxin 
+effects key to the disease process. We therefore analyzed 
+the expression data in the context of broad functional categories.
 
 \subsection{Functions associated with differently expressed genes}
 
-We employed the GO database, which contains extensive annotation of biological functions associated with specific genes, to identify cellular phenotypes associated with changes in gene expression. The terms in this database are separated into three ontologies: Molecular Functions, Cellular Components, and Biological Processes (detailed descriptions at http://www.geneontology.org). A GO category—here defined as all the genes associated with a single GO term—with a proportion of differentially expressed genes greater than would be expected by chance is considered overrepresented or enriched (see \ref{bmc:methods:informatics}). While some enriched categories might have been anticipated, others provide novel insights. Within the Biological Processes ontology, the most significantly enriched categories at 2 and 6 hr are listed in \autoref{bmc:fig2}A. Within the Cellular Component ontology, the mitochondrial outer membrane and the apical junction complex category are enriched most significantly at 6h (\autoref{bmc:figs2}A). Interestingly, many of the functions related to the enriched categories have been linked with toxin treatment in previous work. One or both of the toxins induce activation of caspases \cite{Gerhard:2008wz, QaaposDan:2002uj, Carneiro:2006cw, Brito:2002ky}, damage mitochondria and cause the release of cytochrome c \cite{Matarrese:2007ix, He:2000uc}, increase oxygen radicals and expression of cytokines \cite{He:2002cl,Qiu:1999us,Flegel:1991ws}, alter MAPK signaling \cite{Meyer:2007kj,Lee:2007gj,Na:2005bx}, and disrupt the organization of tight junctions \cite{Nusrat:2001cs}. Hence, our analysis of gene expression as summarized in \autoref{bmc:fig2} is consistent with the previously reported cellular responses to these toxins.
+We employed the GO database, which contains extensive 
+annotation of biological functions associated with specific 
+genes, to identify cellular phenotypes associated with 
+changes in gene expression. The terms in this database are 
+separated into three ontologies: Molecular Functions, Cellular 
+Components, and Biological Processes (detailed descriptions 
+at http://www.geneontology.org). A GO category—here defined 
+as all the genes associated with a single GO term—with a 
+proportion of differentially expressed genes greater than 
+would be expected by chance is considered overrepresented 
+or enriched (see \ref{bmc:methods:informatics}). While 
+some enriched categories might have been anticipated, 
+others provide novel insights. Within the Biological 
+Processes ontology, the most significantly enriched 
+categories at 2 and 6 hr are listed in \autoref{bmc:fig2}A. 
+Within the Cellular Component ontology, the mitochondrial 
+outer membrane and the apical junction complex category 
+are enriched most significantly at 6h (\autoref{bmc:figs2}A). 
+Interestingly, many of the functions related to the 
+enriched categories have been linked with toxin treatment 
+in previous work. One or both of the toxins induce 
+activation of caspases 
+\cite{Gerhard:2008wz, QaaposDan:2002uj, Carneiro:2006cw, Brito:2002ky}, 
+damage mitochondria and cause the release of cytochrome c 
+\cite{Matarrese:2007ix, He:2000uc}, increase oxygen radicals 
+and expression of cytokines \cite{He:2002cl,Qiu:1999us,Flegel:1991ws}, 
+alter MAPK signaling \cite{Meyer:2007kj,Lee:2007gj,Na:2005bx}, 
+and disrupt the organization of tight junctions \cite{Nusrat:2001cs}. 
+Hence, our analysis of gene expression as summarized in 
+\autoref{bmc:fig2} is consistent with the previously reported 
+cellular responses to these toxins.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{bmc/Figure2}
   \caption[Gene ontology categories associated with differentially expressed genes]{
   \textbf{Gene ontology categories associated with differentially expressed genes.}
-  \textbf{(A)} The most significantly enriched GO categories (Fisher Exact Test, topGO elim algorithm \cite{Alexa:2006hg}, see \ref{bmc:methods:informatics}) at 2h and 6h are displayed in a heat map. The color intensity in each cell corresponds to the p-value (Fisher Exact Test) for the GO category that is enriched. The dendrograms were generated from a hierarchical clustering of GO Groups according to Resnik similarity \cite{Resnik:1999jl}.
-\textbf{(B)} The most significantly enriched GO categories at 24h were determined similarly
+  \textbf{(A)} The most significantly enriched GO categories 
+  (Fisher Exact Test, topGO elim algorithm \cite{Alexa:2006hg}, 
+  see \ref{bmc:methods:informatics}) at 2h and 6h are displayed 
+  in a heat map. The color intensity in each cell corresponds to 
+  the p-value (Fisher Exact Test) for the GO category that is 
+  enriched. The dendrograms were generated from a hierarchical 
+  clustering of GO Groups according to Resnik similarity \cite{Resnik:1999jl}.
+  \textbf{(B)} The most significantly enriched GO 
+  categories at 24h were determined similarly
 }
   \label{bmc:fig2}
 \end{figure}
 
 
-The most significantly enriched categories for each toxin at the later time points are related to cell cycle and DNA replication (\autoref{bmc:fig2}B). Categories such as telomere maintenance and nucleosome assembly provide more specific connections between the toxins and changes in DNA replication. A more extensive list reveals that several categories related to microtubule organization during cell division are also enriched (\autoref{bmc:figs2}B). By 24 hr, there are changes related to virtually all elements of the cell cycle, but those controlling G$_{\text{1}}$ and S phases are more significantly affected. Though many of the genes within the enriched categories were not among the most differentially expressed genes, the abundance of differentially expressed genes involved in the same functions provides evidence for toxin effects on control of cell cycle at the G$_{\text{1}}$ phase. Cyclins and other proteins necessary for progression from the G$_{\text{1}}$ phase into and through the S phase are downregulated (\autoref{bmc:fig3}A). Cyclin proteins expressed at different points are central in coordinating entry into or exit from different phases. They specifically bind and activate particular CDKs which then phosphorylate downstream targets effecting progression \cite{Murray:2004ge}. Inhibitors of cyclin-CDK complexes from the INK4 family (p15, p16, p18, and p19) and Cip/Kip family (p21, p27, and p57) may suppress cyclin-CDK signaling \cite{Denicourt:2004bw}. Expression of many of these and other genes, such as CDC6 and CDC25A that are required for progression from G$_{\text{1}}$ to the S phase, is altered by TcdA and TcdB. The decreased expression of G$_{\text{1}}$ cyclins along with the increased expression of inhibitors of G$_{\text{1}}$-associated cyclin-CDK complexes suggest altered regulation of the cell cycle specifically in G$_{\text{1}}$. We also measured expression of genes and proteins (\autoref{bmc:figs3}) after 6 and 24 hr of treatment with 0.1, 1, and 10 ng/ml of TcdA or TcdB in confluent and subconfluent cultures, which confirmed a consistent alteration of cell cycle genes and proteins across a variety of conditions.
+The most significantly enriched categories for each 
+toxin at the later time points are related to cell 
+cycle and DNA replication (\autoref{bmc:fig2}B). Categories 
+such as telomere maintenance and nucleosome assembly 
+provide more specific connections between the toxins 
+and changes in DNA replication. A more extensive list 
+reveals that several categories related to microtubule 
+organization during cell division are also enriched 
+(\autoref{bmc:figs2}B). By 24 hr, there are changes 
+related to virtually all elements of the cell cycle, 
+but those controlling G$_{\text{1}}$ and S phases 
+are more significantly affected. Though many of the 
+genes within the enriched categories were not among 
+the most differentially expressed genes, the abundance 
+of differentially expressed genes involved in the same 
+functions provides evidence for toxin effects on control 
+of cell cycle at the G$_{\text{1}}$ phase. Cyclins and 
+other proteins necessary for progression from the 
+G$_{\text{1}}$ phase into and through the S phase 
+are downregulated (\autoref{bmc:fig3}A). Cyclin 
+proteins expressed at different points are central in 
+coordinating entry into or exit from different phases. 
+They specifically bind and activate particular CDKs which 
+then phosphorylate downstream targets effecting 
+progression \cite{Murray:2004ge}. Inhibitors of cyclin-CDK 
+complexes from the INK4 family (p15, p16, p18, and p19) 
+and Cip/Kip family (p21, p27, and p57) may suppress 
+cyclin-CDK signaling \cite{Denicourt:2004bw}. Expression 
+of many of these and other genes, such as CDC6 and CDC25A 
+that are required for progression from G$_{\text{1}}$ 
+to the S phase, is altered by TcdA and TcdB. The decreased 
+expression of G$_{\text{1}}$ cyclins along with the 
+increased expression of inhibitors of G$_{\text{1}}$-associated 
+cyclin-CDK complexes suggest altered regulation of the cell 
+cycle specifically in G$_{\text{1}}$. We also measured 
+expression of genes and proteins (\autoref{bmc:figs3}) 
+after 6 and 24 hr of treatment with 0.1, 1, and 10 ng/ml 
+of TcdA or TcdB in confluent and subconfluent cultures, 
+which confirmed a consistent alteration of cell cycle 
+genes and proteins across a variety of conditions.
 
 \sidecaptionvpos{figure}{t}
 \begin{SCfigure}
   \centering
   \includegraphics[width=0.6\textwidth]{bmc/Figure3}
-  \caption[The altered gene expression of G$_{\text{1}}$ phase cell cycle regulators at 6h and changes in the distribution of cells within the cell cycle]{
-  \textbf{The altered gene expression of G$_{\text{1}}$ phase cell cycle regulators at 6h and changes in the distribution of cells within the cell cycle.}
- \textbf{(A)} A schematic of cell cycle regulation with proteins placed next to the phase of cell cycle with which they are associated (p19 and p21 are the products of the CDKN2D and CDKN1A genes, respectively). Gray, blue, and red indicate genes with unchanged, increased, or decreased expression, respectively, post toxin treatment.
-\textbf{(B)} Cells in a subconfluent culture were treated with the indicated concentrations of toxin for 24h. The DNA content of cells in each condition was quantified by PI fluorescence. The histograms of the area of PI fluorescence are normalized to the total number of cells (denoted as normalized cell count) in the sample such that the area under each histogram is equal to 1. In this way, the proportions of cells in each phase of the cell cycle may be compared for different size samples. The scale of the vertical axis is the same in each histogram.
-\textbf{(C)} The percentage of cells in each phase of the cell cycle was calculated using ModFit LT software. Sub-G$_{\text{0}}$/G$_{\text{1}}$ cells were not included in the calculations.
-
+  \caption[The altered gene expression of 
+  G$_{\text{1}}$ phase cell cycle regulators 
+  at 6h and changes in the distribution of cells 
+  within the cell cycle]{
+  \textbf{The altered gene expression of 
+  G$_{\text{1}}$ phase cell cycle regulators 
+  at 6h and changes in the distribution of cells 
+  within the cell cycle.}
+  \textbf{(A)} A schematic of cell cycle regulation 
+  with proteins placed next to the phase of cell cycle 
+  with which they are associated (p19 and p21 are the 
+  products of the CDKN2D and CDKN1A genes, respectively). 
+  Gray, blue, and red indicate genes with unchanged, 
+  increased, or decreased expression, respectively, 
+  post toxin treatment.
+  \textbf{(B)} Cells in a subconfluent culture were 
+  treated with the indicated concentrations of toxin 
+  for 24h. The DNA content of cells in each condition 
+  was quantified by PI fluorescence. The histograms 
+  of the area of PI fluorescence are normalized to the 
+  total number of cells (denoted as normalized cell count) 
+  in the sample such that the area under each histogram 
+  is equal to 1. In this way, the proportions of cells in 
+  each phase of the cell cycle may be compared for different 
+  size samples. The scale of the vertical axis is the same 
+  in each histogram.
+  \textbf{(C)} The percentage of cells in each phase of 
+  the cell cycle was calculated using ModFit LT software. 
+  Sub-G$_{\text{0}}$/G$_{\text{1}}$ cells were not included 
+  in the calculations.
 }
   \label{bmc:fig3}
 \end{SCfigure}
 
 \subsection{Effects of TcdA and TcdB on the Regulation of Cell Cycle}
 
-The functional changes suggested by altered gene and protein expression were then investigated by quantifying the proportion of cells in each phase of the cell cycle before and after toxin treatment. To focus on actively growing cells and avoid the effects of contact inhibition, subconfluent cultures were used. After 24 hr of 0.1 or 1 ng/ml TcdB treatment, the distribution of cells across the cell cycle changes significantly, with only a small increase in the proportion of cells with less than a G$_{\text{0}}$/G$_{\text{1}}$ amount of DNA—cells that are presumably dead or dying (\autoref{bmc:fig3}B). In agreement with our gene expression analysis, the percentage of G$_{\text{0}}$/G$_{\text{1}}$ cells increased from 67\% in untreated cells to 91\% and 94\% in cultures treated with 10 ng/ml TcdA and 1 ng/ml TcdB, respectively (\autoref{bmc:fig3}C). The magnitude of increase in the G$_{\text{0}}$/G$_{\text{1}}$ proportion is also concentration-dependent. The effect on cell cycle by the combination of TcdA and TcdB is comparable to those produced by TcdB alone (\autoref{bmc:fig3}C), indicating that,with respect to their influence on cell-cycle arrest, the toxins are neither synergistic nor antagonistic. As with gene and protein expression, TcdB is more potent or faster-acting than TcdA. Taken together, these data establish that the toxin-induced alterations in genes associated with cell cycle correlate with a block at the G$_{\text{1}}$–S interface. In other studies, a G$_{\text{2}}$/M arrest has been reported in human cell lines treated with different concentrations of TcdA or TcdB \cite{Kim:2005jk, Gerhard:2008wz, Nottrott:2007ep}. This G$_{\text{2}}$/M arrest has been linked with a deregulation of the cell structure resulting in an inability of cells to complete cytokinesis \cite{Huelsenbeck:2009di}. We therefore investigated the cell cycle effects and morphology of cells treated for 24 hr with higher concentrations of TcdA (100 ng/ml) and TcdB (10 and 100 ng/ml).
+The functional changes suggested by altered gene and protein 
+expression were then investigated by quantifying the proportion 
+of cells in each phase of the cell cycle before and after 
+toxin treatment. To focus on actively growing cells and 
+avoid the effects of contact inhibition, subconfluent 
+cultures were used. After 24 hr of 0.1 or 1 ng/ml TcdB 
+treatment, the distribution of cells across the cell 
+cycle changes significantly, with only a small increase 
+in the proportion of cells with less than a 
+G$_{\text{0}}$/G$_{\text{1}}$ amount of DNA—cells 
+that are presumably dead or dying (\autoref{bmc:fig3}B). 
+In agreement with our gene expression analysis, the 
+percentage of G$_{\text{0}}$/G$_{\text{1}}$ cells increased 
+from 67\% in untreated cells to 91\% and 94\% in cultures 
+treated with 10 ng/ml TcdA and 1 ng/ml TcdB, 
+respectively (\autoref{bmc:fig3}C). The magnitude of 
+increase in the G$_{\text{0}}$/G$_{\text{1}}$ proportion 
+is also concentration-dependent. The effect on cell cycle 
+by the combination of TcdA and TcdB is comparable to 
+those produced by TcdB alone (\autoref{bmc:fig3}C), 
+indicating that,with respect to their influence on cell-cycle 
+arrest, the toxins are neither synergistic nor antagonistic. 
+As with gene and protein expression, TcdB is more potent or 
+faster-acting than TcdA. Taken together, these data 
+establish that the toxin-induced alterations in genes 
+associated with cell cycle correlate with a block at 
+the G$_{\text{1}}$–S interface. In other studies, a 
+G$_{\text{2}}$/M arrest has been reported in human cell 
+lines treated with different concentrations of TcdA 
+or TcdB \cite{Kim:2005jk, Gerhard:2008wz, Nottrott:2007ep}. 
+This G$_{\text{2}}$/M arrest has been linked with a 
+deregulation of the cell structure resulting in an 
+inability of cells to complete cytokinesis 
+\cite{Huelsenbeck:2009di}. We therefore investigated 
+the cell cycle effects and morphology of cells treated 
+for 24 hr with higher concentrations of TcdA (100 ng/ml) 
+and TcdB (10 and 100 ng/ml).
 
-Our analysis of single-cell images from toxin-treated cultures reveals two unanticipated observations: (1) a biphasic distribution of apoptotic cells with respect to stage of cell cycle and (2) two populations of cells at the G$_{\text{2}}$/M interface.  Cells with a high-contrast bright-field image and a low area of PI fluorescence are classified as apoptotic (\autoref{bmc:fig4}A). Typically, apoptotic cells are associated with a PI fluorescence level less than that of the G$_{\text{0}}$/G$_{\text{1}}$ population.  Here, a significant portion of the toxin-treated cells between the G$_{\text{0}}$/G$_{\text{1}}$ and G$_{\text{2}}$/M cell populations (typically associated with/attributed to the S-phase) are apoptotic (\autoref{bmc:fig4}B). Thus, the accumulation of toxin-treated cells with S-phase levels of PI-fluorescence is not the result of progression from G$_{\text{1}}$ but rather the apoptosis of G$_{\text{2}}$/M cells. Even 24 hr after the addition of 100 ng/ml of TcdB, apoptosis does not dominate or override effects on cell cycle. At the highest concentration tested (100 ng/ml), 68.6\% of TcdB-treated cells are still classified as non-apoptotic (\autoref{bmc:fig4}B). Of the total number of non-apoptotic cells, the proportion in the G$_{\text{2}}$/M phase increases as the concentrations of either TcdA or TcdB increases, indicating an inhibition of progression from G$_{\text{2}}$/M phase, in addition to the G$_{\text{1}}$--\,S block discussed above.
+Our analysis of single-cell images from toxin-treated cultures 
+reveals two unanticipated observations: (1) a biphasic 
+distribution of apoptotic cells with respect to stage of 
+cell cycle and (2) two populations of cells at the 
+G$_{\text{2}}$/M interface.  Cells with a high-contrast 
+bright-field image and a low area of PI fluorescence are 
+classified as apoptotic (\autoref{bmc:fig4}A). Typically, 
+apoptotic cells are associated with a PI fluorescence level 
+less than that of the G$_{\text{0}}$/G$_{\text{1}}$ 
+population.  Here, a significant portion of the 
+toxin-treated cells between the G$_{\text{0}}$/G$_{\text{1}}$ 
+and G$_{\text{2}}$/M cell populations (typically 
+associated with/attributed to the S-phase) are 
+apoptotic (\autoref{bmc:fig4}B). Thus, the accumulation 
+of toxin-treated cells with S-phase levels of 
+PI-fluorescence is not the result of progression 
+from G$_{\text{1}}$ but rather the apoptosis of 
+G$_{\text{2}}$/M cells. Even 24 hr after the addition 
+of 100 ng/ml of TcdB, apoptosis does not dominate or 
+override effects on cell cycle. At the highest 
+concentration tested (100 ng/ml), 68.6\% of TcdB-treated 
+cells are still classified as non-apoptotic 
+(\autoref{bmc:fig4}B). Of the total number of non-apoptotic 
+cells, the proportion in the G$_{\text{2}}$/M phase 
+increases as the concentrations of either TcdA or 
+TcdB increases, indicating an inhibition of progression 
+from G$_{\text{2}}$/M phase, in addition to the 
+G$_{\text{1}}$--\,S block discussed above.
 
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{bmc/Figure4}
-  \caption[Distribution of apoptotic versus non-apoptotic cells within the cell cycle and characteristics of G$_{\text{2}}$/M phase, toxin-treated cells]{
-  \textbf{Distribution of apoptotic versus non-apoptotic cells within the cell cycle and characteristics of G$_{\text{2}}$/M phase, toxin-treated cells.}
-\textbf{(A)} Cells were classified as either apoptotic or non-apoptotic based on the contrast of their brightfield image and the area of PI fluorescence. Representative images of a cell in each class are shown (100 ng/ml TcdB). 
-\textbf{(B)} Histograms of the area of PI fluorescence of each cell show the location of apoptotic and non-apoptotic cells within the cell cycle. The percentage of G$_{\text{2}}$/M cells represents the proportion of non-apoptotic cells with a G$_{\text{2}}$/M level of DNA.
-\textbf{(C)} Non-apoptotic G$_{\text{2}}$/M phase cells were analyzed to determine the number of distinct nuclei. For this analysis only, cells with an area of PI fluorescence 1.85 times greater than the PI fluorescence area at the G$_{\text{0}}$/G$_{\text{1}}$ peak were considered to be G$_{\text{2}}$/M cells. The major and minor axis intensity values are the length of the axis weighted by the intensity of the image along the axis.
+  \caption[Distribution of apoptotic versus non-apoptotic 
+  cells within the cell cycle and characteristics of 
+  G$_{\text{2}}$/M phase, toxin-treated cells]{
+  \textbf{Distribution of apoptotic versus non-apoptotic 
+  cells within the cell cycle and characteristics of 
+  G$_{\text{2}}$/M phase, toxin-treated cells.}
+  \textbf{(A)} Cells were classified as either apoptotic 
+  or non-apoptotic based on the contrast of their 
+  brightfield image and the area of PI fluorescence. 
+  Representative images of a cell in each class are 
+  shown (100 ng/ml TcdB). 
+  \textbf{(B)} Histograms of the area of PI fluorescence 
+  of each cell show the location of apoptotic and non-apoptotic 
+  cells within the cell cycle. The percentage of 
+  G$_{\text{2}}$/M cells represents the proportion of non-apoptotic 
+  cells with a G$_{\text{2}}$/M level of DNA.
+  \textbf{(C)} Non-apoptotic G$_{\text{2}}$/M phase cells 
+  were analyzed to determine the number of distinct nuclei. 
+  For this analysis only, cells with an area of PI 
+  fluorescence 1.85 times greater than the PI 
+  fluorescence area at the G$_{\text{0}}$/G$_{\text{1}}$ 
+  peak were considered to be G$_{\text{2}}$/M cells. 
+  The major and minor axis intensity values are the 
+  length of the axis weighted by the intensity of the 
+  image along the axis.
 }
   \label{bmc:fig4}
 \end{figure}
 
 
-In order to understand the differences between toxin-treated and control cells in G$_{\text{2}}$/M, we determined  several cellular characteristics (circumference, area, and others) of individual cells using an imaging flow cytometer. The feature that best distinguishes toxin-treated from untreated cells is the intensity-weighted aspect ratio of the PI fluorescence image. When an ellipse is fit around the image, an aspect ratio near one indicates a circular nucleus and a higher aspect ratio indicates an elliptical nucleus or multiple nuclei (\autoref{bmc:fig4}A). Upon visual inspection, a high aspect ratio is due typically to binucleation. The higher proportion of binucleated cells in toxin-treated cells (\autoref{bmc:fig4}C) indicates that the G$_{\text{2}}$/M block is attributable to a failure to complete cytokinesis \cite{Huelsenbeck:2009di}. Therefore, in addition to demonstration of a G$_{\text{1}}$--\,S block, our results show an inhibition of progression at the G$_{\text{2}}$\,--\,M transition, which is congruent with previous findings \cite{Kim:2005jk, Gerhard:2008wz, Nottrott:2007ep, Fiorentini:1998uh} in other cell types treated with different toxin concentrations. Importantly, these G$_{\text{2}}$/M effects were observed at the same concentration of toxin used for microarray analysis (100 ng/ml). Again, TcdA elicited a similar response to TcdB at the same concentration, yet to a lesser extent, thus showing consistency from gene and protein expression to cell function.
+In order to understand the differences between toxin-treated 
+and control cells in G$_{\text{2}}$/M, we determined  several 
+cellular characteristics (circumference, area, and others) of 
+individual cells using an imaging flow cytometer. The feature 
+that best distinguishes toxin-treated from untreated cells is 
+the intensity-weighted aspect ratio of the PI fluorescence 
+image. When an ellipse is fit around the image, an aspect ratio 
+near one indicates a circular nucleus and a higher aspect ratio 
+indicates an elliptical nucleus or multiple nuclei 
+(\autoref{bmc:fig4}A). Upon visual inspection, a high aspect 
+ratio is due typically to binucleation. The higher proportion 
+of binucleated cells in toxin-treated cells (\autoref{bmc:fig4}C) 
+indicates that the G$_{\text{2}}$/M block is attributable to 
+a failure to complete cytokinesis \cite{Huelsenbeck:2009di}. 
+Therefore, in addition to demonstration of a G$_{\text{1}}$--\,S 
+block, our results show an inhibition of progression at 
+the G$_{\text{2}}$\,--\,M transition, which is congruent 
+with previous findings 
+\cite{Kim:2005jk, Gerhard:2008wz, Nottrott:2007ep, Fiorentini:1998uh} 
+in other cell types treated with different toxin 
+concentrations. Importantly, these G$_{\text{2}}$/M effects 
+were observed at the same concentration of toxin used for 
+microarray analysis (100 ng/ml). Again, TcdA elicited a similar 
+response to TcdB at the same concentration, yet to a lesser 
+extent, thus showing consistency from gene and protein 
+expression to cell function.
 
 \section{Discussion}
-Understanding the differences between these two toxins is particularly relevant in determining their roles in \textit{C. difficile} infection. Toxin A appears to be the dominant virulence factor in animal studies, yet Toxin B has higher enzymatic activity in vitro and is more potent when injected into Don cells and for human cells studied in vitro \cite{ChavesOlarte:1997cs,Riegler:1995jz}. In a hamster model, Kuehne et al. found that strains of \textit{C. difficile} producing only TcdA or TcdB are comparable in their virulence, while Lyras et al used a TcdA mutant to show that TcdB was the key virulence factor \cite{Kuehne:2010hv,Lyras:2009jx}. In this study, we used a systems approach to understand the effects of TcdA and TcdB on a human colonic epithelial cell line. We observed that the responses to these two toxins are strikingly similar, with the response to TcdB occurring more rapidly. Investigation of one of the biological consequences of these changes in gene expression revealed toxin effects at both the G$_{\text{1}}$--\,S and the G$_{\text{2}}$\,--\,M transitions.
+Understanding the differences between these two toxins is 
+particularly relevant in determining their roles in \textit{C. difficile} 
+infection. Toxin A appears to be the dominant virulence factor 
+in animal studies, yet Toxin B has higher enzymatic activity 
+in vitro and is more potent when injected into Don cells and 
+for human cells studied in vitro \cite{ChavesOlarte:1997cs,Riegler:1995jz}. 
+In a hamster model, Kuehne et al. found that strains of 
+\textit{C. difficile} producing only TcdA or TcdB are comparable 
+in their virulence, while Lyras et al used a TcdA mutant to 
+show that TcdB was the key virulence factor 
+\cite{Kuehne:2010hv,Lyras:2009jx}. In this study, we used a 
+systems approach to understand the effects of TcdA and TcdB 
+on a human colonic epithelial cell line. We observed that the 
+responses to these two toxins are strikingly similar, with 
+the response to TcdB occurring more rapidly. Investigation 
+of one of the biological consequences of these changes in 
+gene expression revealed toxin effects at both the 
+G$_{\text{1}}$--\,S and the G$_{\text{2}}$\,--\,M transitions.
 
-In order to explore the interactions between \textit{C. difficile} and intestinal epithelial cells, Janvilisri et al. examined the transcriptional responses of Caco-2 cells and \textit{C. difficile} organisms during an in vitro infection \cite{Janvilisri:2010wf}. Because expression was measured at no more than 2 hr post-infection, most of the changes in gene expression were slight, yet they identified functions such as cell metabolism and transport associated with affected genes. We focused on cells treated with TcdA or TcdB at a concentration and time course in which the cell morphology is strongly affected. The effects of TcdA and TcdB on gene expression in host cells have been interrogated in other studies focusing on individual pathways, but until now, an analysis of the comprehensive global transcriptional response induced by either TcdA or TcdB alone had not been performed.
+In order to explore the interactions between \textit{C. difficile} 
+and intestinal epithelial cells, Janvilisri et al. examined 
+the transcriptional responses of Caco-2 cells and 
+\textit{C. difficile} organisms during an in vitro 
+infection \cite{Janvilisri:2010wf}. Because expression 
+was measured at no more than 2 hr post-infection, most 
+of the changes in gene expression were slight, yet they 
+identified functions such as cell metabolism and 
+transport associated with affected genes. We focused on 
+cells treated with TcdA or TcdB at a concentration and 
+time course in which the cell morphology is strongly 
+affected. The effects of TcdA and TcdB on gene expression 
+in host cells have been interrogated in other studies 
+focusing on individual pathways, but until now, an analysis 
+of the comprehensive global transcriptional response 
+induced by either TcdA or TcdB alone had not been performed.
 
-Our systems approach identified a disruption of the cell cycle not readily apparent from a ranked list of genes. This approach overcame difficulties in deciphering the particular relevance of genes known to be induced by several stimuli or genes whose expression leads to many possible cellular phenotypes. JUN is overall the most differentially expressed gene in our data, and, considering TcdA or TcdB as a cellular stress, its dramatic increase in expression is consistent with it being characterized as a stress-response gene. However, increased JUN expression has also been associated with the promotion of G$_{\text{1}}$ progression, protection from apoptosis after ultraviolet radiation, and even induction of apoptosis \cite{Ameyar:2003cc}. Clearly, multiple events may lead to the same changes in expression of an individual gene. The identification of functions associated with many of the differentially expressed genes thus provides better evidence of actual biological functions important to the toxin response. 
+Our systems approach identified a disruption of the cell 
+cycle not readily apparent from a ranked list of genes. This 
+approach overcame difficulties in deciphering the particular 
+relevance of genes known to be induced by several stimuli 
+or genes whose expression leads to many possible cellular 
+phenotypes. JUN is overall the most differentially 
+expressed gene in our data, and, considering TcdA or 
+TcdB as a cellular stress, its dramatic increase in 
+expression is consistent with it being characterized 
+as a stress-response gene. However, increased JUN 
+expression has also been associated with the promotion 
+of G$_{\text{1}}$ progression, protection from apoptosis 
+after ultraviolet radiation, and even induction of 
+apoptosis \cite{Ameyar:2003cc}. Clearly, multiple 
+events may lead to the same changes in expression of 
+an individual gene. The identification of functions 
+associated with many of the differentially expressed 
+genes thus provides better evidence of actual 
+biological functions important to the toxin response. 
 
-These results have clarified the effects of TcdA and TcdB at each stage of the cell cycle. In studying Rho signaling, Welsh et al. showed that combined Rho, Rac, and Cdc42 inhibition by TcdA (200 ng/ml) in fibroblasts led to decreased cyclin D1 expression and an inability of serum-starved cells, stimulated with fetal calf serum and treated with toxin, to progress past the G$_{\text{1}}$ phase \cite{Welsh:2001id}. Importantly, we show that a strong G$_{\text{1}}$ arrest occurs in unsynchronized, proliferating epithelial cells. Only when treated with higher concentrations (100 ng/ml TcdA, 10 ng/ml TcdB) of toxin did we begin to observe the inhibition of cell division at the G$_{\text{2}}$/M phase in a significant proportion of cells. With regard to cell death, others have shown an increased susceptibility of S-phase cells to toxin treatment \cite{Huelsenbeck:2007df}. We did observe an increase in the proportion of apoptotic S or G$_{\text{2}}$/M phase cells. At low concentrations (10 ng/ml TcdA, 1 ng/ml TcdB), the decrease in the proportion of S-phase cells, however, could not be entirely accounted for by death of cells at a particular point in the growth cycle. Rather, many non-apoptotic cells remained in the G$_{\text{0}}$/G$_{\text{1}}$ phase.
+These results have clarified the effects of TcdA and TcdB at 
+each stage of the cell cycle. In studying Rho signaling, 
+Welsh et al. showed that combined Rho, Rac, and Cdc42 
+inhibition by TcdA (200 ng/ml) in fibroblasts led to 
+decreased cyclin D1 expression and an inability of 
+serum-starved cells, stimulated with fetal calf serum 
+and treated with toxin, to progress past the 
+G$_{\text{1}}$ phase \cite{Welsh:2001id}. Importantly, 
+we show that a strong G$_{\text{1}}$ arrest occurs in 
+unsynchronized, proliferating epithelial cells. Only when 
+treated with higher concentrations (100 ng/ml TcdA, 
+10 ng/ml TcdB) of toxin did we begin to observe the inhibition 
+of cell division at the G$_{\text{2}}$/M phase in a 
+significant proportion of cells. With regard to cell death, 
+others have shown an increased susceptibility of S-phase cells 
+to toxin treatment \cite{Huelsenbeck:2007df}. We did 
+observe an increase in the proportion of apoptotic S 
+or G$_{\text{2}}$/M phase cells. At low concentrations 
+(10 ng/ml TcdA, 1 ng/ml TcdB), the decrease in the 
+proportion of S-phase cells, however, could not be 
+entirely accounted for by death of cells at a 
+particular point in the growth cycle. Rather, many 
+non-apoptotic cells remained in the 
+G$_{\text{0}}$/G$_{\text{1}}$ phase.
 
 \section{Conclusion}
-Our results have several implications in reference to the role of these toxins in pathogenicity. In a host, the gut epithelial cells normally turn over every 2-3 days \cite{Kim:2010ja}. Disruption of this cellular renewal process, and therefore cell cycle, impairs the maintenance of the epithelial barrier. The ability of both TcdA and TcdB to arrest growth at the G$_{\text{0}}$/G$_{\text{1}}$ phase and the G$_{\text{2}}$\,--\,M transition, by likely different mechanisms (G$_{\text{1}}$ arrest occurs even at low toxin concentrations and is associated with altered protein signaling; G$_{\text{2}}$ arrest is likely associated with disorganization of the cytoskeleton), places each toxin in the category of cyclomodulins. As has been previously shown however, control of cell proliferation is certainly not their only or necessarily primary effect (e.g., inflammation, disruption of tight junctions). The high similarity in the gene expression induced by these two toxins indicates that, qualitatively, their effects and the overall cellular responses are comparable. The rate of internalization and/or the rapidity of inactivation of Rho-family proteins in different hosts may partially account for the different rates in the onset of gene expression. Though we did not observe synergy or antagonism between the two toxins, it is possible that each could differentially bind various cell types and therefore act synergistically within a host. Clearly, the response to each toxin is a complex process involving the activation and inhibition of several pathways in different cell types. The integration and use of the data we present here have and will continue to aid the organization of these multiple effects into a central framework for interrogating toxin activity.
+Our results have several implications in reference to the 
+role of these toxins in pathogenicity. In a host, the gut 
+epithelial cells normally turn over every 2-3 days 
+\cite{Kim:2010ja}. Disruption of this cellular renewal 
+process, and therefore cell cycle, impairs the 
+maintenance of the epithelial barrier. The ability of 
+both TcdA and TcdB to arrest growth at the 
+G$_{\text{0}}$/G$_{\text{1}}$ phase and the 
+G$_{\text{2}}$\,--\,M transition, by likely different 
+mechanisms (G$_{\text{1}}$ arrest occurs even at low 
+toxin concentrations and is associated with altered 
+protein signaling; G$_{\text{2}}$ arrest is likely 
+associated with disorganization of the cytoskeleton), 
+places each toxin in the category of cyclomodulins. 
+As has been previously shown however, control of 
+cell proliferation is certainly not their only or 
+necessarily primary effect (e.g., inflammation, 
+disruption of tight junctions). The high similarity 
+in the gene expression induced by these two toxins 
+indicates that, qualitatively, their effects and 
+the overall cellular responses are comparable. The 
+rate of internalization and/or the rapidity of 
+inactivation of Rho-family proteins in different 
+hosts may partially account for the different 
+rates in the onset of gene expression. Though we did 
+not observe synergy or antagonism between the two 
+toxins, it is possible that each could differentially 
+bind various cell types and therefore act synergistically 
+within a host. Clearly, the response to each toxin 
+is a complex process involving the activation and 
+inhibition of several pathways in different cell 
+types. The integration and use of the data we present 
+here have and will continue to aid the organization 
+of these multiple effects into a central framework 
+for interrogating toxin activity.
 
 \section{Authors' Contributions}
-KMD performed all computational and statistical analyses, cell-cycle experiments, image processing, and drafted the manuscript. GMD performed all experiments for obtaining mRNA for microarrays and PCR. MCG, KMD, and LMC performed experiments to measure protein expression and quantify cell-cycle effects. MDS and JAL performed and contributed to the design of the flow and image cytometry experiments. All authors together conceived this study, participated in its design and coordination, and helped to draft the manuscript. All authors read and approved of the final manuscript.
+KMD performed all computational and statistical 
+analyses, cell-cycle experiments, image processing, 
+and drafted the manuscript. GMD performed all 
+experiments for obtaining mRNA for microarrays and PCR. 
+MCG, KMD, and LMC performed experiments to measure protein 
+expression and quantify cell-cycle effects. MDS and 
+JAL performed and contributed to the design of the 
+flow and image cytometry experiments. All authors 
+together conceived this study, participated in its 
+design and coordination, and helped to draft the 
+manuscript. All authors read and approved of 
+the final manuscript.
 
 \section{Acknowledgements}
-The authors are grateful to David Lyerly, Ph.D., and TechLab, Inc., Blacksburg, VA, for the generous gift of Toxins A and B.
+The authors are grateful to David Lyerly, Ph.D., and 
+TechLab, Inc., Blacksburg, VA, for the generous gift 
+of Toxins A and B.
 
 \section{Funding}
-This work was supported by the National Institute of Allergy and Infectious Diseases Regional Center of Excellence program through the Mid-Atlantic Regional Center of Excellence in Biodefense and Emerging Infections [5U54 AI057168]. KMD is a trainee on the Infectious Diseases Training Grant to the University of Virginia Division of Infectious Diseases and International Health [5T32 AI007046].
+This work was supported by the National Institute of Allergy 
+and Infectious Diseases Regional Center of Excellence 
+program through the Mid-Atlantic Regional Center of 
+Excellence in Biodefense and Emerging Infections 
+[5U54 AI057168]. KMD is a trainee on the Infectious 
+Diseases Training Grant to the University of Virginia 
+Division of Infectious Diseases and International 
+Health [5T32 AI007046].
 
 
 \section{Supporting Figures}
@@ -152,12 +750,19 @@ This work was supported by the National Institute of Allergy and Infectious Dise
   \includegraphics[width=\textwidth]{bmc/FigureS1}
   \caption[qRT-PCR validation of and genes with high differential expression]{
   \textbf{qRT-PCR validation of and genes with high differential expression}
-  \textbf{(A)} Fold changes of gene expression relative to controls as measured by microarray 
-were validated by qRT-PCR. To summarize multiple probe sets within a microarray that were annotated to the same gene, the value for the probe set with the 
-greatest fold change is shown. The notation ``A, 2hr'' indicates the expression 
-of genes treated with TcdA for 2 hr. 
-\textbf{(B)} This list consists of genes that were among the top 25 differentially expressed 
-genes (according to fold change) in at least 3 of the 6 conditions.}
+  \textbf{(A)} Fold changes of gene expression relative 
+  to controls as measured by microarray 
+  were validated by qRT-PCR. To summarize 
+  multiple probe sets within a microarray that 
+  were annotated to the same gene, the value for 
+  the probe set with the 
+  greatest fold change is shown. The notation 
+  ``A, 2hr'' indicates the expression 
+  of genes treated with TcdA for 2 hr. 
+  \textbf{(B)} This list consists of genes that 
+  were among the top 25 differentially expressed 
+  genes (according to fold change) in at 
+  least 3 of the 6 conditions.}
   \label{bmc:figs1}
 \end{figure}
 
@@ -166,10 +771,16 @@ genes (according to fold change) in at least 3 of the 6 conditions.}
   \centering
   \includegraphics[width=\textwidth]{bmc/FigureS2}
   \caption[Gene set enrichment of biological processes and cellular components]{
-  \textbf{Gene set enrichment of biological processes and cellular components.}
-\textbf{(A)} Cellular Component GO categories with $\text{p}<10^{-3}$ across all time points are shown. Criteria for calculating p
-values and GO categories were the same as in Figure 2.
-\textbf{(B)} The 25 most significant GO Biological Processes at 24 hr were selected by the criteria described in \autoref{bmc:fig2}.}
+  \textbf{Gene set enrichment of biological processes 
+  and cellular components.}
+  \textbf{(A)} Cellular Component GO categories 
+  with $\text{p}<10^{-3}$ across all time points 
+  are shown. Criteria for calculating p
+  values and GO categories were the same 
+  as in Figure 2.
+  \textbf{(B)} The 25 most significant GO 
+  Biological Processes at 24 hr were selected 
+  by the criteria described in \autoref{bmc:fig2}.}
   \label{bmc:figs2}
 \end{sidewaysfigure}
 
@@ -177,19 +788,29 @@ values and GO categories were the same as in Figure 2.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{bmc/FigureS3}
-  \caption[Timing of RAC1 glucosylation and expression of cyclin-related genes and proteins in
+  \caption[Timing of RAC1 glucosylation and expression of 
+             cyclin-related genes and proteins in
              subconfluent and confluent cultures.]{
-  \textbf{Timing of RAC1 glucosylation and expression of cyclin-related genes and proteins in
+  \textbf{Timing of RAC1 glucosylation and expression of 
+             cyclin-related genes and proteins in
              subconfluent and confluent cultures.}
-(A) The expression of 10 genes in both subconfluent and confluent toxin-treated cells was measured 
-by qRT-PCR. Fold changes shown are relative to untreated samples.
-(B) Densitometry was performed on immunoblots of lysates from toxin-treated, confluent cells. The 
-intensity of each band was normalized to the intensity of GAPDH, the loading control. The values 
-above each row indicate the amount of protein relative to the amount in untreated cells. The relative 
-intensity for p57 was not calculated because the protein was not detectable in untreated cells. The 
-blots show the presence of p57 after toxin treatment.
-(C) A Rac1 antibody (BD\#610650) that recognizes non-glucosylated Rac1 (protein that has not been 
-glucosylated by either toxin) shows the activity of TcdA and TcdB in HCT-8 cells. }
+  (A) The expression of 10 genes in both subconfluent
+   and confluent toxin-treated cells was measured 
+  by qRT-PCR. Fold changes shown are relative 
+  to untreated samples.
+  (B) Densitometry was performed on immunoblots 
+  of lysates from toxin-treated, confluent cells. The 
+  intensity of each band was normalized to the intensity 
+  of GAPDH, the loading control. The values 
+  above each row indicate the amount of protein relative 
+  to the amount in untreated cells. The relative 
+  intensity for p57 was not calculated because the protein 
+  was not detectable in untreated cells. The 
+  blots show the presence of p57 after toxin treatment.
+  (C) A Rac1 antibody (BD\#610650) that recognizes 
+  non-glucosylated Rac1 (protein that has not been 
+  glucosylated by either toxin) shows the activity of 
+  TcdA and TcdB in HCT-8 cells. }
   \label{bmc:figs3}
 \end{figure}
 

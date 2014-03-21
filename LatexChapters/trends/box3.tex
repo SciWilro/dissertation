@@ -8,7 +8,7 @@ are validated against experimental data to ensure the
 model truly reflects biological processes. Gene essentiality 
 predictions (commonly between 55\% and 90\%) provide 
 confidence that downstream analyses are based on a 
-high-quality model [1,72]. To ensure the usefulness of 
+high-quality model \cite{Feist:2007dq,Jamshidi:2007ei}. To ensure the usefulness of 
 any computational pipeline, drug target predictions 
 should be compared to known targets from the literature. 
 Below we discuss more of the particular difficulties and 
@@ -32,7 +32,7 @@ not included in the network, can account for the same function.
 Therefore, this represents one important knowledge gap in 
 the assembly of metabolic networks, and the inclusion of 
 more refined enzyme annotations will directly improve 
-drug target predictions [73,74].
+drug target predictions \cite{Hsiao:2010bu,Szappanos:2011gu}.
 
 \subsection*{Nutrient availability}
 An important challenge in reconstructing and modeling 
@@ -61,29 +61,29 @@ of important macromolecular components of the cell
 (e.g.\ protein, lipid, RNA, DNA and carbohydrate), the 
 relative abundance of metabolites comprised in each 
 group (e.g.\ amino acids, phospholipids, nucleotides) 
-can be computed [15]. Among several available, a few 
+can be computed \cite{Feist:2010hq}. Among several available, a few 
 experimental methods to measure \glssymbol{biomass} components 
 include chloroform–methanol extraction (lipids), 
 colorimetric protein assays, and gas chromatography–mass 
-spectrometry (protein content) [75]. \Glspl{flux} measured 
+spectrometry (protein content) \cite{Boyle:2009jr}. \Glspl{flux} measured 
 directly by metabolic flux analysis, which tracks 
 the movement of 13C from an initial 13C-labeled 
 substrate, may also help to define the \glssymbol{objectivereaction} 
-function [76,77].
+function \cite{Chen:2011dj,Blank:2005bt}.
 
 ~~~~~~An \glssymbol{objectivereaction} function is most likely to cause 
 errors if metabolites are entirely missing or 
 incorrectly included; the relative amounts of each 
 metabolite in the \gls{objectivereaction} (i.e.\ the 
 stoichiometric coefficients) do not greatly affect 
-\gls{fba} results [16,78]. Therefore, logically 
+\gls{fba} results \cite{Varma:1993hd,Varma:1994tb}. Therefore, logically 
 deducing a \gls{biomass} is often adequate 
 to estimate the growth of an organism. However, 
 additional experimental data can reveal interesting 
 peculiarities that may be used to design a specific 
 \gls{biomass} for a particular organism. 
 Data on growth- and non-growth-associated ATP 
-maintenance can be included in the \gls{biomass} [79]. Under in vivo conditions when a 
+maintenance can be included in the \gls{biomass} \cite{Forster:2003jb}. Under in vivo conditions when a 
 pathogen is interacting with its host, an aspect 
 that is often unclear is which \glssymbol{biomass} component(s) 
 to include in the reaction. The composition of the 

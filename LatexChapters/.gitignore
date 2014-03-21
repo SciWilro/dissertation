@@ -13,3 +13,6 @@ wrapper.run.xml
 *.glo
 *.ist
 *.glsdefs
+*.glg
+*.gls
+*synctex.gz

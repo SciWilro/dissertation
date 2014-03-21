@@ -30,15 +30,16 @@ Clicking on a glossary term within this chapter returns you to its definition in
 Systems biology methods have been applied extensively to the 
 study of infectious diseases across multiple scales of 
 biological organization to generate predictions ranging from pathogen 
-gene lethality in particular microenvironments [1,2] to dynamics 
-involved in the host immune response to infection [3]. Utilizing 
+gene lethality in particular microenvironments 
+\cite{Jamshidi:2007ei,Fang:2010gc} to dynamics 
+involved in the host immune response to infection \cite{SegoviaJuarez:2004bn}. Utilizing 
 the predictive power of computational modeling and systems analysis, 
 wideranging questions related to pathogen virulence, disease 
 progression and host response can be explored to generate hypotheses 
 for more thorough experimental investigation.
 
 The increasing availability of high-quality genome-scale 
-metabolic \glssymbol{reconstruction}s [4] presents an opportunity for the 
+metabolic \glssymbol{reconstruction}s \cite{Oberhardt:2009jw} presents an opportunity for the 
 rational and systematic identification of metabolic drug 
 targets in a pathogen of interest. Built bottom-up from functional 
 genome annotations (and a variety of other data sources) and 
@@ -47,15 +48,15 @@ for hundreds to thousands of metabolites participating in enzymatic
 reactions across a range of metabolic subsystems (e.g.\ carbohydrate, 
 amino acid, lipid, nucleotide and energy metabolism) and cellular 
 localizations (e.g.\ extracellular space, cytosol and compartments 
-specific to particular organisms) (Figure 1a) [5]. Since the 
-initial genome-scale \glssymbol{reconstruction}s of Escherichia coli [6,7] 
-and Haemophilus influenzae [8,9], the metabolic networks of over 
+specific to particular organisms) (\autoref{trends:fig1}A) \cite{Thiele:2010fr}. Since the 
+initial genome-scale \glssymbol{reconstruction}s of \textit{Escherichia coli} \cite{Edwards:2000cn,Reed:2003bj} 
+and Haemophilus influenzae \cite{Edwards:1999ix,Schilling:2000ig}, the metabolic networks of over 
 50 organisms (bacteria, archaea and eukaryotes) have been 
-reconstructed (reviewed in [4]). Elements of this network 
+reconstructed (reviewed in \cite{Oberhardt:2009jw}). Elements of this network 
 \glssymbol{reconstruction} process have been automated, allowing the preliminary 
-analysis of hundreds of draft network \glssymbol{reconstruction}s [10]. Among 
+analysis of hundreds of draft network \glssymbol{reconstruction}s \cite{Henry:2010dg}. Among 
 these, metabolic networks have been reconstructed for several pathogenic 
-organisms (Table 1). Indeed, the study of pathogen metabolism–for the 
+organisms (\autoref{trends:table1}). Indeed, the study of pathogen metabolism-for the 
 elucidation of highpriority drug targets and metabolic factors 
 contributing to pathogenicity—is an exciting application for 
 metabolic network modeling and systems biology.
@@ -72,7 +73,7 @@ metabolic network modeling and systems biology.
        modeling and simulation of the reconstructed network. 
        Advanced network analyses (such as gene essentiality or 
        \glssymbol{fva}) allow for identifying potential 
-       anti-microbial drug targets. These targets can then be 
+       antimicrobial drug targets. These targets can then be 
        associated with drugs using bioinformatics approaches 
        and obtaining target drug information from a variety 
        of publicly available databases (e.g.\ STITCH or DrugBank). 
@@ -110,18 +111,18 @@ modeling efforts in infectious disease.
 
 \section{Reconstructing the metabolic network and defining an objective}
 
-A \gls{reconstruction} is assembled piece-bypiece 
+A \gls{reconstruction} is assembled piece-by-piece 
 by compiling data on known enzymes, genes encoding these enzymes, 
 and the stoichiometry of the reactions catalyzed by these enzymes 
-([11] for a list of databases containing such data). \glspl{gpr}, 
+(see \cite{Durot:2009kb} for a list of databases containing such data). \glspl{gpr}, 
 in the form of Boolean logic statements, define 
 which genes are necessary for each enzyme and which enzymes are 
-necessary for each reaction [5] (Figure 1b). The information for 
+necessary for each reaction \cite{Thiele:2010fr} (\autoref{trends:fig1}B). The information for 
 all the reactions in a network \glssymbol{reconstruction} with m metabolites 
 and n reactions can be stored in an m by n table or matrix, the 
 \gls{smatrix}. Each element or cell in this matrix 
 corresponds to the stoichiometric coefficient of one particular 
-metabolite in one particular reaction [5,12]. The \gls{smatrix} enables 
+metabolite in one particular reaction \cite{Thiele:2010fr,Lee:2006je}. The \gls{smatrix} enables 
 strict accounting for the underlying biochemistry and allows a 
 quantitative description of complex interactions between metabolites 
 that are responsible for driving a cellular phenotype. This matrix 
@@ -135,18 +136,19 @@ requiring that constraints are satisfied, for example that the
 mass entering the network is equal to the mass exiting the network (\gls{massbalance}). 
 In more mathematical terms, \gls{fba} involves the use of a 
 \gls{linearprogramming} formulation wherein an objective is optimized subject 
-to a set of governing constraints (Box 1) [4,12,13]. In addition 
+to a set of governing constraints (\hyperref[trends:box:fba]{Box \ref{trends:box:fba}}) 
+\cite{Oberhardt:2009jw,Lee:2006je,Gianchandani:2010gs}. In addition 
 to requiring \gls{massbalance} for every reaction, thermodynamic, 
 topological, environmental, and regulatory data may provide 
-additional constraints that dictate the \gls{fluxspace} [14]. 
+additional constraints that dictate the \gls{fluxspace} \cite{Price:2004hx}. 
 An \glssymbol{objectivereaction} often used with \gls{fba} is \glssymbol{biomass} production, which is 
 represented \gls{insilico} as a drain capturing crucial metabolites 
-necessary for growth of the organism [15,16]. With the ultimate 
+necessary for growth of the organism \cite{Feist:2010hq,Varma:1993hd}. With the ultimate 
 goal of identifying antimicrobial drug targets (and associated 
 drugs) to slow or stop the growth of a pathogen, a \glssymbol{biomass} objective
 is often very appropriate for computational modeling efforts. 
 Network \glssymbol{reconstruction}s of most pathogenic organisms have incorporated 
-\glspl{biomass} as their \glssymbol{objectivereaction}s (Table 1).
+\glspl{biomass} as their \glssymbol{objectivereaction}s (\autoref{trends:table1}).
 
 \input{trends/box1}
 
@@ -156,24 +158,25 @@ of zero for the \gls{objectiveflux} (\glssymbol{biomass}), and analogously no gr
 Therefore, growth predictions are sensitive to metabolites that are 
 placed in the \gls{biomass} reaction. \gls{fba} can be used to investigate the 
 ability of the model to produce each metabolite within \glssymbol{biomass}. In 
-the Porphyromonas gingivalis metabolic network, the ability of the 
+the \textit{Porphyromonas gingivalis} metabolic network, the ability of the 
 model to produce each of the 52 metabolites within the \gls{biomass} 
-was evaluated after systematic reaction deletions [17]. 
+was evaluated after systematic reaction deletions \cite{Mazumdar:2009gj}. 
 Crucial groups of reactions were identified that were responsible for 
 lipopolysaccharide (LPS) production, coenzyme A production, glycolysis, 
-or purine and pyrimidine biosynthesis [17]. Corresponding enzymes that 
+or purine and pyrimidine biosynthesis \cite{Mazumdar:2009gj}. Corresponding enzymes that 
 are essential for growth, as well as for the production of important 
 bacterial components such as LPS, could serve as potential drug 
-targets. In addition, in a study of Leishmania major metabolism, 
+targets. In addition, in a study of \textit{Leishmania major} metabolism, 
 the contribution of minimal media components to the synthesis of 
-individual \gls{biomass} constituents was analyzed [18]. The study found 
+individual \gls{biomass} constituents was analyzed \cite{Chavali:2008gh}. The study found 
 that the absence of cysteine and oxygen in the minimal media had a 
 drastic impact on the overall metabolic network, limiting the 
-generation of 30 of the 40 \glssymbol{biomass} constituents [18]. Network analyses 
-as delineated in these examples of P. gingivalis and L. major may 
+generation of 30 of the 40 \glssymbol{biomass} constituents \cite{Chavali:2008gh}. Network analyses 
+as delineated in these examples of \textit{P. gingivalis} and \textit{L. major} may 
 permit the formulation of a hypothesis for the role of specific 
 metabolites and their influence on growth. Therefore, defining an 
-appropriate \gls{biomass} (Boxes 2 and 3) is crucial for useful 
+appropriate \gls{biomass} (\hyperref[trends:box:objective]{Box \ref{trends:box:objective}} and
+\hyperref[trends:box:caveats]{Box \ref{trends:box:caveats}}) is crucial for useful 
 predictions and identification of vulnerable parts of the metabolism 
 of a pathogen.
 
@@ -185,19 +188,19 @@ of a pathogen.
 
 \subsubsection{Gene essentiality analysis}
 The most common method to identify potential drug targets has been 
-through the prediction of essential genes (Table 1). The enzymes 
+through the prediction of essential genes (\autoref{trends:table1}). The enzymes 
 encoded by essential genes are typically hypothesized as drug targets. 
 Gene knockouts might lead to a redistribution of \gls{flux} through the 
 network if the perturbed gene or gene product affects the removal 
-of a particular \gls{flux}-carrying reaction [4]. A \gls{gpr} aids in mapping 
+of a particular \gls{flux}-carrying reaction \cite{Oberhardt:2009jw}. A \gls{gpr} aids in mapping 
 the effects of a genetic (or pharmacological) perturbation on the 
 associated reactions, and thus the network. Gene-level perturbations 
 that result in reduced or zero \gls{flux} through a \gls{biomass} 
 correspond to growth-reducing or lethal gene knockouts, 
-respectively (Figure 2). For example, in a \glssymbol{reconstruction} of 
-Mycobacterium tuberculosis, five previously known drug targets 
+respectively (\autoref{trends:fig2}). For example, in a \glssymbol{reconstruction} of 
+\textit{Mycobacterium tuberculosis}, five previously known drug targets 
 were encoded by genes predicted to be essential from computational 
-analysis [19]. For metabolic \glssymbol{reconstruction}s of pathogens, 
+analysis \cite{Beste:2007bi}. For metabolic \glssymbol{reconstruction}s of pathogens, 
 enzymes that are predicted to be essential will offer new 
 experimental hypotheses and avenues for drug discovery. In the 
 following subsections we discuss several other approaches for 
@@ -237,47 +240,48 @@ robustness could identify vulnerable or sensitive portions of a
 metabolic network suitable for drug targeting. To determine the 
 robustness of a metabolic network to the inhibition of an 
 enzyme-catalyzed reaction, the \gls{flux} of a reaction may be constrained 
-to a fraction of its wild-type \gls{flux} (simulating partial to 
+to a fraction of its wild type \gls{flux} (simulating partial to 
 complete inhibition), and the effects on an \gls{objectiveflux} 
-(e.g.\ \glssymbol{biomass} production) can be evaluated [20] (Figure 2). 
+(e.g.\ \glssymbol{biomass} production) can be evaluated \cite{Edwards:2000cz} (\autoref{trends:fig2}). 
 Such an approach was used in analyzing the network \glssymbol{reconstruction} 
-of Francisella tularensis, which revealed that the growth rate 
-was sensitive to changes in H+ and NH4 \gls{flux} in a simulated in vitro 
+of \textit{Francisella tularensis}, which revealed that the growth rate 
+was sensitive to changes in \ce{H+} and \ce{NH4} \gls{flux} in a simulated in vitro 
 medium but not in a simulated in vivo medium that mimicked the 
-environment during infection [21]. Analyzing enzyme robustness with 
-different constraints provides a detailed view of possibly non-lethal 
+environment during infection \cite{Raghunathan:2010gl}. Analyzing enzyme robustness with 
+different constraints provides a detailed view of possibly nonlethal 
 reactions whose change in \gls{flux} has a strong effect on the \glssymbol{objectivereaction} 
 of a network under different environmental conditions, therefore 
 suggesting important reactions during an infection or perturbations 
 for drug targeting.
 
 Alternatively, the \glssymbol{objectivereaction} function could be constrained to a fixed 
-percentage of its wild-type \gls{flux} and the allowable range of \gls{flux} 
+percentage of its wild type \gls{flux} and the allowable range of \gls{flux} 
 for each reaction can be determined using an approach termed 
-\gls{fva} (Box 4) [22]. A recognized shortcoming 
+\gls{fva} (\hyperref[trends:box:fva]{Box \ref{trends:box:fva}}) \cite{Mahadevan:2003di}. A recognized shortcoming 
 of \gls{fba} is that the typical implementation calculates only one 
 of many possible solutions that optimize \gls{flux} through the 
 \gls{objectivereaction}. Consequently, there may be many possible routes through 
 the network that achieve the same optimal \gls{flux} for a given 
-\glssymbol{objectivereaction} [14,22]. In an effort to circumvent this shortcoming, 
+\glssymbol{objectivereaction} \cite{Price:2004hx,Mahadevan:2003di}. 
+In an effort to circumvent this shortcoming, 
 FVA was developed to determine the range of \glspl{flux} over which 
 a particular reaction operates, while still allowing for 
-optimal, or near-optimal, \gls{objectiveflux} [22]. FVA also identifies 
+optimal, or near-optimal, \gls{objectiveflux} \cite{Mahadevan:2003di}. FVA also identifies 
 blocked reactions (reactions incapable of carrying any \gls{flux} in 
 a given model under specified constraints) or reactions with 
 different \gls{flux} ranges in various media. Enzymes that catalyze 
 reactions with little to no variability in \gls{flux} for a given 
 \glssymbol{objectivereaction} could be selected as potential drug targets given that 
 the network may be sensitive to even modest inhibition of its 
-activity. In analyzing the \glssymbol{reconstruction} of M. tuberculosis, the 
+activity. In analyzing the \glssymbol{reconstruction} of \textit{M. tuberculosis}, the 
 average of the highest and lowest allowable \gls{flux} for each reaction 
 was used as a point of comparison for the model under constraints 
-for two growth rates [19]. In the study, the reaction catalyzed by 
-isocitrate lyase – an enzyme important for persistence in a 
-host – was predicted to have increased \gls{flux} during slow growth, 
+for two growth rates \cite{Beste:2007bi}. In the study, the reaction catalyzed by 
+isocitrate lyase---an enzyme important for persistence in a 
+host---was predicted to have increased \gls{flux} during slow growth, 
 and the activity of the enzyme was experimentally confirmed to 
 be greater in slow-growing cells of the closely related 
-Mycobacterium bovis [19]. Hence, \glssymbol{fva} and enzyme 
+\textit{Mycobacterium bovis} \cite{Beste:2007bi}. Hence, \glssymbol{fva} and enzyme 
 robustness aid in further prioritizing drug targets identified 
 from other methods such as gene essentiality.
 
@@ -285,25 +289,25 @@ from other methods such as gene essentiality.
 
 \subsection{Metabolite essentiality}
 Many current drugs have high similarity to natural metabolites and 
-compete for and/or inhibit normal enzymatic activity [23]. Therefore, 
+compete for and/or inhibit normal enzymatic activity \cite{Dobson:2009kg}. Therefore, 
 another very interesting avenue towards identifying drug targets 
 in metabolic networks is via the prediction of essential metabolites. 
 In contrast to the more traditional individual gene knockouts 
 mentioned previously, metabolites in the \gls{smatrix} can also be 
 systematically removed. Consequently, all reactions in which a 
 given metabolite participates are removed, and the resultant 
-effects on the \glssymbol{objectivereaction} are assessed (Figure 2). A total of 
-211 essential metabolites in the Acinetobacter baumanii 
+effects on the \glssymbol{objectivereaction} are assessed (\autoref{trends:fig2}). A total of 
+211 essential metabolites in the \textit{Acinetobacter baumanii} 
 \glssymbol{reconstruction} were narrowed to 9 following removal of (i) currency 
-metabolites (ATP, NADH, H2O, etc.); (ii) metabolites present in 
+metabolites (ATP, NADH, \ce{H2O}, etc.); (ii) metabolites present in 
 the human metabolic network; and (iii) metabolites participating 
-in reactions catalyzed by enzymes with human homologs [24]. 
+in reactions catalyzed by enzymes with human homologs \cite{Kim:2010cu}. 
 Enzymes that catalyze reactions involved in the consumption or 
 production of these essential metabolites may be considered 
 as drug targets. Moreover, structural analogs of essential 
 metabolites may be considered as test compounds for experimental 
 evaluation, thus sidestepping extensive screening or 
-computational predictions [25].
+computational predictions \cite{Kim:2011jm}.
 
 \subsection{Combination gene and reaction perturbations}
 Many anti-infectives on the market act on multiple targets. 
@@ -312,20 +316,20 @@ analysis of 890 FDA-approved drugs targeting 394 human
 proteins (derived from the DrugBank database), where 
 approximately 38\% of the drugs were associated with more 
 than one protein target, and a few drugs were associated 
-with as many as 14 targets [26]. In that regard, a drug 
+with as many as 14 targets \cite{Yildirim:2007hc}. In that regard, a drug 
 discovery strategy incorporating compounds known to act 
 simultaneously on multiple targets can be adopted for 
 microbial pathogens. \gls{fba} allows predictions involving 
 the perturbation of multiple genes or reactions in a rapid 
 timeframe (minutes or hours)—a single \gls{insilico} combination 
-taking only a fraction of a second [27]. In a \glssymbol{reconstruction} 
-of M. tuberculosis that accounted for features specific to 
+taking only a fraction of a second \cite{Becker:2007cu}. In a \glssymbol{reconstruction} 
+of \textit{M. tuberculosis} that accounted for features specific to 
 an in vivo environment, all non-trivial double-deletion 
 mutants (synthetic lethal pairs) were tested for \gls{insilico} 
-growth using \gls{fba} [2]. Of two experimentally-characterized 
+growth using \gls{fba} \cite{Fang:2010gc}. Of two experimentally-characterized 
 double gene deletions, the model accurately predicted reduced 
 \gls{insilico} growth in both in vitro and in vivo environmental 
-conditions [2]. A combination of drugs that affect synthetic 
+conditions \cite{Fang:2010gc}. A combination of drugs that affect synthetic 
 lethal targets may act synergistically to inhibit growth of 
 a pathogen, thereby paving the way for model-guided predictions 
 of drug synergy. Experimentally screening for all possible 
@@ -341,24 +345,24 @@ network \glssymbol{reconstruction} identify sets of reactions that act
 together and therefore may be targeted as an entire pathway. 
 Sets of correlated reactions (or Co-sets) consist of groups 
 of reactions whose \glspl{flux} are linked, and which represent 
-functional modules within a biochemical network [28]. Co-sets, 
+functional modules within a biochemical network \cite{Papin:2004eh}. Co-sets, 
 which can aid in suggesting alternative drug targets by 
 identifying reactions that are functionally related to each 
 other, can be divided into several categories. A perfect 
 Co-set consists of a group of reactions such that, for any 
 given pair in the group, a non-zero \gls{flux} in one reaction 
-implies a non-zero \gls{flux} in the other, with a fixed ratio [29]. 
+implies a non-zero \gls{flux} in the other, with a fixed ratio . 
 Other categories include partial Co-sets (pairs of linked 
 reactions, but with a variable \gls{flux} ratio) and directional 
 Co-sets (a non-zero \gls{flux} in one reaction implies a nonzero 
-\gls{flux} in the other, but the converse is not true) [29]. By 
-calculating hard-coupled reaction (HCR) sets – a subgroup 
+\gls{flux} in the other, but the converse is not true) \cite{Xi:2011gc}. By 
+calculating hard-coupled reaction (HCR) sets---a subgroup 
 of perfect Co-sets where sets of reactions are defined by 
 participating metabolites sharing a consumption to production 
 connectivity of 1:1 (i.e. two reactions are linked by a 
-metabolite that is connected to no other reaction) – one study 
+metabolite that is connected to no other reaction)---one study 
 found 25 of 147 HCR sets contained previously identified drug targets 
-in M. tuberculosis [1]. Because an altered \gls{flux} in one reaction 
+in \textit{M. tuberculosis} \cite{Jamshidi:2007ei}. Because an altered \gls{flux} in one reaction 
 results in an altered \gls{flux} of all reactions within a HCR set, only 
 one enzyme needs to be targeted. This approach aids in prioritizing 
 the list of potential drug targets by identifying linked enzymatic 
@@ -370,23 +374,25 @@ drug targets when data related to environment \glspl{flux} or appropriate
 \subsection{Environment and conditional essentiality}
 Finally, the metabolic phenotype is dependent on the media 
 environment and the exchange of metabolites into and out of 
-the system (see Box 3 for discussion of knowledge gaps 
+the system (see \hyperref[trends:box:caveats]{Box \ref{trends:box:caveats}} 
+for discussion of knowledge gaps 
 associated with nutrient availability). By constraining uptake 
 or secretion \glspl{flux}, a minimal set of metabolites that allows 
-\gls{flux} through the \glssymbol{objectivereaction} can be computed [18]. Moreover, 
+\gls{flux} through the \glssymbol{objectivereaction} 
+can be computed \cite{Chavali:2008gh}. Moreover, 
 enzymes or metabolites that are necessary for growth in 
 various environments (e.g.\ minimal media, defined media, 
 or rich media with an abundance of nutrients and carbon sources) 
-can be predicted. In the \glssymbol{reconstruction} of F. tularensis, 
+can be predicted. In the \glssymbol{reconstruction} of \textit{F. tularensis}, 
 genes that were essential in a simulated macrophage environment 
 and five other environmental conditions were considered to be 
 unconditionally essential genes (in other words, they 
 represented a core set of genes that were essential regardless 
 of the medium). Of the 17 virulence factors cataloged from 
 previous literature, eight were unconditionally essential 
-genes [21]. By contrast, enzymes that may be necessary for 
+genes \cite{Raghunathan:2010gl}. By contrast, enzymes that may be necessary for 
 growth under one condition, but not another, are conditionally 
-essential (Figure 2). With a careful consideration of an \glssymbol{objectivereaction}
+essential (\autoref{trends:fig2}). With a careful consideration of an \glssymbol{objectivereaction}
 and appropriate nutrient uptake, gene essentiality analysis may 
 reveal new drug targets specific to particular growth conditions 
 and environments in which a pathogen must survive. Such an 
@@ -399,31 +405,31 @@ treatment option.
 Computational analysis of metabolic processes in pathogens can 
 yield a ranking of predicted drug targets. Bioinformatics and 
 network analyses were performed to yield a high-confidence list 
-of targets against M. tuberculosis [30]. By implementing a 
+of targets against \textit{M. tuberculosis} \cite{Raman:2008km}. By implementing a 
 multilayered approach, targets that did not pass sequential 
 cut-off values were removed (e.g.\ elimination of enzymes with 
 human homologs or targets with no computationally predicted 
-binding pocket) [30]. In another proof-of-concept study it 
+binding pocket) \cite{Raman:2008km}. In another proof-of-concept study it 
 was noted that essential type II fatty acid biosynthesis (FAS II) 
-reactions in the E. coli MG1655 metabolic network were also 
-essential in several Staphylococcus aureus strains [31]. Following 
+reactions in the \textit{E. coli} MG1655 metabolic network were also 
+essential in several \textit{Staphylococcus aureus} strains \cite{Shen:2010cy}. Following 
 network analysis, a virtual screening strategy was employed 
 whereby small molecules from a library of approximately 106 
 compounds were docked to enzymes catalyzing essential reactions, 
 and 41 inhibitors of FAS II enzymes were selected for experimental 
-validation [31]. In cell viability assays, six of the inhibitors 
-had growth-retarding effects against E. coli and S. aureus 
-strains in standard LB agar plates [31]. Finally, following 
+validation \cite{Shen:2010cy}. In cell viability assays, six of the inhibitors 
+had growth-retarding effects against \textit{E. coli} and \textit{S. aureus} 
+strains in standard LB agar plates \cite{Shen:2010cy}. Finally, following 
 the identification of 163 essential metabolites, a third study 
 used a layered approach to prioritize five essential metabolites 
-in the metabolic network of the opportunistic pathogen Vibrio 
-vulnificus [25]. Currency metabolites, metabolites consumed by 
+in the metabolic network of the opportunistic pathogen 
+\textit{Vibrio vulnificus} \cite{Kim:2011jm}. Currency metabolites, metabolites consumed by 
 a single reaction, metabolites present in the human metabolic 
 network, and metabolites associated with enzymes with human 
 homologs were removed. The study screened 352 compounds found 
 to be structurally similar to one of the five essential metabolites 
 and identified one compound that most potently inhibited growth, 
-more so than a currently used drug [25]. These studies provide 
+more so than a currently used drug \cite{Kim:2011jm}. These studies provide 
 various examples of model-guided pipelines to drug discovery by 
 primarily using network analyses to identify and prioritize drug 
 targets. Additional constraints such as enzyme druggability and 
@@ -432,18 +438,18 @@ targets, which can then guide the screening and selection of compounds.
 
 A common approach in proposing drug targets using metabolic 
 networks has been to rule out targets that overlap with host 
-cell metabolism – the idea being that offtargets can be minimized 
+cell metabolism---the idea being that offtargets can be minimized 
 and drug interference plus subsequent complications with the host 
 can be avoided. However, there are arguments to be made in favor 
 of retaining targets that overlap with human metabolism. First, 
 accounting for the drug selectivity between host and pathogen 
 targets at the respective binding sites may preclude off-target 
-influences [32]. Second, if the goal is to discover drugs against 
+influences \cite{Hopkins:2008bb}. Second, if the goal is to discover drugs against 
 infectious diseases quickly, then the best option may be to 
 focus on finding new clinical indications for existing FDA-approved 
 drugs (i.e. pursuing drug repurposing strategies) instead of 
 developing new investigational compounds that are subject to 
-regulatory hurdles [33]. Also, the majority of FDA-approved 
+regulatory hurdles \cite{Chong:2007dl}. Also, the majority of FDA-approved 
 drugs target human proteins. Hence, eliminating pathogen 
 targets that overlap with human proteins reduces the number 
 of potential drugs that could be evaluated experimentally.
@@ -451,61 +457,63 @@ of potential drugs that could be evaluated experimentally.
 \section{A host cell perspective}
 Interaction with a host cell is often crucial to the metabolism 
 and survival of a pathogen. For instance, the kinetoplastid 
-parasite L. major is unable to synthesize several essential 
-amino acids and therefore obtains them from the host macrophage [34]. 
+parasite \textit{L. major} is unable to synthesize several essential 
+amino acids and therefore obtains them from the host macrophage \cite{McConville:2007df}. 
 As another example, Legionella pneumophila, the bacterium 
 responsible for Legionnaire’s disease, ceases to replicate 
 inside a host macrophage when it cannot access or process 
-threonine [35]. Consequently, identifying the particular 
+threonine \cite{Sauer:2005kf}. Consequently, identifying the particular 
 niche of nutrients and resources in the host cell required 
 by a pathogen is vital to discovering treatment options 
-that specifically target host–pathogen interactions [36].
+that specifically target host-pathogen interactions \cite{Brown:2008gm}.
 
 A systems-level analysis of pathogen metabolism interfaced 
 with cell type-specific host metabolic networks can also 
-be conducted. Because P. falciparum invades mature erythrocytes 
+be conducted. Because \textit{P. falciparum} invades mature erythrocytes 
 to establish infection in its human host, a metabolic model 
 of the human erythrocyte was built in conjunction with the 
-P. falciparum \glssymbol{reconstruction} to make predictions which aligned 
-closer to known conditions in the infected erythrocyte [37]. 
-This model, modifying an existing approach from Shlomi et al. [38], 
+\textit{P. falciparum} \glssymbol{reconstruction} to make predictions which aligned 
+closer to known conditions in the infected erythrocyte \cite{Huthmacher:2010hi}. 
+This model, modifying an existing approach from Shlomi et al. \cite{Shlomi:2008ik}, 
 integrated previous gene expression data where several enzymes 
 were constrained to be ‘on’ and ‘off’ during specific life-cycle 
-stages. The combined erythrocyte-blood stage P. falciparum 
+stages. The combined erythrocyte-blood stage \textit{P. falciparum} 
 network correctly predicted metabolite exchanges between the 
-microbe and host [37]. A recently active area of research has 
+microbe and host \cite{Huthmacher:2010hi}. A recently active area of research has 
 been the development of algorithms to create cell type-specific 
 metabolic networks by integrating gene and protein expression 
-data with existing human metabolic \glssymbol{reconstruction}s [38–40]. Inclusion 
+data with existing human metabolic \glssymbol{reconstruction}s 
+\cite{Shlomi:2008ik,Becker:2008iq,Jensen:2011ie}. Inclusion 
 of host-specific factors into pathogen metabolic-network 
 \glssymbol{reconstruction}s or developing systems-level models of host and 
 pathogen networks will continue to enable investigations into 
-the complexities of the host–pathogen interplay.
+the complexities of the host-pathogen interplay.
 
 Finally, inhibiting host pathways and perturbing the \gls{flux} of 
 metabolites in the host cell may alter the ambient environment 
 and require pathogens to adapt their metabolic needs. Therefore, 
-targeting the machinery of a host cell at the host–pathogen 
-interface can provide new therapeutic approaches [41]. For 
+targeting the machinery of a host cell at the host-pathogen 
+interface can provide new therapeutic 
+approaches \cite{Schwegmann:2008iq}. For 
 example, host proteins hijacked for viral replication are 
 potentially important drug targets. Recently, a high-throughput 
-screening assay identified a lipophilic compound – NA255 – that 
+screening assay identified a lipophilic compound--NA255--that 
 inhibits the host serine palmitoyltransferase, an enzyme 
 needed for association of hepatitis C virus (HCV) with host 
-lipid rafts [42]. Moreover, to characterize transformations 
+lipid rafts \cite{Sakamoto:2005bd}. Moreover, to characterize transformations 
 in host functions, data specific to the host cell preand 
 post-infection must be obtained. The analysis of transcription 
 profiles is one approach that has been successfully implemented 
 to identify genes in the host cell that are differentially 
-regulated due to pathogenic infection [43,44]. Similarly, 
+regulated due to pathogenic infection \cite{Handley:2006fc,Hossain:2006gl}. Similarly, 
 profiling the proteome and lipidome of a hepatocyte over 
 the time-course of infection and integrating these data with 
-protein–protein interaction networks revealed multiple 
+protein-protein interaction networks revealed multiple 
 lipids and enzymes differentially regulated in HCV-infected 
-cells [45]. A third approach for identifying factors in the 
+cells \cite{Diamond:2010it}. A third approach for identifying factors in the 
 host necessary for establishing infection involves the use 
 of genetic screens in which largescale insertional mutagenesis 
-is performed to develop null mutants in a human cell line [46]. 
+is performed to develop null mutants in a human cell line \cite{Carette:2009ba}. 
 Ultimately, the use of new experimental technologies along 
 with metabolic modeling will be vital to discovering host 
 components crucial to the survival of a pathogen.
@@ -521,36 +529,36 @@ Below, we highlight several future directions in this
 realm and provide a few examples of efforts already underway.
 
 The recent completion of metabolic \glssymbol{reconstruction}s of the 
-pathogen Pseudomonas aeruginosa [47] and the related nonpathogen 
-Pseudomonas putida [48] creates new opportunities for 
+pathogen \textit{Pseudomonas aeruginosa} \cite{Oberhardt:2008fr} and the related nonpathogen 
+\textit{Pseudomonas putida} \cite{Puchalka:2008ct} creates new opportunities for 
 investigating species-specific differences in metabolism 
-and the metabolic basis for virulence of P. aeruginosa. 
+and the metabolic basis for virulence of \textit{P. aeruginosa}. 
 Towards that end, a reconciliation of the two \glssymbol{reconstruction}s 
 was completed such that any differences in the metabolic 
-networks of P. aeruginosa and P. putida would be indicative 
+networks of \textit{P. aeruginosa} and \textit{P. putida} would be indicative 
 of true biological variations as opposed to artifacts of 
-the \glssymbol{reconstruction} and modeling process [49]. In the reconciliation 
+the \glssymbol{reconstruction} and modeling process \cite{Oberhardt:2011jq}. In the reconciliation 
 study, the model for each organism was analyzed to characterize 
 the tradeoffs of producing \glssymbol{biomass} versus the production of 
-individual metabolites. Compared to P. putida, P. aeruginosa 
+individual metabolites. Compared to \textit{P. putida}, \textit{P. aeruginosa} 
 was able to produce a small proportion of the shared virulence 
 factor precursors with only a slight decrease in \glssymbol{biomass} 
 production. In general, the metabolic flexibility analysis 
-suggested that the virulence of P. aeruginosa is complex 
+suggested that the virulence of \textit{P. aeruginosa} is complex 
 and highly multifactorial, and has more flexibility than 
-P. putida in many metabolic pathways. This computational 
+\textit{P. putida} in many metabolic pathways. This computational 
 analysis paves the way for future modeling efforts of other 
 infectious disease-causing agents and their basis for establishing 
 virulence.
 
 As another example, syntrophic mutualism between a sulfate-reducing 
-bacterium, Desulfovibrio vulgaris, and a methanogen, Methanococcus 
-maripaludis, was investigated by performing \gls{fba} on a compartment-based 
+bacterium, Desulfovibrio vulgaris, and a methanogen, \textit{Methanococcus 
+maripaludis}, was investigated by performing \gls{fba} on a compartment-based 
 model involving the metabolic \glssymbol{reconstruction}s of both organisms 
-and a culture medium [50]. In another study, gene expression data 
+and a culture medium \cite{Stolyar:2007jh}. In another study, gene expression data 
 were integrated with the genome-scale metabolic \glssymbol{reconstruction} of 
-P. aeruginosa in the context of a chronic cystic fibrosis lung 
-infection over a 44-month time-course [51]. This analysis provided 
+\textit{P. aeruginosa} in the context of a chronic cystic fibrosis lung 
+infection over a 44-month time-course \cite{Oberhardt:2010bp}. This analysis provided 
 a systems-level view of bacterial adaptations in a cystic fibrotic 
 lung environment over time. Subsequent studies can shed light on 
 the interactions between multiple organisms over the time course 
@@ -558,7 +566,7 @@ of an infection.
 
 Finally, automated \glssymbol{reconstruction} platforms such as ModelSEED 
 permit the rapid \glssymbol{reconstruction} of hundreds of draft bacterial 
-metabolic networks [52,53]. Integration of many such reconstructed 
+metabolic networks \cite{Overbeek:2005dv,Aziz:2008ku}. Integration of many such reconstructed 
 networks may help elucidate interactions within the host 
 microbiome and partially explain the development of opportunistic 
 infections that occur primarily because of an altered bacterial 
@@ -573,7 +581,7 @@ without eliminating non-pathogenic members.
 
 \section{Concluding remarks}
 As \glssymbol{reconstruction}s of metabolic networks become more standard 
-and automated [5], the need for computational tools to characterize 
+and automated \cite{Thiele:2010fr}, the need for computational tools to characterize 
 these networks becomes more apparent. In addition, the generation 
 and management of large datasets pertaining to both host cell 
 and pathogen intracellular processes of metabolism, signal 
@@ -587,7 +595,7 @@ constrained the value of some model predictions. For
 example, TraDIS (a new experimental method used to 
 identify all essential genes simultaneously) directly 
 measures gene essentiality that the model could only 
-predict [54]. However, the iterative relationship between 
+predict \cite{Langridge:2009ip}. However, the iterative relationship between 
 modeling and experiment will always permit the generation 
 of novel hypotheses and the contextualization of large 
 datasets, often in a quicker and more cost-efficient 
@@ -623,6 +631,3 @@ Diseases and International Health (5T32 AI0070465).
 
 \singlespacing
 \printbibliography
-
-
-
