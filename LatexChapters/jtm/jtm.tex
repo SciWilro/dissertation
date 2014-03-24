@@ -2,10 +2,272 @@
 
 \chapter{ JTM chapter }
 
-\section{Figures from JTM}
+\section{Motivation}
 
-Here is the analyses and figures that I made.
+Computational models that use millions of data points
+often require complex, multi-step analyses that few can implement or understand completely, 
+yet the end goal is most always 
+to find simple, fundamental relationships
+that most anyone can intellectually grasp. However, simple, well-designed
+summaries and descriptions of the data are, arguably, of equal importance if not
+more important than a predictive or mechanistic model.
+Transitioning from a computer and data to logic and understanding is a
+bottleneck for the sharing ideas with a larger community
+that can derive new interpretations to advance medicine.
+Visual summaries allow us to take advantage of the best
+analytical tool we have, the human intellect.
+Here, I present a phase II
+clinical trial in which I guided the analyses and presentation of the data
+after the completion of the treatment period \cite{Wagenseller:2013fj}.
+Through this example, I show how appropriate visualizations identified
+errors in previous analyses and enabled new interpretations and new
+hypotheses to be generated.
 
+The clinical trial was directed by Dr. Craig Slingluff at the
+University of Virginia. Aubrey Wagenseller, the first author on the associated
+publication \cite{Wagenseller:2013fj}, drafted the manuscript 
+and led follow-up experiments. A more general and briefer background
+of that given in the manuscript is provided below. My analsysis as presented
+in the publication (figures and results) are also presented in this section. 
+In addition, a more in depth description of the
+methods are also presented. This important addition allows one to understand
+the choice of methods and also reproduce
+the results shown in the publication, a process which is not possible from the
+supplemental data provided in the published manuscript.
+
+\section{Introduction}
+
+A metastatic melanoma (more formally `stage IV melanoma') is a type of cancer
+in which melanocytes (cells that produce the pigmant melanin that is found in
+the skin, eye, inner ear, etc.) grow improperly or uncontrollably 
+and spread to other parts of the
+body. Even with current treatments, the two-year survival rate is 
+under 20\%, so there is a need for new therapeutics
+or improvements upon current therapies \cite{Robert:2011vp}\cite{Hodi:2010wt}.
+To find more potent, target-specific drugs, several studies have targeted
+molecular pathways known to be disregulated in many melanomas \cite{Ko:2011dk}.
+Clinical trials with many of these monotherapies have had variable results:
+3\% response rate in a Temsirolimus (targeting PI3K-AKT-mTOR pathway) 
+trial and 0\% and 17\% response rates in two Bevaczimub (targeting VEGF)
+trials \cite{Margolin:2004vl,Varker:2007dj,Schuster:2012fo}.
+However, combination therapies that simultaneously target multiple
+pathways have potential to succeed where single drugs have failed.
+For example, Molhoek et al. found that dual targeting of VEGF and mTOR
+with bevacizumab and sirolimus synergistically reduced growth
+and caused death in VEGFR-2$^{+}$, patient-derived, melanoma cell lines \cite{Molhoek:2008jx}.
+In a follow-up phase II trial with 17 patients treated with temsirolimus+bevaczimub,
+three patients partially responded, nine had stable disease after 8 weeks,
+four had progressive disease, and one patient could not be 
+evaluated (\autoref{jtm:table1}) \cite{Slingluff:2013ej}. In this clinical study, additional miRNA data
+was taken from patients before and after treatment. This analysis aimed to 
+identify (1) if pre-treatment miRNA expression profiles 
+correlate with treatment response or (2) if any post- versus pre-treatment
+changes in miRNA expression correlate with the treatment effectiveness.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{ c c c c c c }
+Patient & Pre-tx & Post-tem & Post-combo & BRAF\textsuperscript{V600E} & Outcome \\ \hline
+1 &   &   & + & ND    & Stable disease \\
+2 & + & + & + & Y & Stable disease \\
+3 & + & + & ND & Y & Stable disease \\
+4 & + & + & + & Y & Stable disease \\
+5 & + & + & + & Y & Progressive disease \\
+6 & + & + & ND & N & Partial response \\
+7 & + & + & + & N & Progressive disease \\
+8 & + & + & + & Y & Progressive disease \\
+9 & + & + & + & N & Partial response \\
+10 & + & + & + & N & Not evaluable \\
+11 & + & + & ND & N & Stable disease \\
+12 & + & + & + & N & Stable disease \\
+\end{tabular}
+\end{center}
+\caption[Patient outcomes and availability of miRNA data]{
+    \textbf{Patient outcomes and availability of miRNA data.}
+    A `+' indicates that miRNA was measured from biopsies 
+    before treatment (Pre-tx), after temsirolimus treatment (Post-tem),
+    or after bevacizumab+temsirolimus treatment (Post-combo). All patients
+    received each treatment unless denoted with ND (not done). Blank entries indicate where
+    ample RNA could not be obtained.}
+\label{jtm:table1}
+\end{table}
+
+\section{Methods}
+
+\subsection{miRNA quantification}
+500 ng of total RNA was extracted from formalin-fixed, parafin-embedded
+tissue sections and labeled with the dye Hy3. A universal reference sample was labeled with
+Hy5. After image processing, the local \textit{median} background 
+signal was subtracted from the \textit{median} signal 
+of each spot on the array. The log of the ratio of these background-corrected signals
+($log(\text{Hy3}/\text{Hy5})$) was then
+normalized using LOWESS fits (fitting $log(\text{Hy3}/\text{Hy5})$ versus  
+$log(\text{Hy3} \times \text{Hy5}) / 2$ ).
+These intra-array normalized ratios were denoted as the `log median ratio' (LMR).
+Inter-array normalization was not performed because of the built-in normalization provided
+by the universal reference sample.
+The LMR metric will be unfamiliar to most researchers who use 
+popular single-channel, high-density RNA microarrays (e.g. Affymetrix).
+However, the universal reference sample in this experimental
+design better accounts for errors from cross-hybridization or
+probe-specific affinities. The raw data processing was performed by the manufacturer of the
+arrays. The images of the scanned arrays are not publicly available.
+The raw data files publicly available online (GEO \#GSE37131) only include
+the signal intensities for one channel, which makes it impossible to reproduce
+the data normalization. The processed data (the LMR values provided to me) are available
+online as an XML file. The code for parsing and analyzing this XML file is provided online
+in my public code repository. For more information about experimental methods, see
+Wagenseller et al. \cite{Wagenseller:2013fj}.
+
+
+
+\section{Results}
+
+\subsection{miRNA expression of all samples}
+
+\autoref{jtm:fig1} summarizes the miRNA data from tumors that could be biposied and profiled
+(14 of the 17 patients). The row of colors above the heatmap indicate the patient
+from which miRNA samples came. The shapes above each column of the heatmap represent the time
+at which the sample was obtained. Lines indicate pre-treatment samples. Filled circles represent
+samples from patients one day after temsirolimus treatment (day 1). Patients received
+bevacizumab+temsirolimus (day 8) and then temsirolimus (day 15). ``Double-circles'' indicate
+post-combination treatment samples
+that were obtained on day 23. The heatmap colors show the expression of each miRNA relative to
+a universal reference sample.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{jtm/Figure1}
+  \caption[miRNA expression profiles pre- and post-treatment]{
+       \textbf{miRNA expression profiles pre- and post-treatment}
+       The 50 miRNAs with the greatest variance across all samples are shown.
+  }
+  \label{jtm:fig1}
+\end{figure}
+
+The dendrogram in \autoref{jtm:fig1} shows a hierarchical
+clustering of miRNA samples based on correlation coefficients. 
+This clustering shows that the strongest
+factor distinguishing the tumors is the patient. In other words, patient to patient
+variability is greater than variability from any other factor such as pre- versus post-treatment.
+The tight clustering of technical replicates (shaded gray) showed that variations
+were due experimental or human error.
+In the initial analysis, there were only four 
+samples from patient 7 (there are five samples
+shown in \autoref{jtm:fig1}). However, the clustering suggested
+ that one of the pre-treatment samples for patient
+7, which had been annotated as patient 6, was mislabeled. After checking lab notebooks
+and shipping documents, we rectified the problem. Previous analyses did not visualize these results.
+Only p-values were calculated, and so this mistake had not been identfied. After correcting
+the annotations, the variance of samples from patients 6 and 7 decreased greatly.
+This, in turn, increased statistical power so that additional differentially expressed miRNAs could
+be detected.
+
+This initial profiling provided a general understanding of the structure and scale
+of the data. However, because the patient-to-patient variability so strongly
+dominated the overall variability, we performed statistical tests to focus
+on treatment effects.
+
+\subsection{miRNA expression changes after treatment}
+
+To identify differentially expressed miRNAs, paired t-tests were
+performed by comparing pre- and post-treatment groups (samples from
+the same patient were paired). \autoref{jtm:fig2} plots the p-values
+from these tests against the effect size (shown as $\text{dLMR} =
+\text{LMR}_{\text{post-treatment}} - \text{LMR}_{\text{pre-treatment}}$).
+These ``volcano plots'' helps identify differences that are statistically
+signficant (y-axis) while the x-axis helps identify large effects sizes
+that are often interpreted as more biologically significant. miRNAs with
+low p-values and large effects sizes are in the upper left and upper right
+corners of the plot. The samples used in the comparisons can be
+seen in \autoref{jtm:fig1} or \autoref{jtm:table1}. This visualization revealed
+a technical error in previous analyses that was to be used for publication before
+I joined the study. There was an unusual distribution of p-values with
+an overabundance of values close to 1.0, which appeared to be an artifact of the code used
+to calculate the statistics.
+This problem was resolved after missing values were 
+estimated using knn-imputation and p-values were calculated using 
+the R scripting language.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.65\textwidth]{jtm/Figure2}
+  \caption[Effect size and statistical significance of post- versus pre-treatment miRNA expression]{
+       \textbf{Effect size and statistical significance of post- versus pre-treatment miRNA expression}
+       Black circles represent individual miRNAs. Red circles indicate miRNAs of interest. Closed red
+       circles are putative tumor supressors.
+  }
+  \label{jtm:fig2}
+\end{figure}
+
+The volcano plots were used to defines miRNAs of interest, with the cutoffs
+being $|dLMR|>0.5$ and $p<0.01$ (gray lines in \autoref{jtm:fig2}). 
+No miRNAs met these cutoffs in the
+post-temsirolimus treatment versus pre-treatement comparison. However,
+there were 15 miRNAs of interest when comparing post-combination treatment
+versus pre-treatment. One concern from this analysis may be that the t-test
+is inappropriate if the effect sizes are not normally distributed. I therefore
+performed a permutation based statistical test (`Significant Analysis of Microarrays')
+and found the same 15 miRNAs as the most significant. Such close agreement
+between statistical tests is rare. The same findings with two statistical tests
+further supports these miRNAs as truly differentially expressed.
+The expression of the 15 miRNAs was validated by qRT-PCR
+Several of these miRNAs have predicte targets that are known
+to be oncogenic. For a discussion of these targets, see Wagenseller
+et al. \cite{Wagenseller:2013fj}.
+
+\subsection{Different miRNA expression changes between responders and non-responders}
+Last, we sought to investigate if there are particular miRNAs or sets
+of miRNAs whose pre-treatment expression would separate the responders from the non-responders
+(patients with `progressive disease'). This is a two-class
+classification problem (10 total samples) with 1,300 features (1,300 miRNAs). 
+Any linear model with 10 of the miRNAs will be guaranteed to perfectly predict
+responers. The problem is then to identify which 10 or fewer miRNAs
+most reliably predict responders versus non-responders. Backwards subtraction 
+selection of feautures finds many possible sets of miRNAs
+that perfectly predict responders. The problem of many possible models remains.
+Often, miRNAs are correlated to each other so that
+the independence assumption of linear models are violated. I investigated 
+regularized linear models (lasso and ridge regression), yet there was still no clear
+best set of miRNAs that predicted responders. Cross-validation of many models
+worked 100\% of the time. Other predictive models (e.g. support vector machines and
+decision trees) had similar problems. After conceding that there is no `best' model given
+the miRNA data, I decided to present the four miRNAs with $p<0.01$ and $|\text{dLMR}|>0.5$
+(\autoref{jtm:fig4}A). The heatmap shows that any one of these miRNAs, with an
+appropriately selected cutoff, are capable of predicting responders versus non-responders.
+\autoref{jtm:fig4}B shows miRNAs with $|\text{dLMR}|>0.5$ and $p<0.04$ when comparing post-combination
+treatment to pre-treatment expression. Finally, BRAF\textsuperscript{V600E}, BRAF\textsuperscript{WT}, melanomas are 
+treatable with vemurafenib. Since other treatments that target other pathways in BRAF\textsuperscript{WT}
+are needed (e.g. temsirolimus or bevacizumab), we also tried to distinguish 
+miRNAs that differ between BRAF\textsuperscript{V600E} and BRAF\textsuperscript{WT}.
+The separation of samples based on mutational status is more difficult (\autoref{jtm:fig4}C).
+However, there are a collection of miRNAs that warrant further investigation in the future.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{jtm/Figure4}
+  \caption[Different miRNA expression between responders and non-responders]{
+       \textbf{Different miRNA expression between responders and non-responders.}
+       Green numbers and branches indicate non-responders. Red numbers and branches indicate
+       BRAF\textsuperscript{V600E} tumors.
+  }
+  \label{jtm:fig4}
+\end{figure}
+
+\section{Conclusions}
+
+Proper use of simple statistical tests and well-designed visualizations corrected for
+small, but critical errors in the analyses of high throughput biological data
+obtained from a clinicial trial (\autoref{jtm:fig1}).
+
+Bevacizumab+temsirolimus treatment affects miRNA expression more than temsirolimus treatment alone,
+suggesting that the two drugs are at least additive in their effects on melanoma miRNA expression (\autoref{jtm:fig2}).
+This is in line with their synergistic growth-reducing effects in melanoma cell lines \cite{Molhoek:2008jx}.
+
+The pre-treatment expression of small sets of miRNA
+predicted the success of bevacizumab+temsirolimus treatment (\autoref{jtm:fig4}A). 
+The expression changes of 7 miRNAs could classify responders versus non-responders; these
+miRNAs may play a role in the response to treatment (\autoref{jtm:fig4}B).
 
 
 
