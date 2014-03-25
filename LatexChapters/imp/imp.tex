@@ -1,0 +1,717 @@
+\doublespacing
+
+\chapter{ Impedance chapter }
+
+\section{Abstract}
+
+\subsection{Background}
+Clostridium difficile toxins A and B (TcdA and TcdB), homologous 
+proteins essential for C. difficile infection, affect the behavior 
+and morphology of several cell types with different potency and 
+timing. However, precise morphological changes over various time scales, 
+which help explain the roles of cell types, are poorly characterized. 
+The toxins' glucosyltransferase domains are critical to their 
+deleterious effects, and cell responses to glucosyltransferase-independent 
+activities are incompletely understood. By tracking morphological 
+changes of multiple cell types to C. difficile toxins with high 
+temporal resolution, newly characterized cellular responses to 
+TcdA, TcdB, and a mutant, glucosyltransferase-deficient TcdB 
+(gdTcdB) are elucidated.
+
+\subsection{Results}
+Human umbilical vein endothelial cells, J774 macrophage-like 
+cells, and four epithelial cell lines were treated with TcdA, 
+TcdB, and gdTcdB. Impedance changes across cell cultures were 
+measured to track changes in cell morphology. Metrics from 
+impedance data, developed to quantify rapid and long-lasting 
+responses, were used to build standard curves with wide dynamic 
+ranges that defined cell line-specific toxin sensitivities. Except 
+for T84 epithelial cells, all cell lines were more sensitive to TcdB 
+than TcdA. Macrophages rapidly stretched and arborized, and then 
+increased in size in response to TcdA and TcdB but not gdTcdB. 
+High concentrations of TcdB and gdTcdB ($>$10 ng/ml) resulted 
+in loss of intact macrophages. In HCT8 epithelial cells, 
+gdTcdB (1000 ng/ml) elicited a cytopathic effect only after 
+several days, yet it was capable of delaying TcdA and TcdB's 
+rapid effects. gdTcdB did not delay TcdA's stimulation of macrophages.
+
+\subsection{Conclusions}
+Epithelial and endothelial cells have similar responses to toxins 
+yet differ in timing and degree. Relative potencies of TcdA and 
+TcdB in mouse epithelial cells in vitro do not correlate with 
+potencies in vivo. gdTcdB is not entirely benign in HCT8 cells. 
+TcdB requires glucosyltransferase activity to stimulate macrophages, 
+but cell death from high TcdB concentrations is 
+glucosyltransferase-independent. Competition experiments with gdTcdB show 
+TcdA or TcdB round HCT8 cells through common mechanisms, yet 
+macrophages are stimulated through potentially different pathways. 
+This first-time, precise quantification of multiple cell lines 
+provides a comparative framework for contextualizing previous 
+research and delineating the roles of different cell types and 
+toxin-host interactions.
+
+\section{Introduction}
+
+Clostridium difficile infections, with an annual occurrence in the 
+US of over 300,000, cause potentially fatal diarrhea and colitis [1]. 
+These pathologies arise from the release of two potent, homologous, 
+protein toxins—TcdA and TcdB—into the host gut. The toxins' 
+interactions with many cell types lead to disease, yet the relative 
+sensitivities and roles of different cell types remain poorly 
+understood. Both toxins disrupt the epithelial barrier by causing 
+epithelial cells to round and detach [2]. Neutrophil infiltration 
+and activation of other immune cells, driven by inflammatory 
+signals, are also key to toxin-induced enteritis [3]. Though 
+several molecular mediators of disease have been identified, 
+little is understood about the host cell dynamics and the role 
+of each cell type involved [4, 5]. To explore the toxins' 
+effects on different cells, facets of the host response have 
+been studied using cell lines treated with TcdA and/or TcdB 
+(e.g., release of cytokines [4, 6, 7], changes in cell 
+morphology [8, 9], gene expression [10, 11], and cell death [12, 13]). 
+Most of these assays used in previous studies are limited to 
+few time points, and since both toxins affect cells rapidly 
+(in less than one hour), it is unknown if either toxin has 
+additional effects on finer time scales and if any of these 
+effects are consistent across cell lines at comparable concentrations.We and others have tracked temporal changes in cell 
+morphology and attachment in response to TcdA or TcdB 
+by continuously measuring electrical impedance across 
+the surface of a cell culture [14-16]. When cells 
+grow or increase their footprint or adherence, impedance 
+rises. In contrast, cell rounding, shrinking, and/or 
+death correspond to decreased impedance. This assay 
+has primarily been used as a sensitive diagnostic—as 
+a more quantitative replacement of assays that are 
+dependent on visualization of cell rounding. In 
+this study, we recognize that this impedance data, 
+in addition to indirectly detecting the amount of toxin 
+in samples, can further be analyzed to reveal previously 
+unrecognized, dynamic responses of host cells. Our analyses 
+and associated metrics also allow precise comparisons 
+between the effects of TcdA and TcdB and between different 
+cell types. Using epithelial and endothelial cells, 
+these analyses identify characteristics such as the minimal 
+effective toxin concentrations and the shortest time to 
+measurable toxin effects; standard curves with wide 
+dynamic ranges can also be derived. Impedance changes 
+of other cells, such as macrophages, are not as easily 
+linked to known cell functions, but the data reveal toxin 
+effects that would not otherwise be observed at lower 
+temporal resolution. This knowledge contextualizes the 
+potential roles and relative abilities of different cell 
+types to respond directly to toxin during an infection. Impedance curves that profile cell responses also provide 
+insight into the toxins' molecular functions. TcdA and 
+TcdB have glucosyltransferase domains that inactivate small 
+GTPases. With the use of engineered mutant toxins, 
+glucosyltransferase activity has been found necessary 
+for cell rounding [17]. However, evidence that some 
+glucosyltransferase-deficient mutants of TcdB (gdTcdB) 
+are cytotoxic has raised questions about whether there 
+are other, previously unknown toxin activities [18]. In 
+order to identify changes dependent and independent of 
+glucosyltransferase activity, we use gdTcdB to evaluate 
+the dynamics of the response of macrophage and epithelial 
+cell lines to gdTcdB, elucidating changes dependent and 
+independent of glucosyltransferase activity. We also 
+leverage the unique response profiles to TcdA, TcdB, 
+and gdTcdB in order to investigate synergy or antagonism 
+between toxins.The cell response profiles define the dynamics of basic 
+changes in cell physiology (e.g., cell rounding) across 
+multiple cell types in response to TcdA, TcdB, and gdTcdB. 
+This understanding identifies those times most representative 
+of the entire cell response, delineates the contribution 
+of glucosyltransferase activity to overall toxin effects, 
+and suggests the relative roles of various cell during 
+toxin-mediated disease.
+
+\section{Methods}
+
+\subsection{Cell Culture}
+HCT-8 cells were cultured in RPMI-1640 supplemented with 10\% 
+heat-inactivated fetal bovine serum (HI-FBS) and 1 mM 
+sodium pyruvate. J774A.1 cells were cultured in DMEM high 
+glucose media supplemented with 10\% HI-FBS, 1 mM, and 
+MEM nonessential amino acids (Gibco 11140). HUVEC cells 
+(passage 3) were cultured in endothelial growth medium 
+(EGM-Bullet Kit CC-3124, Lonza group). T84 cells were 
+grown in an equal mixture of Ham's F12 and Dulbecco's 
+modified Eagle's media supplemented with 2.5 mM L-glutamine 
+and 5\% HI-FBS. All cells were incubated at 
+37\textdegree{}C/5\% CO2. In our analyses, we include 
+our previous data from immortalized, mouse, cecal 
+epithelial cells (hereon referred to as IMCE cells) 
+which were derived by Becker et al. and incubated at 
+33\textdegree{}C as described by Becker et al. [16, 19]. 
+TcdA and TcdB, isolated and purified from strain VPI-10643, 
+were a generous gift from David Lyerly (TECHLAB Inc., Blacksburg, VA). 
+Recombinant gdTcdB and TcdB were a generous gift from the 
+laboratory of Aimee Shen.
+
+\subsection{Electrical impedance assay}
+Impedance was measured using the xCELLigence RTCA 
+system (ACEA Biosciences), which consists of an RTCA 
+DP Analyzer and 16-well E-plates. PBS was added around 
+all wells to prevent evaporation. In each well, 100 \textmu{}L 
+media was incubated at room temperature for 30 minutes, 
+and one baseline reading was taken. Cells in 100 \textmu{}L 
+media were then added and allowed to settle at room 
+temperature for 30 minutes. Plates were then moved inside 
+the RTCA DP Analyzer inside a CO2 incubator at 37\textdegree{}C. 
+Subsequent readings were taken at frequencies ranging between 
+every 4 seconds to every 10 minutes, with higher frequency 
+measurements reserved for times directly before toxin 
+addition to at least 6 hours after addition (complete 
+protocols and data files available in the Supplemental Material).Since the impedance measurements are sensitive to 
+slight movements or vibrations, the method by which 
+toxin was added to cells was an important consideration. 
+In our initial experiments, mechanical agitation and 
+replacement of media sometimes caused small, sharp 
+spikes in electrical impedance. To minimize disturbances, 
+plates were not removed from the RTCA Analyzer once 
+seated. Toxins prepared in media (10x) were gently 
+pipetted using only one to two depressions. Media was 
+not replaced after the addition of toxin.
+
+\subsection{Analyses}
+The protocols, data, computer code, and instructions 
+for running the code that reproduce all results and 
+figures are provided in the Supplemental Material.
+
+
+\section{Results}
+
+\subsection{Quantification of the cytopathic effects 
+              elicited by TcdA and TcdB}
+In order to assess the cytopathic effects of TcdA and TcdB, 
+we measured changes in impedance across the surface of 
+electrode-embedded wells (Methods). Impedance is dependent 
+upon cell number, adherence, and morphology. It increases 
+as cells proliferate or spread and decreases when toxin is 
+added and cells round up (\autoref{imp:fig1}). The rate at which impedance 
+decreases is dependent on the toxin, toxin concentration, and cell 
+type (\autoref{imp:fig2}A and \autoref{imp:fig2}B). To summarize the data-rich 
+``impedance curves'', we calculated simple metrics: the 
+area between the curves of control and toxin-treated cells 
+(ABC, gray area in inset of \autoref{imp:fig1}), the maximum slope of 
+a curve (MaxS), and time for a curve to decrease by 50\% (TD\textsubscript{50}, 
+\autoref{imp:fig1}). A negative ABC indicates that the impedance curves 
+of toxin-treated cells are below the curves of untreated 
+cells. Blue, dashed lines in Figure 2C show the variability 
+of the ABC of control cells from their average impedance 
+curve. Standard curves relating TD\textsubscript{50} to toxin concentration 
+have been generated before [20], and we found that our 
+metrics, ABC and MaxS, also produce log-linear calibration 
+curves (\autoref{imp:fig2}C). Among replicates, differences in 
+timing translated to differences in TD\textsubscript{50}, as expected, 
+whereas MaxS values were more similar. In simpler terms, 
+for replicates within and between experiments, the time 
+required to observe a change in impedance was more 
+variable than the rate of the change. For this reason, 
+we found that MaxS, instead of TD\textsubscript{50}, better quantified 
+rapidity of the cell response to high toxin concentrations. 
+The other metric, ABC, captures long-term effects by 
+integrating readings over several hours. The minimal 
+concentration to induce a change in impedance from control 
+is denoted as the minimal cytopathic concentration 
+(MCC; \autoref{imp:fig2}C). When ABC and MaxS are considered together, 
+toxin concentration can be determined with a dynamic 
+range spanning six orders of magnitude or more (depending 
+on toxin and cell type). Together, these metrics allow 
+for millions of data points and hundreds of wells to be 
+simultaneously visualized and summarized to dozens of numbers 
+or fewer that can be easily interpreted (e.g., \autoref{imp:fig2}D 
+and Supplement).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{imp/Figure1.png}
+  \caption[Measurement of toxins’ cytopathic effects by tracking 
+            electrical impedance across the surface of a cell culture]{
+       \textbf{Measurement of toxins’ cytopathic effects by tracking electrical 
+             impedance across the surface of a cell culture.}
+       All impedance readings were normalized to the impedance at 
+       the time toxin was added. Shaded regions above and below lines 
+       represent the standard deviation of technical replicates (n=2). 
+       Readings were taken as quickly as every four seconds (Methods). 
+       The brightness of each photograph was adjusted digitally 
+       (uniformly across an entire photograph) to make the overall 
+       brightness across all photographs similar.
+  }
+  \label{imp:fig1}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{imp/Figure2.png}
+  \caption[SQuantification of cytopathic effects]{
+       \textbf{Quantification of cytopathic effects. }
+       \textbf{(A and B)} The cytopathic effects between cell types and 
+       toxins can easily be distinguished. \textbf{(C)} The impedance 
+       curves can be analyzed to produce two metrics, ABC and 
+       MaxS, which can then be used to define the minimal 
+       cytopathic concentration (MCC). \textbf{(D)} The MCC of TcdA and 
+       TcdB for five cell lines define cell line specific sensitivities.
+  }
+  \label{imp:fig2}
+\end{figure}
+
+\subsection{Epithelial and endothelial cells: similar characteristic responses
+              but different sensitivities to TcdA and TcdB}
+In the first set of comparisons, we chose four well-characterized 
+cell types or cell lines—one endothelial (HUVECs) and three 
+epithelial (CHO, HCT8, and T84)—and one immortalized, cecal, 
+mouse epithelial cell line (IMCE, see Methods). For these 
+five cell lines, the MCC for TcdA and TcdB varied over ranges 
+of 0.1-1 ng/ml and 0.1-100 pg/ml, respectively (\autoref{imp:fig2}D). 
+We did not find a maximal effective concentration of either 
+toxin (1 μg/ml was the highest concentration tested). TcdB 
+was consistently 100-1000 times more potent than TcdA, except 
+in T84 cells, which were equally sensitive to TcdA and 
+TcdB (as measured by MCC). The curves were largely similar 
+in that they all consisted of a short delay followed by a 
+sharp decrease that then leveled off (\autoref{imp:fig2}A); differences 
+were primarily in scale. Determining the time to the onset 
+of the first toxin effects was complicated slightly by the 
+physical process of adding toxins to wells—a process which 
+caused disturbances that temporarily affected impedance 
+(note the early “bump” in \autoref{imp:fig2}A). Nevertheless, differences 
+between control and toxin-treated cells can be distinguished. 
+Across all cell types, the time required for an impedance 
+curve to diverge from control was more than ten minutes. 
+Nothing clearly suggested an immediate response to toxin binding. 
+Morphological changes might not occur until after toxins 
+enter cells and glucosylate Rho proteins. We next examined 
+early effects of toxins on macrophages and investigated the 
+contribution of glucosyltransferase activity to the dynamics 
+of cell responses.
+
+\subsection{Macrophages: rapid, sensitive, complex concentration-dependent 
+              responses to TcdA and TcdB}
+J774 mouse macrophages were as sensitive and responsive to 
+TcdA and TcdB as epithelial cells. The impedance of 
+macrophages treated with TcdA (300 ng/ml) and TcdB (10 ng/ml) 
+diverged from controls in 10 and 20 minutes, respectively 
+(Supplement). In contrast to epithelial cells, however, the 
+impedance of macrophages increased after toxin addition (\autoref{imp:fig3}), 
+and the responses of J774 cells to TcdA and TcdB differed in 
+shape and scale. TcdA caused a rise in impedance at 0.1 ng/ml, 
+and the magnitude and speed of this rise increased until 
+TcdA concentration reached 100 ng/ml (\autoref{imp:fig3}A). At 
+higher concentrations (300 and 1000 ng/ml), the slope of 
+the rise continued to increase, yet the rise was inhibited, 
+as if stopped prematurely before reaching its peak, and 
+then impedance dropped below that of control cells (Figure \autoref{imp:fig3}A
+and Supplement). Considering now TcdB, 0.1, 1, and 10 ng/ml 
+caused impedance to rise and stabilize at approximately double 
+the initial value; only the slope of the rise (not the final 
+height) was affected by toxin concentration (Figure 3A and 
+Supplement). These curves allowed us to resolve time 
+points that would be of most interest for cell imaging. 
+Increases in impedance, for TcdA and TcdB, correlated 
+with rapid stretching and arborization of cells (appearance 
+of many filopodia in \autoref{imp:fig3}B) that suggest macrophage 
+activation. Over the next 48 hours, cells increased in size 
+and became more circular (\autoref{imp:fig3}B). Subsequently for TcdA, 
+decreased impedance correlated with a decrease in intact 
+cells (\autoref{imp:fig3}B). These results support complex 
+dynamic responses of J774 cells to different toxin 
+concentrations or a response driven by two or more 
+cellular functions (e.g. activation and apoptosis are 
+known to occur in monocytes and macrophages in response 
+to TcdA and TcdB [12, 21-23]).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{imp/Figure3.png}
+  \caption[Macrophage responses to TcdA and TcdB]{
+       \textbf{Macrophage responses to TcdA and TcdB}
+       \textbf{(A)} Impedance curves from a selection of toxin 
+       concentrations for TcdA and TcdB. Both graphs 
+       represents one multi-well experiment where confluent 
+       cells were treated with toxin. 
+       \textbf{(B)} Pairing of impedance data with photographs 
+       to show the morphological changes represented 
+       in the impedance data. Since wells with electrodes 
+       are opaque, technical replicates in transparent 
+       wells were used for microscopy. Sub-confluent 
+       cultures were used so that structural changes 
+       in individual cells could more easily be observed.
+  }
+  \label{imp:fig3}
+\end{figure}At 100, 300, and 1000 ng/ml of TcdB, the impedance curves were 
+entirely different than lower concentrations. Instead of 
+rising, impedance fell (see loss of intact cells in bottom 
+row of images of \autoref{imp:fig3}B). Hence, at a concentration 
+between 10 and 100 ng/ml, the response of macrophages to 
+TcdB switches from cell stretching to a degradation of 
+normal cell structure. We hypothesized that the 
+glucosyltransferase activity of TcdB, when at or above 
+100 ng/ml, is not necessary to induce the loss of intact 
+cells. To investigate this, we used gdTcdB. First, to 
+better understand the effects of gdTcdB, we examined its 
+ability to induce the well-known cytopathic effects of TcdA 
+and TcdB in epithelial cells.
+
+\subsection{Glucosyltransferase-deficient TcdB alters the effects of TcdA and TcdB
+              on macrophages and epithelial cells}
+Since the cytopathic effects of TcdA and TcdB have been 
+attributed to their glucosyltransferase activities, we expected 
+that gdTcdB would not cause cell rounding. Indeed, the 
+impedances of HCT8 cells treated with gdTCB (100 and 1000 ng/ml) 
+and untreated cells were indiscernible in the first ten 
+hours after toxin addition (\autoref{imp:fig4}A). However, gdTcdB 
+caused an unexpected slow rise in impedance above that of 
+control cells (\autoref{imp:fig4}A). During this rise, imaging revealed 
+continued growth, elongation, and close apposition of 
+untreated cells, while cells treated with 100 or 1000 ng/ml 
+of gdTcdB rounded slightly but remained attached (\autoref{imp:fig4}A). 
+The increased impedance elicited by gdTcdB was followed by 
+a slow decrease towards that of TcdB-treated cells. This 
+decrease, which took more than six days, was due to 
+detachment of cells and disruption of cell morphology 
+(\autoref{imp:fig4}A). Hence, though gdTcdB does not round 
+cells quickly as with TcdB, it still has unexplained, 
+slow effects that alter the morphology of HCT8 epithelial cells.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{imp/Figure4.png}
+  \caption[Response of HCT8 epithelial cells to gdTcdB, 
+             TcdA+gdTcdB, and TcdB+gdTcdB]{
+       \textbf{Response of HCT8 epithelial cells to 
+               gdTcdB, TcdA+gdTcdB, and TcdB+gdTcdB}.
+       \textbf{(A)} Impedance curves of HCT8 cells treated with 
+       gdTcdB and corresponding photographs. 
+       \textbf{(B)} HCT8 cells 
+       treated with TcdB or gdTcdB and TcdB in combination. 
+       \textbf{(C)} HCT8 cells treated with TcdA or gdTcdB 
+       and TcdA in combination. The three graphs are 
+       from the same multi-well experiment but are 
+       representative of three independent experiments.
+  }
+  \label{imp:fig4}
+\end{figure}
+To investigate if TcdA and TcdB have overlapping activity, 
+we performed experiments with gdTcdB plus TcdA or TcdB. We 
+anticipated that gdTcdB would attenuate or delay the effects 
+of TcdB and perhaps TcdA. Indeed, a tenfold excess gdTcdB 
+delayed the onset of the effects of TcdA and TcdB in HCT8 
+cells (\autoref{imp:fig4}B and \autoref{imp:fig4}C). 
+Competition for shared substrates 
+(Rho family proteins) of gdTcdB with TcdA and TcdB likely 
+account for the delay, although other factors such as 
+shared receptors may be responsible.We next determined glucosyltransferase-dependent toxin effects 
+on J774 macrophages. Low gdTcdB concentrations did not cause 
+macrophages change their morphology as did TcdB (\autoref{imp:fig5}A). 
+However, gdTcdB at 100 and 1000 ng/ml resulted in a loss 
+of intact macrophages, similar to TcdB at 100 ng/ml 
+(\autoref{imp:fig5}A). Hence, glucosyltransferase activity is 
+required for macrophage stretching and arborization 
+but not required for the loss of intact cells for 
+concentrations of TcdB at or above 100 ng/ml.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{imp/Figure5.png}
+  \caption[Response of J774 macrophages to gdTcdB, 
+             TcdA+gdTcdB, and TcdB+gdTcdB]{
+       \textbf{Response of J774 macrophages to 
+               gdTcdB, TcdA+gdTcdB, and TcdB+gdTcdB}.
+    \textbf{(A)} Impedance curves of J774 cells treated with gdTcdB 
+    and corresponding photographs. Concentrations 
+    at or below 10 ng/ml are denoted as “low”, and 
+    other concentrations are denoted as “high”. This 
+    data is derived from the same experiment shown in 
+    Figure 3B. 
+    \textbf{(B and C)} J774 cells treated with TcdB; gdTcdB and 
+    TcdB in combination; or gdTcdB and TcdA in 
+    combination. The data in the three graphs are 
+    derived from three independent experiments.
+  }
+  \label{imp:fig5}
+\end{figure}
+
+Since TcdA and TcdB caused different effects at and 
+above 100 ng/ml, we hypothesized that TcdA and TcdB 
+have one or more distinct activities in macrophages. 
+As expected, gdTcdB delayed the effects of TcdB on 
+J774 cells (\autoref{imp:fig5}B). However, gdTcdB did not clearly 
+attenuate or delay the response of J774 cells to TcdA, 
+suggesting that the prominent responses to TcdA and 
+TcdB in these cells are due to distinct toxin activities 
+or substrates (\autoref{imp:fig5}C).
+
+\section{Discussion}
+In this study we systematically profiled the dynamic 
+responses of epithelial, endothelial, and macrophage 
+cell lines to TcdA and TcdB, revealing relative 
+sensitivities and complex concentration-dependent 
+cell responses. While comparing results from different 
+experimental systems is difficult, our data have allowed 
+quantitative comparisons between cell types and between 
+toxins under similar conditions, distinguishing which cell 
+types may respond most quickly or most intensely when 
+exposed directly to toxins. The impedance “response profiles” 
+provide continuous readouts representing external changes 
+in morphology and adherence that occur from several 
+possible functions within the cell. We began to explore 
+the mechanisms of these changes by using glucosyltransferase 
+deficient TcdB (gdTcdB), revealing which molecular 
+functions of the toxin contribute to different aspects 
+of response profiles. The response profiles also raise 
+many questions about the mechanisms for the novel differences 
+we observed. Although addressing each of these in detail 
+is beyond the scope of this study, we highlight, in the 
+following text, the findings that bring about these questions, 
+discuss their relevance to previous studies, and so explain 
+how they improve our current understanding of host cell 
+responses to TcdA and TcdB.The cytopathic effects of TcdA and TcdB that led to their 
+discovery are still used as the gold standard diagnostic 
+for infection [24, 25]. Since most cytotoxicity assays 
+are endpoint assays, the kinetics of these effects that 
+are key to scientific research and clinical practice have 
+not been characterized. With a continuous assay, we 
+were better able to observe immediate effects of toxin. 
+Although toxins may interact immediately with the toxin 
+surface, the morphological differences (represented by 
+impedance) occurred after a delay of ten minutes or more. 
+Since TcdA (2.65 \textmu{}g/ml) has been found to enter 
+HT29 cells in 5-10 minutes, the delay we observed is likely 
+because toxins must enter HCT8 cells to alter their morphology [26].Epithelial and endothelial cell lines had the same 
+characteristic changes in morphology, yet the rapidity 
+of the changes distinguished different cell types, 
+toxin concentrations, and TcdA versus TcdB. These differences 
+could be summarized by condensing the data into metrics 
+that represented the greatest rate of the change (MaxS) 
+and the cumulative amount of change over several hours 
+(ABC). When these metrics are considered together, standard 
+curves over many orders of magnitude can be used to 
+measure toxin concentration and determine the minimal 
+amount of toxin necessary to induce an effect (MCC, Figure 2D). 
+The CHO cell line was second-most sensitive to TcdB, making 
+CHO cells a good choice for toxin detection. Indeed, a 
+modified CHO cell line was used in the development of an 
+ultrasensitive assay of toxin activity [14]. T84 cells, 
+the least sensitive to TcdB, were similarly sensitive to 
+TcdA and TcdB, as has been found previously [27]. For 
+TcdB, the two rodent cell lines (CHO and IMCE) were more 
+sensitive than the three human cell lines (HCT8, HUVEC, 
+and T84), although more cell lines would be needed to 
+confirm any species-specific sensitivity. For TcdA, 
+cell line sensitivities were less variable than for TcdB, 
+indicating that factors that make cells vulnerable to 
+TcdA may be more consistent between cell lines.Comparisons between TcdA and TcdB have often been a 
+prominent research focus. TcdB is more cytotoxic in cell 
+culture; TcdA is more enterotoxic in animal intoxication 
+models [16, 28]; and there are varying results about which 
+toxin is essential for C. difficile infection [29, 30]. 
+Identifying which toxin contributes most to disease helps 
+prioritize therapeutics. Comparisons between toxins are 
+also valuable scientific tools. Differences in the toxins' 
+effects provide clues about their molecular activities. 
+Also, by correlating differences in host cell responses 
+to differences in disease severity, particular cell 
+types or toxin activities can be prioritized. For instance, 
+TcdA is more enterotoxic than TcdB in mice and hamster 
+ceca, damaging the epithelial barrier [16, 31]. This 
+agrees with findings that TcdB binds weakly in the hamster 
+intestine, and TcdA binds epithelial cells [32, 33]. 
+One might then expect that cecal epithelial cells from 
+mice of the same genetic background as those used in the 
+aforementioned in vivo studies (IMCE cells) would be 
+more sensitive to TcdA than TcdB. Instead, IMCE cells 
+were over 100 times more sensitive to TcdB than TcdA, 
+suggesting that factors in addition to the cytopathic 
+effects on epithelial cells are important in explaining 
+the pathologies of toxins in vivo. The extracellular 
+environment or other cell types may be the key mediators 
+determining disease severity.Macrophages are likely exposed to toxin after epithelial damage 
+and play an important part in disease, changing morphology 
+and releasing molecules that exacerbate inflammation [22, 34]. 
+Previous studies have quantified the viability either TcdA- 
+or TcdB-treated macrophages at one or two time points [21, 23, 35]. 
+We characterized the effects of both toxins on macrophages, 
+and the other cell types already presented, over many more 
+concentrations and time points. J774 macrophages, HUVECs, 
+and epithelial cells had similar sensitivity to toxins, 
+indicating that all may be affected directly by toxins 
+during disease. TcdA or TcdB rapidly stretched and 
+arborized macrophages, which was reflected in increased 
+macrophage impedance. However, the timing and 
+concentration-dependent effects of TcdA and TcdB were 
+different, as discussed below.TcdA increased macrophage impedance, and a subsequent 
+decrease from the peak of the increase towards the impedance 
+of control cells correlated with a loss of intact cells. 
+This agrees in part with Melo Filo et al. who reported 
+that TcdA and TcdB killed 30\% and 60\%, respectively, 
+of primary mouse macrophages (1 ug/ml at 24h) [23]. The 
+balance of activation and death may therefore account for 
+the rise and fall of impedance of TcdA-treated macrophages. 
+At 100 ng/ml (the concentration at which the rise in 
+impedance was greatest), two effects appear to be balanced. 
+At higher concentrations, the stimulatory effect that 
+raised the impedance occurred more rapidly but did not 
+reach the same height, indicating that higher concentrations 
+move the balance away from stimulation towards death and 
+decreased adherence.TcdB caused two distinct responses in J774 macrophages: 
+stretching (with “low” concentrations at or below 10 ng/ml) 
+or a loss of intact structure (with “high” concentrations 
+at or above 100 ng/ml). Siffert et al. showed TcdB-treated, 
+human macrophages arborize with little loss of viability 
+(1\textmu{}g/ml at 3h and 24h) [21]. This arborization 
+corresponds with the morphological responses of J774 
+macrophages to low TcdB concentrations. It is possible 
+that TcdB also causes two distinct response in human 
+macrophages, but Siffert et al. only reported results at 
+one concentration. Although much remains to be determined 
+about the mechanisms of these effects, we have identified 
+new characteristics of the dynamic responses of 
+macrophages and these effects help to explain the 
+role of macrophages during disease. In the intestine, 
+macrophages likely respond to several signals begun during 
+intoxication, and given their high sensitivity, may 
+also respond directly to toxin in the intestine. Early 
+stimulation of macrophages may contribute to acute 
+inflammation, while eventual death correlates with 
+macrophage depletion and neutrophil accumulation in 
+C. difficile associated diarrhea [36].The cell responses described above prompted questions about 
+toxin mechanisms. For instance, microinjection of TcdB's 
+glucosyltransferase domain is sufficient to induce 
+cytopathic effects, yet are there changes in cell structure 
+independent of glucosyltransferase activity [37]? We found 
+that 100 or 1,000 ng/ml of gdTcdB raised the impedance of 
+epithelial cells above controls two days after toxin 
+addition, and this difference was observed by tightly 
+packed, visibly distinct control cells versus a smoother 
+monolayer and slightly rounded gdTcdB-treated cells. The 
+mechanisms for these differences are unclear. It is possible 
+another toxin activity is unmasked when the strong 
+cytopathic activity is removed or that the mutant 
+glucosyltransferase affects substrates differently. After 
+several days, gdTcdB causes cytotoxic or cytopathic effects. 
+Chumbler et al. found that glucosyltransferase mutants were 
+cytotoxic to HeLa cells after only 2.5h [18]. The different 
+cell types (HCT8 versus HeLa) and different glucosyltransferase 
+mutants may account for the differences in timing. It 
+is also possible that any residual glucosyltransferase 
+activity of the mutant toxin is not revealed until 
+several days after treatment. The effects of mutant 
+toxins have never been assessed over such long time 
+scales with such great sensitivity.The relatively benign effects of gdTcdB in the first 
+hours after addition to HCT8 cells allowed us to 
+investigate the effects of gdTcdB in combination with 
+TcdA and TcdB. Since TcdA and TcdB are homologous, one 
+might expect that gdTcdB should interfere with TcdA. 
+Indeed, gdTcdB delayed the cytopathic effects of TcdA 
+and TcdB. A first interpretation of this result is 
+that TcdA and TcdB compete for cell entry. However, 
+two studies using truncated toxins found that (1) 
+the C-terminal domain (which is believed to be 
+necessary for toxin internalization) of TcdA does 
+not inhibit the effects of TcdB and (2) the TcdB 
+C-terminus inhibits neither TcdA or TcdB-induced 
+cell rounding [38, 39]. Hence, at the point of cell 
+entry, TcdA and TcdB likely do not interfere with one 
+another. Since the glucosyltransferase domains of TcdA 
+and TcdB have many of the same Rho-family proteins as 
+substrates, another interpretation is that the toxins 
+compete after internalization. In this scenario, our 
+results would indicate that gdTcdB is processed by 
+the host cell, and its glucosyltransferase domain is 
+still capable of binding Rho proteins or is at least 
+close enough to interfere with TcdA. Although 
+gdTcdB-mediated changes have the potential to reveal 
+interesting mechanisms independent of glucosyltransferase 
+activity, the results overall confirm the central 
+role of the glucosyltransferase domains in eliciting 
+the rapid, full effects of TcdA and TcdB in epithelial 
+cells. However, as described later, glucosyltransferase 
+activity may not be required for all toxin effects in 
+all cell types.gdTcdB often delayed the onset of cytopathic effects 
+by one hour or less. Without high temporal resolution, 
+we would have likely missed the time window in which 
+TcdB+gTcdB was different than TcdB alone. This has 
+implications in other studies that wish to identify 
+other host factors that enhance or attenuate toxin 
+effects. Without precisely tracking changes in cell 
+structure, several potential inhibitors of toxin 
+effects could be missed.Since macrophages detect a variety of antigens, 
+one might expect that the responses to toxin might 
+not be entirely dependent on glucosyltransferase activity.
+The stretching of macrophages with low TcdB 
+concentrations required glucosyltransferase activity. 
+However, high TcdB concentrations destroyed intact 
+macrophage structure by an unknown, 
+glucosyltransferase-independent mechanism.The high sensitivity of epithelial cells, endothelial cells, 
+and macrophages to TcdA and TcdB suggests that all of 
+these cells could be damaged by direct toxin interaction 
+in the host. However, the amount and location of toxin 
+during infection is very poorly understood. With 
+sensitivities of cells reaching as low as 100 pg/ml, 
+tracking toxins by immunohistochemistry is technically 
+challenging. Antibody labeling has only detected toxin 
+on fixed, toxin-treated tissues with concentrations 
+greater than 1 \textmu{}g/ml [33]. Assessing sensitivities 
+in vitro provides an indirect measure of the roles of 
+different cell types in isolation. In addition to their 
+direct effects, TcdA and TcdB initiate a cascade of 
+deleterious events involving multiple cells. Neuronal 
+signals have been implicated in beginning the disease 
+process, stimulating mast cells or macrophages that may then 
+recruit other cells [40-43]. Neutrophil infiltration is a 
+hallmark of intoxication, yet neutrophils in vitro require 
+much higher toxin concentrations than all other cell types 
+to be affected or recruited (>1 μg/ml) [3, 9, 44-46]. 
+Hence, it is thought that neutrophils may be primarily 
+recruited by signals secondary to toxin damage [3, 4, 47]. 
+To confirm the low toxin-sensitivity of neutrophils, we 
+did attempt to measure impedance changes of neutrophils 
+in response to toxins, yet the variability in these 
+primarily non-adherent cells (impedance largely measures adherence) 
+was too high to identify differences (Supplement). 
+Elements of the toxin responses of other cell types 
+(e.g., mast cells [48-50], dendritic cells[51, 52], 
+neurons [53, 54], fibroblasts [55, 56], etc.) have been 
+studied, yet the dynamics of their responses—and in many 
+cases concentration-dependent effects—are unknown. In the 
+future, precisely capturing the time and concentration-dependent 
+responses to TcdA and TcdB will better contextualize their 
+potential roles in the host. Our analyses of endothelial 
+cells, epithelial cells, and macrophages in the same 
+experimental framework set a precedent for such comparisons. 
+Furthermore, we show how data from sensitive, continuous 
+assays, could be used to gain insight into cell function 
+and molecular mechanisms and generate new hypotheses. The 
+framework and simple analyses may also be used to investigate 
+synergy, antagonism, or interactions between bacterial toxins 
+and other host factors that affect cells over a wide range of 
+time scales.
+
+\section{Author's contributions}
+KD and MB performed computational and statistical analyses 
+and drafted the manuscript. KD made all figures and 
+wrote the supplement. KD, MB, YR, MG, and EO performed 
+experiments. KD, JP, and EH conceived of the study. KD, 
+MB, YR, MG, JP, and EH participated in the study design 
+and coordination. All authors edited drafts and approved 
+the final manuscript.
+
+\section{Acknowledgements}
+We are exceedingly grateful to David Lyerly and 
+TECHLAB Inc. for providing purified TcdA and TcdB 
+as well as Aimee Shen for providing recombinant TcdB 
+and gdTcdB. This work was supported by the National 
+Institute of Allergy and Infectious Diseases Regional 
+Center of Excellence program through the Mid-Atlantic 
+Regional Center of Excellence in Biodefense and Emerging 
+Infections (2 5U54 AI057168). KD was supported by the 
+Infectious Diseases Training Grant to the University 
+of Virginia Division of Infectious Diseases and 
+International Health (5T32 AI007046).
+
+
+\singlespacing
+\printbibliography
+
+
+
