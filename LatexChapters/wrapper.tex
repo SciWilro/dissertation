@@ -1,5 +1,5 @@
 % beginning
-\documentclass[11pt]{report}
+\documentclass[11pt,openany]{book}
 
 % For tables with multirow rows
 \usepackage{multirow}
@@ -117,18 +117,22 @@
 
 \begin{document}
 
-%\include{TitlePage/TitlePage2}
+\frontmatter
+\include{TitlePage/TitlePage2}
 %\include{ApprovalSheet/ApprovalSheet}
-%\tableofcontents
-%\listoffigures
-%\listoftables
+\tableofcontents
+\listoffigures
+\listoftables
 
 \doublespacing
-\include{bmc/bmc}
-\include{ini/ini}
-\include{trends/trends}
+\include{preface/preface}
+
+\mainmatter
 \include{jtm/jtm}
-\include{imp/imp}
+%\include{bmc/bmc}
+%\include{ini/ini}
+%\include{imp/imp}
+%\include{trends/trends}
 
 \singlespacing
 \printbibliography
