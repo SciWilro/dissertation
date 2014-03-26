@@ -43,7 +43,7 @@
 \usepackage[labelfont=bf]{caption}
 
 % citations
-\usepackage[style=nature, sorting=none, refsection=chapter, maxbibnames=99, backref=true]{biblatex}
+\usepackage[style=nature, sorting=none, maxbibnames=99, backref=true]{biblatex}
 \addbibresource{ini/ini.bib}
 \addbibresource{bmc/bmc.bib}
 \addbibresource{trends/trends.bib}
@@ -123,13 +123,15 @@
 %\listoffigures
 %\listoftables
 
-
-%\include{bmc/bmc}
-%\include{ini/ini}
-%\include{trends/trends}
-%\include{jtm/jtm}
+\doublespacing
+\include{bmc/bmc}
+\include{ini/ini}
+\include{trends/trends}
+\include{jtm/jtm}
 \include{imp/imp}
 
+\singlespacing
+\printbibliography
 
 
 \end{document}
