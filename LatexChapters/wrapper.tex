@@ -48,6 +48,7 @@
 \addbibresource{bmc/bmc.bib}
 \addbibresource{trends/trends.bib}
 \addbibresource{jtm/jtm.bib}
+\addbibresource{imp/imp.bib}
 \AtEveryBibitem{\clearfield{issn}}
 \AtEveryCitekey{\clearfield{issn}}
 
@@ -55,16 +56,16 @@
 \usepackage[colorlinks=true,
             urlcolor=blue,
             linkcolor=blue,
-            citecolor=blue]{hyperref}
-
-% upright greek letters
-\usepackage{textgreek}
+            citecolor=blue,
+            unicode]{hyperref}
 
 % Other fonts using xelatex
 \usepackage{fontspec}
 
+% upright greek letters
+\usepackage{textgreek}
+
 % my custom fonts
-%\setmainfont[Ligatures=TeX]{Adobe Caslon Pro}
 \newfontfamily\myfont[Ligatures=TeX]{Adobe Caslon Pro}
 \newenvironment{caslonpro}{\myfont}{\par}
 
@@ -128,6 +129,7 @@
 %\include{trends/trends}
 %\include{jtm/jtm}
 \include{imp/imp}
+
 
 
 \end{document}
