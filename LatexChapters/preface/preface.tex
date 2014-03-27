@@ -1,5 +1,233 @@
+\chapter{Acknowledgements}
+
+First and foremost, I would like to thank my family for their
+love and continued support during my graduate education. 
+Throughout my work in the past few years, I have finally begun to realize
+the degree of the dedication of my parents, Mike and Jennifer, to
+my sister and me while at the same time succeeding
+in their even more challenging careers. I thank my sister and 
+best friend, Wendy, for showing me how to survive, always keeping my spirits up,
+and keeping me grounded and sane.
+
+I would not be adequately equipped for my research if it weren't for
+the faculty, students, and researchers in Biomedical Engineering
+and the Biomedical Sciences at UVa.
+As an engineer, I have had the incredible opportunity to work day in and day out
+with biologists, learning how to develop and contextualize my work.
+At the same time, the faculty in Biomedical Engineering have developed my intuition for applying
+models to practical problems.
+I've been fortunate to ``grow up'' in 
+this multilingual scientific community, unknowingly becoming fluent in different 
+``scientific languages''.
+
+My dissertation would not exist if it wasn't for collaborations
+and help from colleagues and friends.
+The students with whom I've worked with the longest---Arvind, 
+Edik, Paul, Phil, Anna, and Jennie---have provided constant critical feedback
+that has improved my work and kept me focused. Edik Blais, the other
+the other developing statistician in lab, has been
+a fantastic resource, my go-to person for improving my visualizations.
+I'd especially like to thank
+Arvind Chavali, a colleague with whom I collbarated with many times, but even more
+a friend who showed me the ropes, and has and I'm sure will continue to provide advice
+for years to come. I've been very fortunate to have wonderful fellow students that
+have made my time at UVa so enjoyable, whether it be cheering for the 'Hoos
+or discovering Charlottesville's most interesting locations and activities.
+
+I'm indebted to the handful of researchers with whom I have worked most closely
+since my first day of graduate school. 
+Mary Gray and Gina Donato, who always happily
+answered my many questions, taught me most everything I know at the bench.
+Without their instruction, I would surely have spent many months of frustration
+troubleshooting every problem I encountered.
+Cirle Warren, in our group's weekly meetings, has helped me
+put my research into clinical cotext.
+Glynis Kolling has been a tremendous resource, showing me what 
+is and is not possible experimentally and helping me choose the best
+path to follow based on my many crazy ideas.
+I've had the privilege to work side by side with this group of researchers,
+at the bench and at the whiteboard hammering out ideas and manuscripts.
+
+Finally, I'd like to thank those on my dissertation committee:
+Shayn Peirce-Cottler, Kevin Janes, Alison Criss, Erik Hewlett, and Jason Papin.
+My discussions with them have shown me their genuine interest in my career.
+They have pushed me far beyond my comfort zone as only
+a clever engineering student to become a better thinker, to step
+back, understand the broader goals, and decide the most beneficial
+steps to achieve those goals.
+
+Erik Hewlett has graciously served as an unoffical secondary advisor,
+and I am grateful for the time he has given me the past five years.
+After every experiment, presentation, and paper, he has been right there
+excited to hear how things are going, ready to provide encouragment and criticism.
+As someone from an engineering background where tools and 
+methods are neat exciting,
+he has contributed greatly to my ability to logically think step-by-step
+through a complete study. I am also greatly appreciative for the opportunities he has provided.
+I have been able to meet and work with many other great people through his initiatives.
+
+Jason Papin has been everything that a great mentor should be.
+I still don't understand how he is available to me and everyone else
+whenever we need him.
+I have and will continue to try to emulate him as I mentor others.
+It then should go without saying that he has helped me develop
+into a better scientist and all that goes along with being successful in academia.
+I credit much of my progression from a fault-finding, cynic to more of a  
+forward-thinking optimist to his influence.
+Beyond this, what has been remarkable to me is his genuine interest for 
+my own personal and career goals. It is for this that I am most thankful.
+He has shown me how to better approach problems, not just scientific ones, and has
+given me the freedom to think independently, to fail and to succeed on my own.
+
+
 \chapter{Preface}
 
-This is the preface
+\section{Me, a biomedical engineer}
+
+I don't label myself an engineer in the traditional sense; 
+I don't design things to be manufactured. I also dislike 
+being called a scientist because of the visual it may provoke; 
+most of my time isn't spent in a long white coat at a 
+bench. Though others might think me one, I don't consider 
+myself a statistician, computer scientist, or biologist either.
+
+I am a scientist in that I’m curious about nature, especially 
+health and medicine. I’m an engineer in that I’m curious 
+about translating scientific understanding to ideas and 
+tools that will improve others' quality of life. To do 
+this, I use and invent tools in mathematics, statistics, 
+computer science, and the biological sciences. There is 
+no formal and universally accepted definition of a 
+``biomedical engineer'' and likely never will be. However, 
+the above description is the one I use and, I believe, is
+close to the definition of many other self-proclaimed 
+biomedical engineers.
+
+\section{Me, a computational systems biologist}
+
+As a biomedical engineer in the information age, trillions of 
+data points are available. In this dissertation alone, I gather 
+data from dozens of expression states of the 3.3-billion 
+letter human genome or 2.8-billion letter mouse genome. Tens 
+of thousands of megapixel images of individual cells are 
+captured at different wavelengths of light. Tissue and blood 
+samples from hundreds of mice under different stresses are 
+analyzed microscopically and by molecular assays to quantify 
+pathology, the proportion of different cells (e.g., epithelial, 
+white blood cell, etc.), and the amounts of dozens of proteins. 
+However, these data points independent of each other are of little 
+use. As an example, consider a mouse that ingests a toxin. If we then observe 
+inflammation in the mouse’s intestine, we wonder about the cause.
+After dissecting tissue sections, we then find that a particular 
+gene is expressed prior to inflammation. Is this gene responsible for 
+inflammation? Are there other genes whose regulation is 
+linked to this gene of interest? How does expression 
+of this gene translate to the amount of its gene product, 
+the protein that physically interacts with the cells’ 
+environment? Is this inflammation only due to local 
+events? What about the brain and the nervous system? What 
+happens after inflammation? Are there any changes throughout 
+the body from the local injury in the intestine (e.g., in 
+the blood)? Where did the toxin go? The questions go on, 
+but it is apparent that there are many levels of data and 
+interactions, a \textbf{system}, that determine the apparent 
+clinical manifestation. \textbf{Systems biology} aims 
+to consider biological systems as a whole and answer how 
+one or many changes affects the state or output of the 
+entire system.
+Systems biology requires computational tools just so data 
+can be managed, so the term \textbf{computational systems biology} 
+is somewhat redundant. The term’s definition will change 
+from person to person. As I use it in this dissertation, 
+it is distinct from ``systems biology'' in that computational tools 
+are used to make insights and comparisons that would be experimentally 
+impossible, or would at least be prohibitively difficult.
+Computational systems biology may take well-designed, simple, 
+compartive experiments that are the core of good scientific 
+research (e.g., think null versus 
+alternate hypotheses and p-values) and then go one step further
+by presenting the data in novel ways and by making formal, rigorous predictions. 
 
 
+\section[My dissertation as systems biologist]{My dissertation as a biomedical engineer 
+              and computational systems biologist}
+
+As I described above, Biomedical Engineering and Computational Systems
+Biology include aspects of many different fields (biology, medicine, engineering, etc.).
+Therefore, this dissertation includes new contributions and tools to these fields, 
+allowing for better descriptions and reliable, repeatable predictions from biological data.
+The unifying element to these contributions and tools is one research question:
+why do a bacterium's toxins make us sick and what are ways
+to make us better once we're sick? More specifically,
+I show how multi-level, systems biology data improves our understanding of host cell responses 
+to the two principal virulence factors of \textit{Clostridium difficile}, toxins A and B. 
+This understanding suggests new treatments and diagnostics, but also 
+reveals entirely new ways of thinking that offer leads to promising targets
+for future treatments. 
+
+\section{A preview of this dissertation}
+
+\subsection{Introduction}
+\subsubsection{ Background of C. difficile }
+Cdiff is bad
+\subsubsection{ Background of transcriptomics research }
+Analyses are hard
+
+\subsection{JTM paper}
+Example of transcriptomics
+\subsection{ Linker is to go from individual genes to pathways and functions }
+
+\subsection{BMC paper}
+Lots of changes in cells
+\subsection{Linker is going towards in vivo}
+Make sure to show the unpublished results from Ki-67 and other pictures
+Mention that there are better methods to look at this, Fucci mice
+No one has ever considered how growth is regulated over long term by
+low toxin concentrations in long-lasting infections.
+
+\section{INI paper}
+Many variables. Many changes. Markers of disease severity.
+
+\subsection{Linker. Quantification of toxin}
+Make sure to show the pictures of cells and the quantification of toxin.
+
+\subsection{Linker. The effects of other cell types}
+
+\section{Impedance paper}
+These are the different cell types
+
+\subsection{Metabolic changes are big}
+Repeat some of the findings with the in vivo arrays.
+Show the western diet and results.
+
+\subsection{Linker}
+Discuss future directions with metabolism and inflammation.
+
+\section{Trends Review}
+
+
+\section{Concluding remarks and final thoughts}
+Discuss how we may not be studying the specific response to toxin,
+yet a general host response to acute inflammation. This is good and 
+bad. Work can be extended to other toxins and causes of
+diarrhea and inflammation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
