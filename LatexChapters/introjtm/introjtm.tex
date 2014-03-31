@@ -1,7 +1,294 @@
 
-\chapter{JTM Introduction}\label{chapter:intro3}
+\chapter[Choosing transcriptomics analyses]{Choosing reliable, reproducible 
+           transcriptomics analyses}\label{chapter:intro3}
+
+Throughout this dissertation, I present analyses of the expression of the genomes
+of human cells or tissues of mice that have been treated 
+with \textit{C. difficile} toxins A and B
+(TcdA and TcdB) in order to determine the pathogenic responses
+of the host at the cellular level. 
+In learning how to process this type of data,
+I encountered many limitations and misunderstandings in 
+common gene expression analyses. In this chapter, I describe
+the background of this type of data and data analyses that form 
+the base of this dissertation, and explain some important considerations
+for interpreting sometimes very different results 
+produced by different data analyses, an overlooked problem in the
+majority of gene expression studies.
+
+\section{Background}
+
+\subsection{mRNA as a measure of cell state}
+
+Our genomes are a sequence of $\sim$3-billion ``letters'' from a four-letter
+alphabet of nucleobase molecules (\textit{bases}) \cite{Lander:2001wi}. 
+Each of our $\sim$20,000 genes is pieced together from, on average,
+5 physically separate sequences called \textit{exons}. Exons, which
+range from $\sim$20 to 1,600 bases, are contained
+within one of the 46 strands of DNA in our cells \cite{Michael:1999dm}.
+
+The central dogma of molecular biology is 
+DNA $\rightarrow$ RNA $\rightarrow$ protein \cite{Crick:1970wb}.
+In each cell, exons are
+copied (\textit{transcribed}) and spliced into portable
+messenger RNA (mRNA). 
+mRNA is then \textit{translated} to strings
+of amino acids that arrange themselves into shapes with 
+chemical properties that perform specific tasks.
+These amino acid strings, or proteins, are the primary functional 
+units that execute the instructions in our DNA.
+
+When a protein is needed, a cell's ``circuitry'' 
+triggers a gene (the DNA encoding that protein)
+to be transcribed to mRNA that is then translated to the protein.
+Specific amounts of proteins are produced
+in response to different stimuli. Since the proteins will alter
+the physical state of cells and consequently the body's overall physiological responses, 
+many scientists have striven to understand the arrangement and logic
+of this regulatory circuitry.
+
+Most of this circuit's components were identified soon after the
+sequencing of the human genome in 2003 \cite{Consortium:2004bm,Gregory:2006tu}.
+This and decades of previous biological research provided a very basic view
+of connections within the cell, yet many of the studies delineating
+functions were limited to small sets of genes and proteins.
+To be able to understand how all the components affect each other,
+there had to be a way to take snapshots of the levels of thousands more 
+mRNAs or proteins.
+
+In 1982, technology to simultaneously measure
+genome-wide gene expression (i.e., the levels of mRNA in a cell)
+from a collection of cells was already being developed \cite{Augenlicht:1982wo}. 
+Current RNA sequencing technologies
+can now count individual mRNA molecules (\textit{transcripts}) from a collection of cells
+for \${}1000 or less.
+
+\subsection{Measuring mRNA levels with microarrays}
+
+DNA molecules consist of two, connected, parallel strands, each strand 
+containing a sequence of nucleobases along a sugar backbone.
+The four bases (adenosine (A), thymine (T), cytosine (C), guanine (G))
+join to each other by hydrogen bonds. A only pairs with T; C only pairs with G.
+When two strands are aligned so that the base pairs match, the two strands
+\textit{hybridize}.
+
+Strand-specific hybridization can be used to identify
+DNA sequences from uncharacterized samples. For example, single-stranded DNA
+with a known sequence
+can be fixed to a substrate or surface, and DNA from an unknown
+source can then be labeled and washed over that surface.
+If DNA from the two sources have matching strands (i.e., they
+\textit{complement} one another), the labeled
+DNA will hybridize and be detected.
+The first ``gene arrays'' that could detect multiple sequences in this way
+were built by attaching 
+DNA to hundreds of spots (\textit{probes}) on glass plates or 
+slides \cite{Maskos:1992co, Augenlicht:1982wo}.
+Each probe contained thousands or millions of DNA 
+molecules with the same sequence so that one gene was detected per probe.
+
+Since hybridization requires two DNA samples, mRNA must
+be reverse transcribed back to DNA if it is to be measured on a gene array.
+The resulting complementary DNA (cDNA)
+can then be labeled and detected.
+Signal intensities from the probes indicate the relative amounts of each
+mRNA in a sample.
 
 
+Microarrays, very small gene arrays, were introduced in 1995 \cite{Schena:1995fy}. 
+Although microarrays require more sophisticated
+manufacturing, they are based on the principles of older gene arrays.
+
+
+\section{Affymetrix microarray analyses}
+
+The most commonly used microarrays over the past decade
+have been made by Affymetrix.
+In less than one square inch, they fit over one million probes, enough
+to measure genome-wide expression (the \textit{transcriptome}).
+Since exons are usually much longer than the 25-nucleotide probes,
+\textit{probe sets} of ten to fifteen probes are designed to hybridize
+one gene or exon.
+
+\subsection{Steps of data preprocessing}
+
+\subsubsection{Nonspecific hybridization}
+
+For each probe, Affymetrix made another
+\textit{mismatch} probe with the 13\textsuperscript{th} 
+base changed. 
+By subtracting the mismatch signal from the \textit{perfect-match} signal,
+\textit{nonspecific hybridization} from other transcripts may be 
+estimated (\textit{perfect match correction}).
+However, mismatch hybridization is far more complex than this.
+Usually, more than one third of mismatch probes have a higher
+signal than their perfect match probes \cite{Irizarry:2003ge}. 
+This should theorectically never happen. Several have proposed
+hierarchical models with nonlinear terms that
+better account for mismatch probes 
+\cite{Li:2001jv,Milo:2003tt,Liu:2005ey,Hein:2005ip}, yet algorithms
+that ignore mismatch probes perform equally
+well or better \cite{Chen:2007cr,Irizarry:2003ge,Hochreiter:2006ja}.
+
+\subsubsection{Background correction}
+
+Since mismatch probes cannot be used and there is no 
+empty space on high-density arrays, 
+background signals must be estimated from many
+probes. Affymetrix first proposed splitting an array
+into zones and calculating background signals from low
+intensity probes. This approach systematically corrects large
+sections of the array,
+yet it does not address probe-specific background signals.
+
+Taking a statistical approach, 
+Irizarry et al. observed the distribution
+of all observed probe signals ($O$) could be approximated by
+a mixture of an exponential distribution ($S$) and a
+normal distribution ($B$) \cite{Irizarry:2003ge}.
+$S$ and $B$ were considered the true signal and background signal, respectively ($O=S+B$).
+After the mean and variance of $S$ and $B$ are estimated from the data, 
+the background-corrected signal can be calculated 
+as $\text{E}[S|O=o]$ by the robust multi-array average (RMA) procedure in
+\cite{Irizarry:2003ge}. 
+Wu et al. introcuded gcRMA, which improved upon RMA by 
+accounting for sequence-specific probe
+affinities that were determined from previous experiments
+($O=S+B+N$ where $N$ is non-specific hybridization due to
+differences in probe sequences) \cite{Wu:2004wh}. gcRMA
+also modeled mismatch probes by making two equations, one for 
+$O_{\text{mismatch}}$ and one for $O_{\text{perfect}}$, with one common 
+term, the true signal $S$. 
+Similarly, other model-based expression value calculations
+have the option to include or ignore
+mismatch probes (e.g.,\cite{Li:2001jv,Milo:2003tt}).
+
+\subsubsection{Probe set summarization}
+
+To get a gene's expression value, the probes in a probe
+set must be summarized. 
+Since outliers are common, robust
+statistics (e.g., median) are preferred.
+Affymetrix first recommended the Tukey bi-weight
+statistic, calculating probe set values one microarray at a time.
+However, many probes have similar effects across all microarrays
+(e.g., different affinities), and these \textit{probe effects} can 
+be modeled and removed to increase precision as was shown by Li and Wong 
+(\cite{Li:2001jv,Li:2001wk} is often called the ``Li-Wong method'').
+The most popular summarization, ``median polish'', places a probe set's expression
+values $a_{ij}$ in a matrix ($i$ indicates the probe an $j$ 
+indicates the array). The row and column medians are 
+iteratively subtracted to estimate an error matrix. Probe effects and
+expression values are calculated from the sum of the subtracted row 
+and column medians, respectively, minus the 
+medians of both vector sums \cite{Mosteller:1977vp,Irizarry:2003ge}.  
+Chen et al.'s ``distribution-free, weighted'' summarization
+accounts for probe effects primarily by assuming that low-variability
+probes are high-quality and should be weighted more 
+than other probes \cite{Chen:2007cr}.
+Hochreiter et al. assume perfect match probes are normally distributed, enabling
+them to perform `factor analysis' 
+where the `factors'
+are considered normalized concentrations of mRNA \cite{Hochreiter:2006ja}. 
+Even more complex models may incorporate 
+background correction, perfect-match correction, and probe set summarization
+into one step, yet each step is typically performed separately.
+
+\subsubsection{Normalization}
+
+Systematic differences between arrays must be normalized if they
+are to be compared.
+
+
+
+
+
+\subsection{Choosing a preprocessing workflow}
+
+\subsubsection{Probe-level and probe set-level}
+
+\subsubsection{Order and necessity of analysis steps}
+
+\subsection{Interpreting processed microarray data}
+
+\subsection{Caveats of microarrays and alternatives}
+
+\subsection{Future improvements in transcriptomics analyses}
+
+
+
+
+
+in 
+
+
+
+One could simply calculate the mean or median
+of a probe set's probes.
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Probe effect}
+
+The affinities of probes to transcripts also vary.
+
+
+The truth is that some work better for detecting levels, some
+better account for low intensity variation, some find a way use the mismatch
+information to gain a slight boost in accuracy. There is no best way.
+
+some work for better output. correlation with RMA versus gcRMA
+gcRMA sacrifices precision for better accuracy
+
+
+
+
+
+z
+
+
+Quality metrics
+Background Correction
+Normalization
+Perfact Match correction
+Probe set summarization
+  Annotation -- definition of probe sets
+  
+  
+
+
+RNA
+
+
+synthesized DNA to glass slides.
+
+
+Many of these weak hydrogen bonds join the strands together. 
+ 
+
+
+
+form two base pairs that weakly bind to each other 
+(adenosine (A) pairs 
+
+
+\subsection{Caveats of transcriptional analyses}
+
+
+
+
+\subsection{Data processing}
+
+
+ transcriptional data
 
 
 
@@ -38,7 +325,8 @@ Use many tools to reveal findings from data. Typically,
 models greatest usefulness are there ability to guide us, 
 not to tell us the answers.
 
-There is always a constant tug from “hypothesis generating” 
+
+There is always a constant tug from “hypothesis generating” 
 research and “hypothesis generated” research. Discovery 
 based versus logical yes/no experiments. It’s a spectrum, 
 but it’s how we think about it.

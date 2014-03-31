@@ -43,12 +43,13 @@
 \usepackage[labelfont=bf]{caption}
 
 % citations
-\usepackage[style=nature, sorting=none, maxbibnames=99, backref=true]{biblatex}
+\usepackage[style=nature, sorting=none, maxbibnames=500, minbibnames=99, backref=true]{biblatex}
 \addbibresource{ini/ini.bib}
 \addbibresource{bmc/bmc.bib}
 \addbibresource{trends/trends.bib}
 \addbibresource{jtm/jtm.bib}
 \addbibresource{imp/imp.bib}
+\addbibresource{introjtm/introjtm.bib}
 \AtEveryBibitem{\clearfield{issn}}
 \AtEveryCitekey{\clearfield{issn}}
 
@@ -118,36 +119,37 @@
 \begin{document}
 
 \frontmatter
-\include{TitlePage/TitlePage2}
+%\include{TitlePage/TitlePage2}
 %\include{ApprovalSheet/ApprovalSheet}
-\tableofcontents
+%\tableofcontents
 %\listoffigures
 %\listoftables
 
 \doublespacing
-\include{preface/preface}
+%\include{preface/preface}
 
 \mainmatter
-\include{intromain/intromain}
+%\include{intromain/intromain}
 
 \include{introjtm/introjtm}
 %\include{jtm/jtm}
 
-\include{introbmc/introbmc}
+%\include{introbmc/introbmc}
 %\include{bmc/bmc}
 
-\include{introini/introini}
+%\include{introini/introini}
 %\include{ini/ini}
 
-\include{introimp/introimp}
+%\include{introimp/introimp}
 %\include{imp/imp}
 
-\include{introwellz/introwellz}
-\include{wellz/wellz}
+%\include{introwellz/introwellz}
+%\include{wellz/wellz}
 
-\include{introtrends/introtrends}
+%\include{introtrends/introtrends}
 %\include{trends/trends}
 
+%\include{conclusion/conclusion}
 
 
 \singlespacing

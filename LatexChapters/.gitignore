@@ -16,3 +16,4 @@ wrapper.run.xml
 *.glg
 *.gls
 *synctex.gz
+*.gz(busy)
