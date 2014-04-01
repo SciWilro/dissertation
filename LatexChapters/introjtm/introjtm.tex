@@ -100,17 +100,22 @@ Although microarrays require more sophisticated
 manufacturing, they are based on the principles of older gene arrays.
 
 
-\section{Affymetrix microarray analyses}
+\section[Microarray preprocessing]{Microarray preprocessing techniques}
 
 The most commonly used microarrays over the past decade
-have been made by Affymetrix.
-In less than one square inch, they fit over one million probes, enough
+have been made by Affymetrix. I described here many methods
+designed for these arrays, yet the principles can be extended to
+most other microarray technologies and even sequencing data.
+
+\subsection{Steps of data preprocessing}
+
+\subsubsection{Affymetrix microarrays}
+
+In less than one square inch, Affymetrix arrays fit over one million probes, enough
 to measure genome-wide expression (the \textit{transcriptome}).
 Since exons are usually much longer than the 25-nucleotide probes,
 \textit{probe sets} of ten to fifteen probes are designed to hybridize
 one gene or exon.
-
-\subsection{Steps of data preprocessing}
 
 \subsubsection{Nonspecific hybridization}
 
@@ -197,148 +202,106 @@ into one step, yet each step is typically performed separately.
 \subsubsection{Normalization}
 
 Systematic differences between arrays must be normalized if they
-are to be compared.
+are to be compared. The simplest normalization procedures center
+all array values by mean, median, or some other measure, yet centering
+doesn't account for different ranges of values.
+Quantile normalization forces two arrays to have the exact same
+statistical distribution \cite{Bolstad:2003ia}. Li and Wong's normalization
+iteratively searches for a group of ``householding genes'' (the invariant 
+set of probes) that will be forced to the same expression values in all arrays,
+and all other probes are adjusted accordingly \cite{Li:2001wk}.
+Huber et al. found that the inverse hypberbolic sine transformation
+of array data made a probe's variance across arrays 
+less dependent on its mean \cite{Huber:2003bw}.
+This variance stabilization---in combination with a nonlinear model that is fit to find
+scaling factors and offsets for each microarray---is used for normalization.
+Loess normalization applies a smoother to an `MA plot' which plots
+the differences between two arrays ($M=log_2(x_1/x_2)=log_2(x_1)-log_2(x_2)$)
+versus the average signal of two arrays ($A=\frac{1}{2}log_2(x_1x_2)=\frac{1}{2}(log_2(x_1)+log_2(x_2))$).
+The smoother is subtracted from each point so that the plot
+is centered around the $A$-axis. Loess normalization thus makes
+offset adjustments that are dependent on the intensity of the signal.
 
+\subsection{Order and necessity of analysis steps}
 
+All microarray preprocessing steps are optional.
+ 
+If one is sure of impeccable sample isolation and
+reproducibility, they might decide against normalization. 
+This rarely happens in practice. Only in some
+\textit{in vitro} experiments performed at the same time by the same person
+are samples so similar that skipping normalization might be unnecessary.
+However, even the slightest differences in one of many experimental steps 
+(e.g., scanner reproducibility, mRNA concentratioin calculations, hybridization
+temperatures) usually cause systematic errors that require normalization.
+There should be strong justification for skipping normalization.
 
+Background correction algorithms essentially deconvolute the observed
+signal into two signals: the noise and true signal.
+They are most helpful then for low-signal probes where
+the signal to noise ratio is lowest. If one is only interested in
+probes with the highest signal, they might consider skipping
+background correction. After all, background correction is a model, and models
+are always wrong.
 
+One may trust that mismatch probes entirely account for
+background signals and nonspecific hybridization. 
+However, mismatch and perfect match
+probes are usually correlated, indicating that mismatch probes still
+weakly detect the target transcript. Therefore mismatch probes should
+be ignored or included as a factor in statistical models that perform
+background correction.
 
-\subsection{Choosing a preprocessing workflow}
+Probe set summarization may even be skipped, and expression values
+for 500,000+ probes reported by aligning each probe to a gene. Summarization
+reduces 10+ probes to one value, so 90\% of the information content
+is lost. With so much focus on data reduction, this
+dramatic loss in information is overlooked. Before summarization, one might use
+the distribution of probe values to perform more powerful statistical tests or to propogate
+error through subsequent analyses \cite{Milo:2003tt,Liu:2005ey}.
+Nevertheless, probe set summarization must eventually be performed
+at some level if one wants to study genes, not 25-nucleotide stretches of DNA.
 
-\subsubsection{Probe-level and probe set-level}
+There is no strict requirement for the order of the steps are performed,
+yet there are limitiations. For instance, if probe set summarization were done first,
+then background summarization could not use the probe values to estimate
+the distribution of noise in the array. Perfect-match correction also wouldn't
+be possible. Probe set summarization is usually the last step, and background
+correction is the first.
 
-\subsubsection{Order and necessity of analysis steps}
+Normalization can be applied before and/or after summarization.
+There is no strong evidence supporting one choice.
+It is also unclear if normalization should be done for all arrays at once
+or separately for subsets (e.g., control and treatment groups).
+
+\section{Choosing preprocessing techniques}
+
+\subsection{Which preprocessing steps should I choose?}
+
+There is no good answer. Over ten years of 
 
 \subsection{Interpreting processed microarray data}
 
-\subsection{Caveats of microarrays and alternatives}
+some work for better output. correlation with RMA versus gcRMA
+gcRMA sacrifices precision for better accuracy
 
-\subsection{Future improvements in transcriptomics analyses}
-
-
-
-
-
-in 
-
-
-
-One could simply calculate the mean or median
-of a probe set's probes.
-
-
-
-
-
-
-
-
-
-
-
-\subsubsection{Probe effect}
-
-The affinities of probes to transcripts also vary.
-
+\subsubsection{How data processing affects results}
 
 The truth is that some work better for detecting levels, some
 better account for low intensity variation, some find a way use the mismatch
 information to gain a slight boost in accuracy. There is no best way.
 
-some work for better output. correlation with RMA versus gcRMA
-gcRMA sacrifices precision for better accuracy
 
 
 
+\section[Differential expression]{Detecting differentially expressed genes}
 
 
-z
+\section{Caveats of microarrays and alternatives}
+
+\section{Future improvements in transcriptomics analyses}
 
 
-Quality metrics
-Background Correction
-Normalization
-Perfact Match correction
-Probe set summarization
-  Annotation -- definition of probe sets
-  
-  
+\subsection{reproducibility}
 
-
-RNA
-
-
-synthesized DNA to glass slides.
-
-
-Many of these weak hydrogen bonds join the strands together. 
- 
-
-
-
-form two base pairs that weakly bind to each other 
-(adenosine (A) pairs 
-
-
-\subsection{Caveats of transcriptional analyses}
-
-
-
-
-\subsection{Data processing}
-
-
- transcriptional data
-
-
-
-
-Consider a social science metaphor where people replace biological 
-components like genes or cells. We may hypothesize that 
-introverts have fewer friends than extraverts and through 
-a survey find that this is indeed true. However, a network 
-diagram of connections in a social network with more metadata 
-may reveal richer, more specific interpretations (e.g., 
-clusters of introverted individuals or people that are 
-hubs, the social organizers). We then go even further 
-and develop models that predict what happens when a 
-social organizer is moved from one part of the network to 
-another, or we may predict what combination of characteristics 
-(hobbies, musical preferences, etc.) will change the number 
-of friends one will have. In a similar way, computational 
-systems biology obtains many types of data about proteins, 
-genes, cells, organs, etc. and model and predict how they 
-will affect one another and how perturbations like drugs 
-will alter the system’s state.
-
-
-
-
-Great comedians tell us of everyday experiences in new, 
-unexpected ways. Novelists and poets express our thoughts 
-better than we could. Statisticians place abstract common 
-sense into concrete writing. My job is to take things that 
-were always there, but we didn’t know. To present and 
-communicate in a way that allows us to do things in a 
-novel way that lead to discoveries and ways of thinking.  
-Use many tools to reveal findings from data. Typically, 
-models greatest usefulness are there ability to guide us, 
-not to tell us the answers.
-
-
-There is always a constant tug from “hypothesis generating” 
-research and “hypothesis generated” research. Discovery 
-based versus logical yes/no experiments. It’s a spectrum, 
-but it’s how we think about it.
-
-
-
-
-
-\section{How data processing affects results}
-
-\section{Gene enrichment analysis}
-
-\section{reproducibility}
-
-\section{visualization}
+\subsection{visualization}
