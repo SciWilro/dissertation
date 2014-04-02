@@ -113,19 +113,20 @@ most other microarray technologies and even sequencing data.
 
 In less than one square inch, Affymetrix arrays fit over one million probes, enough
 to measure genome-wide expression (the \textit{transcriptome}).
-Since exons are usually much longer than the 25-nucleotide probes,
+Since exons are longer than the 25-nucleotide probes,
 \textit{probe sets} of ten to fifteen probes are designed to hybridize
 one gene or exon.
 
 \subsubsection{Nonspecific hybridization}
 
-For each probe, Affymetrix made another
+For each probe sequence, Affymetrix made a
 \textit{mismatch} probe with the 13\textsuperscript{th} 
 base changed. 
 By subtracting the mismatch signal from the \textit{perfect-match} signal,
-\textit{nonspecific hybridization} from other transcripts may be 
-estimated (\textit{perfect match correction}).
-However, mismatch hybridization is far more complex than this.
+\textit{nonspecific hybridization} (\textit{cross-hybrdization} 
+from other transcripts) may be 
+estimated (\textit{perfect-match correction}).
+However, mismatch hybridization is complex.
 Usually, more than one third of mismatch probes have a higher
 signal than their perfect match probes \cite{Irizarry:2003ge}. 
 This should theorectically never happen. Several have proposed
@@ -170,7 +171,7 @@ mismatch probes (e.g.,\cite{Li:2001jv,Milo:2003tt}).
 
 \subsubsection{Probe set summarization}
 
-To get a gene's expression value, the probes in a probe
+To estimate a gene's expression, the probes in a probe
 set must be summarized. 
 Since outliers are common, robust
 statistics (e.g., median) are preferred.
@@ -178,7 +179,7 @@ Affymetrix first recommended the Tukey bi-weight
 statistic, calculating probe set values one microarray at a time.
 However, many probes have similar effects across all microarrays
 (e.g., different affinities), and these \textit{probe effects} can 
-be modeled and removed to increase precision as was shown by Li and Wong 
+be modeled and removed as was shown by Li and Wong 
 (\cite{Li:2001jv,Li:2001wk} is often called the ``Li-Wong method'').
 The most popular summarization, ``median polish'', places a probe set's expression
 values $a_{ij}$ in a matrix ($i$ indicates the probe an $j$ 
@@ -194,10 +195,11 @@ than other probes \cite{Chen:2007cr}.
 Hochreiter et al. assume perfect match probes are normally distributed, enabling
 them to perform `factor analysis' 
 where the `factors'
-are considered normalized concentrations of mRNA \cite{Hochreiter:2006ja}. 
+are mRNA concentrations \cite{Hochreiter:2006ja}. 
 Even more complex models may incorporate 
-background correction, perfect-match correction, and probe set summarization
-into one step, yet each step is typically performed separately.
+background correction , perfect-match correction, and probe set summarization
+into one step (e.g. \cite{Zhang:2003to,Liu:2005ey}), 
+yet each step is typically performed separately.
 
 \subsubsection{Normalization}
 
@@ -262,7 +264,7 @@ error through subsequent analyses \cite{Milo:2003tt,Liu:2005ey}.
 Nevertheless, probe set summarization must eventually be performed
 at some level if one wants to study genes, not 25-nucleotide stretches of DNA.
 
-There is no strict requirement for the order of the steps are performed,
+There is no strict requirement for the order in which the steps are performed,
 yet there are limitiations. For instance, if probe set summarization were done first,
 then background summarization could not use the probe values to estimate
 the distribution of noise in the array. Perfect-match correction also wouldn't
@@ -270,15 +272,61 @@ be possible. Probe set summarization is usually the last step, and background
 correction is the first.
 
 Normalization can be applied before and/or after summarization.
-There is no strong evidence supporting one choice.
+There is no strong evidence supporting one choice over the other.
 It is also unclear if normalization should be done for all arrays at once
 or separately for subsets (e.g., control and treatment groups).
 
 \section{Choosing preprocessing techniques}
 
-\subsection{Which preprocessing steps should I choose?}
+\subsection{What are the best preprocessing steps?}
 
-There is no good answer. Over ten years of 
+Usually, the answer is ``we're not sure'' or ``it depends''. 
+Several hundred papers have been published
+different ways to process data, each claiming to be better than
+previous methods in some way. For instance, Zhang et al claimed their PDNN model 
+was superior to dChip ("Li-Wong" method)
+and MAS5.0 (Affymetrix default) \cite{Zhang:2003to}.
+However, Wu and Irizzary quickly published a comment on 
+showing that their
+RMA and gcRMA methods performed as well or better for predicting
+mRNA concentrations in spike-in experiments \cite{Wu:2004ul}.
+Zhang et al. responded that their concentration predictions
+are off only in a scale factor that can easily be estimated, and that
+sensitivity and specificity to detect differentially expressed genes
+were slightly better than RMA and gcRMA \cite{Zhang:2004tl}. They were also able to
+reproduce results supporting Wu and Irizarry's claims. This public
+debate exemplified the misunderstandings in microarray analysis.
+It was unclear what the goal should be: accurate predictions of mRNA levels or
+differentially expressed genes?
+
+The most daunting challenge is selecting the sequence of steps
+to move from a scanned image of a microarray to a single expression value
+for a gene.
+
+
+In an effort to once and for all determine the best
+preprocessing methods, Zhu et al. designed a ``gold standard''
+experiment
+
+
+
+
+
+
+
+
+
+Golden Spike
+Platinum Spike
+
+So what do we know? Perfect match correction. Normalization.
+
+
+\subsection{Which preprocessing steps should I choose?}
+There is no good answer, except for
+
+
+Over ten years of 
 
 \subsection{Interpreting processed microarray data}
 
@@ -293,7 +341,6 @@ information to gain a slight boost in accuracy. There is no best way.
 
 
 
-
 \section[Differential expression]{Detecting differentially expressed genes}
 
 
@@ -301,7 +348,116 @@ information to gain a slight boost in accuracy. There is no best way.
 
 \section{Future improvements in transcriptomics analyses}
 
+There are even more caveats to microarrays than the ones presented
+above. Pozhitkov et al. review many of these limitations and go
+so far as stating that ``there is currently no way to design 
+an oligonucleotide microarray such that the probes have 
+fully predictable hybridization'' \cite{Pozhitkov:2007go}.
 
-\subsection{reproducibility}
 
-\subsection{visualization}
+The greatest need is visualization, Culhane et al provide a visualization
+for data sets from different studies and platforms \cite{Culhane:2003it}.
+Le Cao improved upon Culhane et al \cite{Cao:2009dd}.
+Other methods have been made to correct for cross-platform differences \cite{Fan:2011iy}.
+
+Ensemble methods
+It is possible that data from different platforms could be combined
+to provide additional information \cite{Hockley:2009tf}.
+Models may also be combined as they were in predictive models
+of cancer diagnostics \cite{Chen:2011ib}.
+
+very important to have the correct probe annotations \cite{Carter:2005bq}.
+
+\section{Visualizing results}
+
+\section{Reproducibile analyses}
+
+\subsection{Why bother?}
+
+Irreproducible analyses are dangerous, perhaps bordering on unethical negligence. 
+Dave et al. in the \textit{New England
+Journal of Medicine} reported a marker for follicular lymphoma \cite{Dave:2004vl}. 
+In letters to the editor, Tibshirani and Hong et al. stated they 
+could not reproduce the analyses \cite{Tibshirani:2005el}. 
+Dave et al. rectified the discrepancy as a misunderstanding
+in how their data was interpreted. This is just one of a handful of
+public disputes in the literature about gene expression analyses (two mentioned
+in previous paragraphs).
+Authors of disputed studies are most always well-intentioned, yet 
+irreproducible analyses or poorly presented data raise suspicions.
+
+In my opinion, analysts shouldn't fear being wrong; most researchers
+are wrong most of the time. They must fear being overconfident or misleading. 
+By making data and code open to criticism,
+scientists protect their integrity and intellectual property in the same
+way that lab notebooks do. They protect their colleagues
+whose careers are dependent on their analyses as well as the patients
+whose health decisions are affected by their research.
+Finally, they increase there chance for mutually beneficial collaborations.
+
+\subsection{Are microarrays reproducible?}
+
+Thre has been great concern about inter-lab repeatability of 
+gene expression experiments
+(see example of poor reproducibility in 
+\cite{Evsikov:2003ic,Fortunel:2003eu,Ivanova:2003bh,RamalhoSantos:2002dy}). 
+Rather than discrediting microarray analysis,
+one should also consider that micorarrays
+may reveal differences in \textit{seemingly} same experimental protocols.
+For example, with the data presented in this dissertation, arrays from
+replicate experiments on different days were clearly different when
+visualized with principal components analysis. However, the differences
+were systematic and could be corrected.
+
+Problems may also arise from overexpectations or and misunderstanding 
+of what expression values represent. 
+For example, comparisons of microarray classification
+studies (e.g., \cite{Veer:2002vv,Yeoh:2002wg,Alizadeh:2000tn,Golub:1999fn,
+Perou:1999fr,Wang:2005uu,VanDeVijver:2002wj,Rosenwald:2002eg,Beer:2002uy,
+Bhattacharjee:2001dt,Ramaswamy:2003to,Pomeroy:2002wx,Iizuka:2003wo})
+with non-microarray studies have indicated predictive cancer markers or profiles
+may not be as reliable as hoped \cite{Miklos:2004wn,Michiels:2007vs,Koscielny:2010gg,Eden:2004ua}.
+Hundreds or even thousands of microarrays may be necessary to
+accurately predict cancer 
+outcomes \cite{Ioannidis:2005kd,Michiels:2005tg,EinDor:2006ga,Frantz:2005ur}.
+However, a more rigorous re-evaluation, of a pessimistic study claiming
+that microarray studies cannot predict cancer markers, found that
+markers can indeed be found (see \cite{Michiels:2005tg,Fan:2010cv,Tong:2010ka,Koscielny:2010jd}
+for another collegial debate).
+Thus, one shouldn't jump to conclusions from any one or even a few
+analytical workflows.
+For instance, two studies may find very different
+list of differentially expressed genes, yet the correlation
+between the data sets may be strong. Alternatively, different studies may
+predict different markers that are all correct \cite{Zhang:2008bk,Zhang:2009cy}.
+
+Several studies 
+raise concerns about experimental reproducibility between
+experimental platforms \cite{Tan:2003be,Kuo:2002cl,
+Mah:2004ia,Rogojina:2003te,Woo:2004wz,Li:2002cz,Kothapalli:2002gz}.
+Many irreproducibility claims were incorrect, first
+dismissed by scientsist at the FDA \cite{Shi:2005ik}.
+The FDA and EPA coordinated a Microarray Quality Control (MAQC) project
+to set standards and resolve outstanding questions 
+\cite{Lesko:2004vi,Frueh:2006uy,Dix:2006ty,Shi:2004vh}.
+With careful quality assurance and analyses,
+microarray data were similar between 
+laboratories \cite{Dobbin:2005wj,Irizarry:2005kb,Larkin:2005hb,
+Ulrich:2004vw,Waring:2004vh,Weis:2005ut} and
+microarray platforms \cite{Petersen:2005by,Yauk:2004fq,
+Park:2004ux,Yuen:2002ha,Canales:2006ts,Shippy:2006uf,
+Patterson:2006hi,Tong:2006cg,Guo:2006wi}.
+
+\subsection{How to make reproducible analyses?}
+
+\subsection{Reproducibility of this dissertation}
+
+Being wrong as a scientist is expected, but being wrong in a way
+that other
+
+
+disput
+
+
+
+
