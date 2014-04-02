@@ -107,7 +107,7 @@ have been made by Affymetrix. I described here many methods
 designed for these arrays, yet the principles can be extended to
 most other microarray technologies and even sequencing data.
 
-\subsection{Steps of data preprocessing}
+\subsection{Steps of data preprocessing}\label{introjtm:steps}
 
 \subsubsection{Affymetrix microarrays}
 
@@ -224,7 +224,7 @@ The smoother is subtracted from each point so that the plot
 is centered around the $A$-axis. Loess normalization thus makes
 offset adjustments that are dependent on the intensity of the signal.
 
-\subsection{Order and necessity of analysis steps}
+\subsection{Order and necessity of analysis steps}\label{introjtm:steporder}
 
 All microarray preprocessing steps are optional.
  
@@ -281,9 +281,71 @@ or separately for subsets (e.g., control and treatment groups).
 \subsection{What are the best preprocessing steps?}
 
 Usually, the answer is ``we're not sure'' or ``it depends''. 
-Several hundred papers have been published
-different ways to process data, each claiming to be better than
-previous methods in some way. For instance, Zhang et al claimed their PDNN model 
+Hundreds of methods have been published.
+Which ones are chosen depends on if the method's assumptions (many
+discussed in \ref{introjtm:steps}) match
+the experimental design.
+
+Selecting the full sequence of steps (the \textit{workflow}) is daunting.
+The techniques in \ref{introjtm:steps} are a subset of the many choices.
+For each step (background correction, normalization,
+perfect-match correction, and probe set summarization), there are
+ten or more possible algorithms making at least $10^4=10,000$ possible
+workflows. However, each algorithm has at least one, sometimes
+three or four arbitrarily or heuristically chosen parameters, making
+for over ten million possible workflows (actually real number parameters make 
+for infinite workflows).
+Some recommendations are given in \ref{introjtm:steporder}.
+However, since there are no easy general best methods, I present an example. 
+Consider an experiment with a cell line that has
+treatment (e.g., a Rho inhibitor) and control microarrays. 
+
+\subsubsection{Background correction and perfect-match correction}
+Background correction is the least understood step, largely because
+``there is currently no way to design 
+an oligonucleotide microarray such that the probes have 
+fully predictable hybridization'' \cite{Pozhitkov:2007go}.
+gcRMA and PDNN use sequence data to try and infer complex
+probe affinities from sequence data yet are not much better than
+some that do not \cite{Irizarry:2003ge,Zhang:2003to,Wu:2004wh}.
+Most methods make a model of the form $\text{observed}=f(\text{signal})
++ g(\text{noise}) + \text{constant}$. $f$ and $g$ are either statistical
+distributions or nonlinear terms whose parameters are fit
+by estimates such as maximum likelihood. 
+Affymetrix's MAS5.0 background correction and perfect-match corrections
+are not model based, making simple assumptions on how low-intensity probes
+or mismatch probes should adjust surrounding perfect-match probes.
+There is no clear, universal support
+of one method over another. However, it is commonly accepted that 
+mismatch signals should be ignored or modeled as partially 
+contributing to the observed signal.
+
+\subsubsection{Normalization}
+If the researchers believe that only a few dozen
+of thousands of transcripts will be affected, they might assume that the
+probe value disributions are similar among all microarrays. Quantile
+normalization might then be appropriate. If treatment
+systematically increases the total mRNA per cell, quantile
+normalization would incorrectly mean-center all arrays 
+(though uncommon, cells may need to be counted before RNA isolation \cite{Loven:2012km}).
+Loess normalization might be better since it 
+modifies each array's values according to similarly expressed 
+probes on other arrays, allowing for slightly different distributions.
+If the primary problem is high variance of low-signal probes, variance
+stabilization may be best. If $~$10 ``householding'' genes are known
+or can be trusted to be found algorithmically, invariant set normalization
+would work. However, since invariant set normalization assumes probe affinities
+are similar, probe values must be corrected in background correction.
+Treatment groups may be so different that
+no normalization cannot be justified. The treatment groups might then
+be separately normalized, although subsequent comparisons may be difficult to interpret.
+
+\subsubsection{Probe set summarization}
+
+
+\subsubsection{Different choices for different goals}
+
+For instance, Zhang et al claimed their PDNN model 
 was superior to dChip ("Li-Wong" method)
 and MAS5.0 (Affymetrix default) \cite{Zhang:2003to}.
 However, Wu and Irizzary quickly published a comment on 
@@ -293,16 +355,16 @@ mRNA concentrations in spike-in experiments \cite{Wu:2004ul}.
 Zhang et al. responded that their concentration predictions
 are off only in a scale factor that can easily be estimated, and that
 sensitivity and specificity to detect differentially expressed genes
-were slightly better than RMA and gcRMA \cite{Zhang:2004tl}. They were also able to
-reproduce results supporting Wu and Irizarry's claims. This public
+were slightly better than RMA and gcRMA \cite{Zhang:2004tl}. They were also unable to
+reproduce results supporting Wu and Irizarry's claims. This
 debate exemplified the misunderstandings in microarray analysis.
 It was unclear what the goal should be: accurate predictions of mRNA levels or
 differentially expressed genes?
 
-The most daunting challenge is selecting the sequence of steps
-to move from a scanned image of a microarray to a single expression value
-for a gene.
+If the goal is correlation, than gcRMA should not be done.
 
+
+\subsubsection{The gold standard}
 
 In an effort to once and for all determine the best
 preprocessing methods, Zhu et al. designed a ``gold standard''
@@ -310,21 +372,14 @@ experiment
 
 
 
-
-
-
-
-
-
 Golden Spike
 Platinum Spike
 
-So what do we know? Perfect match correction. Normalization.
 
 
 \subsection{Which preprocessing steps should I choose?}
-There is no good answer, except for
 
+More than one. The one that matches with your goals.
 
 Over ten years of 
 
@@ -345,6 +400,13 @@ information to gain a slight boost in accuracy. There is no best way.
 
 
 \section{Caveats of microarrays and alternatives}
+
+Most of the problems with microarrays are low-intensity probes or
+low-abundance transcripts. Discussion.
+
+The second problem is that we don't understand how transcripts
+interact with surfaces. These problems can hopefully be avoided
+with RNA sequencing.
 
 \section{Future improvements in transcriptomics analyses}
 
