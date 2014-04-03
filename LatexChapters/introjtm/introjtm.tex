@@ -69,8 +69,7 @@ DNA molecules consist of two, connected, parallel strands, each strand
 containing a sequence of nucleobases along a sugar backbone.
 The four bases (adenosine (A), thymine (T), cytosine (C), guanine (G))
 join to each other by hydrogen bonds. A only pairs with T; C only pairs with G.
-When two strands are aligned so that the base pairs match, the two strands
-\textit{hybridize}.
+Two strands \textit{hybridize} when their base pairs are aligned.
 
 Strand-specific hybridization can be used to identify
 DNA sequences from uncharacterized samples. For example, single-stranded DNA
@@ -147,7 +146,6 @@ intensity probes. This approach systematically corrects large
 sections of the array,
 yet it does not address probe-specific background signals.
 
-Taking a statistical approach, 
 Irizarry et al. observed the distribution
 of all observed probe signals ($O$) could be approximated by
 a mixture of an exponential distribution ($S$) and a
@@ -213,9 +211,8 @@ iteratively searches for a group of ``householding genes'' (the invariant
 set of probes) that will be forced to the same expression values in all arrays,
 and all other probes are adjusted accordingly \cite{Li:2001wk}.
 Huber et al. found that the inverse hypberbolic sine transformation
-of array data made a probe's variance across arrays 
-less dependent on its mean \cite{Huber:2003bw}.
-This variance stabilization---in combination with a nonlinear model that is fit to find
+made probe variance less dependent on probe mean \cite{Huber:2003bw}.
+This variance stabilization---in combination with a nonlinear model fit to find
 scaling factors and offsets for each microarray---is used for normalization.
 Loess normalization applies a smoother to an `MA plot' which plots
 the differences between two arrays ($M=log_2(x_1/x_2)=log_2(x_1)-log_2(x_2)$)
@@ -224,66 +221,14 @@ The smoother is subtracted from each point so that the plot
 is centered around the $A$-axis. Loess normalization thus makes
 offset adjustments that are dependent on the intensity of the signal.
 
-\subsection{Order and necessity of analysis steps}\label{introjtm:steporder}
-
-All microarray preprocessing steps are optional.
- 
-If one is sure of impeccable sample isolation and
-reproducibility, they might decide against normalization. 
-This rarely happens in practice. Only in some
-\textit{in vitro} experiments performed at the same time by the same person
-are samples so similar that skipping normalization might be unnecessary.
-However, even the slightest differences in one of many experimental steps 
-(e.g., scanner reproducibility, mRNA concentratioin calculations, hybridization
-temperatures) usually cause systematic errors that require normalization.
-There should be strong justification for skipping normalization.
-
-Background correction algorithms essentially deconvolute the observed
-signal into two signals: the noise and true signal.
-They are most helpful then for low-signal probes where
-the signal to noise ratio is lowest. If one is only interested in
-probes with the highest signal, they might consider skipping
-background correction. After all, background correction is a model, and models
-are always wrong.
-
-One may trust that mismatch probes entirely account for
-background signals and nonspecific hybridization. 
-However, mismatch and perfect match
-probes are usually correlated, indicating that mismatch probes still
-weakly detect the target transcript. Therefore mismatch probes should
-be ignored or included as a factor in statistical models that perform
-background correction.
-
-Probe set summarization may even be skipped, and expression values
-for 500,000+ probes reported by aligning each probe to a gene. Summarization
-reduces 10+ probes to one value, so 90\% of the information content
-is lost. With so much focus on data reduction, this
-dramatic loss in information is overlooked. Before summarization, one might use
-the distribution of probe values to perform more powerful statistical tests or to propogate
-error through subsequent analyses \cite{Milo:2003tt,Liu:2005ey}.
-Nevertheless, probe set summarization must eventually be performed
-at some level if one wants to study genes, not 25-nucleotide stretches of DNA.
-
-There is no strict requirement for the order in which the steps are performed,
-yet there are limitiations. For instance, if probe set summarization were done first,
-then background summarization could not use the probe values to estimate
-the distribution of noise in the array. Perfect-match correction also wouldn't
-be possible. Probe set summarization is usually the last step, and background
-correction is the first.
-
-Normalization can be applied before and/or after summarization.
-There is no strong evidence supporting one choice over the other.
-It is also unclear if normalization should be done for all arrays at once
-or separately for subsets (e.g., control and treatment groups).
 
 \section{Choosing preprocessing techniques}
 
-\subsection{What are the best preprocessing steps?}
+\subsection{What are the best preprocessing steps?}\label{introjtm:whatsbest}
 
 Usually, the answer is ``we're not sure'' or ``it depends''. 
 Hundreds of methods have been published.
-Which ones are chosen depends on if the method's assumptions (many
-discussed in \ref{introjtm:steps}) match
+Which ones are chosen depends on if the method's assumptions match
 the experimental design.
 
 Selecting the full sequence of steps (the \textit{workflow}) is daunting.
@@ -295,36 +240,46 @@ workflows. However, each algorithm has at least one, sometimes
 three or four arbitrarily or heuristically chosen parameters, making
 for over ten million possible workflows (actually real number parameters make 
 for infinite workflows).
-Some recommendations are given in \ref{introjtm:steporder}.
-However, since there are no easy general best methods, I present an example. 
-Consider an experiment with a cell line that has
-treatment (e.g., a Rho inhibitor) and control microarrays. 
+Since there are no easy general guidelines, I present some
+illustrative examples below. 
 
 \subsubsection{Background correction and perfect-match correction}
-Background correction is the least understood step, largely because
+
+Background correction algorithms essentially deconvolute the observed
+signal into two signals: the noise and true signal.
+They are most helpful then for low-signal probes where
+the signal to noise ratio is lowest. If researchers are uninterested
+in low-abundance transcripts, they might consider skipping
+background correction.
+
+Background correction is the least understood step because
 ``there is currently no way to design 
 an oligonucleotide microarray such that the probes have 
 fully predictable hybridization'' \cite{Pozhitkov:2007go}.
 gcRMA and PDNN use sequence data to try and infer complex
 probe affinities from sequence data yet are not much better than
 some that do not \cite{Irizarry:2003ge,Zhang:2003to,Wu:2004wh}.
-Most methods make a model of the form $\text{observed}=f(\text{signal})
-+ g(\text{noise}) + \text{constant}$. $f$ and $g$ are either statistical
-distributions or nonlinear terms whose parameters are fit
-by estimates such as maximum likelihood. 
 Affymetrix's MAS5.0 background correction and perfect-match corrections
 are not model based, making simple assumptions on how low-intensity probes
 or mismatch probes should adjust surrounding perfect-match probes.
-There is no clear, universal support
-of one method over another. However, it is commonly accepted that 
-mismatch signals should be ignored or modeled as partially 
+Although there is no clear, universal support of one method over another,  
+it is commonly accepted that 
+mismatch signals should be ignored or modeled in some way as 
 contributing to the observed signal.
 
 \subsubsection{Normalization}
-If the researchers believe that only a few dozen
-of thousands of transcripts will be affected, they might assume that the
-probe value disributions are similar among all microarrays. Quantile
-normalization might then be appropriate. If treatment
+
+If one is sure of impeccable sample isolation and
+reproducibility, they might decide against normalization. 
+However, since even the slightest differences in one of many experimental factors 
+(e.g., scanner reproducibility, mRNA concentratioin calculations, hybridization
+temperatures) cause systematic errors, there should be strong 
+justification for skipping normalization.
+
+If researchers believe that only a few dozen
+of thousands of transcripts vary between arrays, then the distribution
+of expression values should be similar. Quantile
+normalization would then be appropriate. If treatment
 systematically increases the total mRNA per cell, quantile
 normalization would incorrectly mean-center all arrays 
 (though uncommon, cells may need to be counted before RNA isolation \cite{Loven:2012km}).
@@ -342,62 +297,133 @@ be separately normalized, although subsequent comparisons may be difficult to in
 
 \subsubsection{Probe set summarization}
 
+There are no general rules for probe set summarization, yet
+there are mistakes to be avoided. Outliers are common in microarrays
+so robust measures of center are used.
+It is recommended to choose summaries
+that ``borrow'' information from all arrays to identify probe effects.
+Though different summarization techniques may produce significantly
+different expression values, no technicque is necessarily incorrect.
+However, the artifacts introduced by some techniques may
+cause incorrect interpretations in downstream analyses (see \ref{introjtm:difgoals}).
 
-\subsubsection{Different choices for different goals}
+Summarization reduces 10+ probes to one value, so 90\% of the data
+is lost. Therefore, before summarization, one might use
+the distribution of probe values to perform more powerful statistical tests or to propogate
+error through subsequent steps \cite{Milo:2003tt,Liu:2005ey}.
+Nevertheless, probe set summarization must eventually be performed
+at some level if one wants to study genes, not 25-nucleotide stretches of DNA.
 
-For instance, Zhang et al claimed their PDNN model 
+\subsubsection{The order of steps}
+There is no required order for each step of the analysis,
+yet there are limitiations. For instance, if probe set summarization were done first,
+probe values would not be available to estimate the background signal. 
+Perfect-match correction also wouldn't
+be possible. Normalization can be applied before and/or after summarization.
+There is no strong evidence supporting one choice over the other.
+It is also unclear if normalization should be done for all arrays at once
+or separately for subsets (e.g., control and treatment groups).
+
+With few exceptions, each preprocessing method is modular, compatible
+with any other method. However, very few have explored
+the effects effects of combining algorithms.
+For example, it may be the case that a background correction
+invalidates assumptions for some normalization procedures.
+
+\subsubsection{Different choices for different goals}\label{introjtm:difgoals}
+
+Different analyses work better for different problems.
+For example, Zhang et al claimed their PDNN model 
 was superior to dChip ("Li-Wong" method)
 and MAS5.0 (Affymetrix default) \cite{Zhang:2003to}.
-However, Wu and Irizzary quickly published a comment on 
-showing that their
+However, Wu and Irizzary commented that their
 RMA and gcRMA methods performed as well or better for predicting
-mRNA concentrations in spike-in experiments \cite{Wu:2004ul}.
+mRNA concentrations \cite{Wu:2004ul}.
 Zhang et al. responded that their concentration predictions
-are off only in a scale factor that can easily be estimated, and that
-sensitivity and specificity to detect differentially expressed genes
-were slightly better than RMA and gcRMA \cite{Zhang:2004tl}. They were also unable to
-reproduce results supporting Wu and Irizarry's claims. This
-debate exemplified the misunderstandings in microarray analysis.
+are off by a predictable scale factor, and that
+the ability to detect differentially expressed genes
+was better than RMA and gcRMA \cite{Zhang:2004tl}. They were also unable to
+reproduce results supporting Wu and Irizarry's claims.
 It was unclear what the goal should be: accurate predictions of mRNA levels or
 differentially expressed genes?
 
-If the goal is correlation, than gcRMA should not be done.
+If the goal of a study is to compare the profiles of many genes
+or samples, one must be aware of artifacts 
+probe set summarization algorithms that severely
+overestimate correlations.
+Lim et al. observed, with gcRMA, an average correlation coefficient of 0.4
+among randomly generated, uncorrelated arrays \cite{Lim:2007gc}. 
+Since correlation measures are essential
+for reverse engineering regulatory networks, previous network
+studies that used gcRMA were flawed. 
+Giorgi et al. identified that the median polish algorithm introduces 
+high inter-sample correlations among randomly generated arrays \cite{Giorgi:2010jw}.
+Their solution was to transpose the matrix of probe intensities
+for each probe set, thereby transferring the error so that probes
+would be overly correlated, not samples.
+Therefore, if a study's goal is to classify patients by a clustering
+algorithm, one should use the median polish algorithm very carefully.
+If the goal is only to detect differentially expressed genes, then
+the algorithm will not cause critical errors.
 
 
-\subsubsection{The gold standard}
+\subsubsection{Gold standards?}
 
-In an effort to once and for all determine the best
-preprocessing methods, Zhu et al. designed a ``gold standard''
-experiment
+To once and for all determine the best
+preprocessing methods, Choe et al. spiked in
+5,700 transcripts at various concentrations 
+on 18 arrays (called ``Golden Spike'' \cite{Choe:2005dd})
+By quantifying the accuracy of predicted differentially expressed genes, they defined
+one best performing workflow, though several others 
+performed similarly well. Several authors
+noted flaws in the experimental design and analysis
+causing unrealistic conclusions \cite{Pearson:2008jr,Schuster:2007wr,
+Dabney:2006ud,Irizarry:2006bq,Gaile:2007ei,Fodor:2007wb}, and
+a ``Platinum Spike'' data set was generated to address the flaws \cite{Zhu:2010jx}.
+Conflicting recommendations from various authors that stemmed from
+these data suggests 
+that there will likely never be one ``best'' workflow, yet the analyses
+made possible by these data sets
+highlighted advantages and pitfalls each method (many of which
+are discussed in \ref{introjtm:whatsbest}) and led to the invention of new techniques.
 
+\subsection{Which workflow do I use?}
 
-
-Golden Spike
-Platinum Spike
-
-
-
-\subsection{Which preprocessing steps should I choose?}
-
-More than one. The one that matches with your goals.
-
-Over ten years of 
-
-\subsection{Interpreting processed microarray data}
-
-some work for better output. correlation with RMA versus gcRMA
-gcRMA sacrifices precision for better accuracy
-
-\subsubsection{How data processing affects results}
-
-The truth is that some work better for detecting levels, some
-better account for low intensity variation, some find a way use the mismatch
-information to gain a slight boost in accuracy. There is no best way.
-
-
+The previous sections have shown that I or anyone
+else cannot definitively choose the right workflow. 
+Instead, I would recommend an exploratory approach 
+tailored for each data set.
+For example, one could analyze there data set with ten 
+or more different workflows and compare the results
+using diagnostic tools (e.g., correlation matrices, clustering,
+principal components analysis (PCA), and MA plots).
+For example, one may find, as I did in one case, that invariant set
+normalization causes outlier arrays (identified by PCA) because
+of the automatically selected ``householding genes''.
+Using an MA plot, they may then notice extraordinarily
+high variance in the fold changes of low-signal probes, and then decide
+on a workflow (e.g., mmGmos) that propagates this error to
+statistical tests for differential expression. If expression levels
+from arrays will be used as parameters in another model (e.g., a model
+of metabolic flux where expression levels indicate the presence of 
+different enzymes), then the high-variance, low-signal expression values
+might all be set to a common threshold.
+Interactive, easy-to-use diagnostic visualizations that allow for these
+decisions are desperately lacking.
+Although developing visualizations is a tremendous technical challenge,
+there is a great oppurtunity for improvement in this area.
 
 \section[Differential expression]{Detecting differentially expressed genes}
 
+After microarray preprocessing, the next step is identify differentially
+expressed genes (DEGs) between two treatment groups. Like preprocessing,
+there are many methods and 
+
+\subsubsection{Parametric tests}
+
+\subsubsection{Permutation tests}
+
+\subsubsection{Thoughts}
 
 \section{Caveats of microarrays and alternatives}
 
@@ -429,6 +455,16 @@ Models may also be combined as they were in predictive models
 of cancer diagnostics \cite{Chen:2011ib}.
 
 very important to have the correct probe annotations \cite{Carter:2005bq}.
+
+\section{Recommendations}
+
+Low-abundance transcripts are the biggest problem. Experimental methods should
+specifically target this problem.
+
+%http://camda.bioinfo.cipf.es/camda07/agenda/pdfs/submission_21.pdf
+Most metrics will work for low and high intensity probes
+
+Make clear the confidence in predictions from gene expression studies
 
 \section{Visualizing results}
 
@@ -472,7 +508,7 @@ visualized with principal components analysis. However, the differences
 were systematic and could be corrected.
 
 Problems may also arise from overexpectations or and misunderstanding 
-of what expression values represent. 
+of what expression values can predict. 
 For example, comparisons of microarray classification
 studies (e.g., \cite{Veer:2002vv,Yeoh:2002wg,Alizadeh:2000tn,Golub:1999fn,
 Perou:1999fr,Wang:2005uu,VanDeVijver:2002wj,Rosenwald:2002eg,Beer:2002uy,
@@ -485,13 +521,13 @@ outcomes \cite{Ioannidis:2005kd,Michiels:2005tg,EinDor:2006ga,Frantz:2005ur}.
 However, a more rigorous re-evaluation, of a pessimistic study claiming
 that microarray studies cannot predict cancer markers, found that
 markers can indeed be found (see \cite{Michiels:2005tg,Fan:2010cv,Tong:2010ka,Koscielny:2010jd}
-for another collegial debate).
-Thus, one shouldn't jump to conclusions from any one or even a few
+for the debate).
+Hence, one shouldn't jump to conclusions from any one or even a few
 analytical workflows.
 For instance, two studies may find very different
 list of differentially expressed genes, yet the correlation
-between the data sets may be strong. Alternatively, different studies may
-predict different markers that are all correct \cite{Zhang:2008bk,Zhang:2009cy}.
+between the data sets may be strong. Alternatively, two studies may
+predict two different results that are both correct \cite{Zhang:2008bk,Zhang:2009cy}.
 
 Several studies 
 raise concerns about experimental reproducibility between
@@ -506,7 +542,7 @@ With careful quality assurance and analyses,
 microarray data were similar between 
 laboratories \cite{Dobbin:2005wj,Irizarry:2005kb,Larkin:2005hb,
 Ulrich:2004vw,Waring:2004vh,Weis:2005ut} and
-microarray platforms \cite{Petersen:2005by,Yauk:2004fq,
+platforms \cite{Petersen:2005by,Yauk:2004fq,
 Park:2004ux,Yuen:2002ha,Canales:2006ts,Shippy:2006uf,
 Patterson:2006hi,Tong:2006cg,Guo:2006wi}.
 
