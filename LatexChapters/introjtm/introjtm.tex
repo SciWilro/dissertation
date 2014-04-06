@@ -1,5 +1,5 @@
 
-\chapter[Choosing transcriptomics analyses]{Choosing reliable, reproducible 
+\chapter[Choosing transcriptomics analyses]{Reliable, reproducible 
            transcriptomics analyses}\label{chapter:intro3}
 
 Throughout this dissertation, I present analyses of the expression of the genomes
@@ -278,7 +278,7 @@ justification for skipping normalization.
 
 If researchers believe that only a few dozen
 of thousands of transcripts vary between arrays, then the distribution
-of expression values should be similar. Quantile
+of expression values should be similar among all arrays. Quantile
 normalization would then be appropriate. If treatment
 systematically increases the total mRNA per cell, quantile
 normalization would incorrectly mean-center all arrays 
@@ -315,7 +315,7 @@ Nevertheless, probe set summarization must eventually be performed
 at some level if one wants to study genes, not 25-nucleotide stretches of DNA.
 
 \subsubsection{The order of steps}
-There is no required order for each step of the analysis,
+There is no required order for each step of the workflow,
 yet there are limitiations. For instance, if probe set summarization were done first,
 probe values would not be available to estimate the background signal. 
 Perfect-match correction also wouldn't
@@ -348,7 +348,7 @@ It was unclear what the goal should be: accurate predictions of mRNA levels or
 differentially expressed genes?
 
 If the goal of a study is to compare the profiles of many genes
-or samples, one must be aware of artifacts 
+or samples, one must be aware of artifacts introduced by
 probe set summarization algorithms that severely
 overestimate correlations.
 Lim et al. observed, with gcRMA, an average correlation coefficient of 0.4
@@ -415,58 +415,234 @@ there is a great oppurtunity for improvement in this area.
 
 \section[Differential expression]{Detecting differentially expressed genes}
 
-After microarray preprocessing, the next step is identify differentially
-expressed genes (DEGs) between two treatment groups. Like preprocessing,
-there are many methods and 
+After preprocessing, it is common to identify genes that are differentially
+expressed (DEGs) between two treatment groups. Like preprocessing,
+there are many methods with different assumptions (reviewed in
+\cite{Cui:2003vl,Murie:2009dk,Storey:2003kd,Sreekumar:2008wj,
+Pan:2002hy,Hong:2008hy,Yanofsky:2010by,Kadota:2011dz,Jeffery:2006bm}). This further expands
+the number of possible workflows to well over 100 million.
 
-\subsubsection{Parametric tests}
+Conceptually, significance tests for DEGs are simple.
+For each gene, two groups can be compared with a t-test.
+However, signficant p-values are usually found for too many 
+lowly expressed transcripts with small effect sizes because of very small
+variances near the microarray detection limit.
+Therefore, filtering of low-abundance transcripts is common, 
+yet newer statistical tests can adjust for errors in low-signal probes
+without excluding the probes from subsequent analyses.
+
+\subsection{Types of statistical tests}
+
+\subsubsection{Modified t-tests}\label{introjtm:modttests}
+
+In Student's t-test, a t statistic is
+the difference in expression between conditions (effect size) divided by the amount 
+of variability in the data (standard error). The distribution of t-statistics
+with different sample sizes is known, so how unusual (or how significant) a t-statistic is
+can be calculated as a p-value.
+Since the standard error of probes
+is what causes too many significant transcripts, a simple solution
+is to add a ``fudge factor'' to the standard error, thus making a
+modified t-statistic.
+
+\begin{equation}
+t_{\text{modified}} = \frac{\text{Effect size}}{\text{fudge factor} + \text{standard error}}
+\end{equation}
+
+The goal of several bioinformatics studies has been to how to
+best estimate the fudge factor. Tusher et al. heuristically 
+chose a constant that minimized
+the variation of the standard error across all
+expression values \cite{Tusher:2001kk}.
+Efron et al. chose the constant to be the 
+90\textsuperscript{th} percentile of the standard
+error for all transcripts \cite{Efron:2000wq,Efron:2001uu}.
+Baldi and Speed's cyberT method
+adds ``pseudo-replicate'' arrays for which the standard deviation
+is estimated as the average standard deviation of similarly 
+expressed genes on the real arrays \cite{Baldi:2001ul}.
+The variance of expression values is therefore ``shrunk'' towards
+the variance of similarly expressed genes.
+Fox et al. instead calculate
+the variance of pseudoreplicates using the sum-squared differences of similarly
+expressed genes \cite{Fox:2006hq}.
+Demissie et al. show how to use a similar fudge factor but for a 
+Welch test (a t-test where groups have unequal variance) \cite{Demissie:2008dv}.
+
+\subsubsection{Bayesian statistics}
+cyberT improves upon a regular t-test by incorporating
+information we know (or guessed) to be true, namely that the sample variance of low-signal
+probes is usually greater than observed. ``Bayesian statistics'' is the field
+of statistics that allows one to make such prior assumptions (called \textit{priors})
+in a mathematically rigorous way
+to reduce the set of possible outcomes (the sample space). The reduced sample
+space allows us to make new, \textit{posterior} 
+probabilities \textit{given} the prior information. For example, my
+guess of the average height of people in a room (perhaps 5'6'') would
+change dramatically if I were told prior that everyone 
+was 2 years old (a subset of the population--the reduced sample space). Bayesian statistics
+are common in microarray analyses. Since formulas
+for prior and posterior probabilities can be esoteric, I will only
+mention the assumptions on which the priors are based.
+
+Lonnstedt et al. derived a statistic equal to the log of the 
+probability a gene is a DEG divided by the probability the gene is not a DEG \cite{Lonnstedt:2002wu}.
+To do so, they made the prior assumptions that (1) only a small proportion, $p$, of 
+genes are DEG, (2) all fold changes of transcripts are normally distributed,
+and (3) the variances of expression values follow an inverse gamma distribution.
+The parameters for prior
+distributions (e.g. the mean and variance of 
+the normal distribution) are 
+called hyperparameters. Lonnstedt et al. guessed $p$ and estimated
+the other hyperparameters using the data. Efron et al.
+assumed a prior distribution of a modified t-statistic
+based on random permutations of microarrays. This ``empirical
+Bayes'' procedure has been used in several other DEG tests \cite{Efron:2001uu}.
+As researches have continued to learn about microarray chemistry so that
+we may make better prior assumptions, Bayes statistics for DEG detection
+have continued to be published. See
+the aforementioned reviews and citations for more examples 
+\cite{Newton:2001te,Murie:2008iz,Jain:2003kh,Yu:2011vo,
+Astrand:2008jk,Newton:2004cp,Gottardo:2003hb,Efron:2002bz,Townsend:2002tf}.
+
+
+\subsubsection{Linear models}
+Linear models are a natural extension to t-tests when an experiment
+has multiple factors that describe the samples (e.g., treatment group,
+gender, RNA isolation protocol). Analysis of variance (ANOVA) is
+used to estimate how much of the experiment-wide variance is 
+due to each factor. Instead of a t-statistic, ANOVA finds an F-statistic
+which compares these variances. Like the modified t-tests 
+in \ref{introjtm:modttests} , there are
+several modified F-tests, some of which use Bayesian statistics to
+estimate fudge factors (reviewed in \cite{Cui:2003vl}).
+For example, the IBMT method extends cyberT's assumptions to
+linear models \cite{Sartor:2006hw}.
+Perhaps the most common DEG test, ``linear models for
+microarray data'' (LIMMA), builds a linear model based on multiple
+factors that are then reduced to another linear model calculating
+specific contrasts (effect sizes) \cite{Smyth:2005ht,Smyth:2004gh}. Limma extends the bayesian moderated
+t-statistic from Lonnstedt et al. to calculate the signifcance 
+of the contrasts for each gene \cite{Lonnstedt:2002wu}.
+
+
+\subsubsection{Rank-based metrics}
+t-tests and linear models (types of parametric tests) assume
+the expression values for each gene are normally distributed. However, the
+assumption may not be justified; there usually aren't enough samples to know.
+Additionally, the assumption required by the t-test
+that the mean and variance be independent is usually not true in microarray data.
+Nevertheless, parametric tests are often chosen
+for practical reasons. Expensive microarray experiments have small sample sizes, and
+parametric tests are often needed to gain enough statistical power
+to find DEGs.
+
+However, several non-parametric tests have been developed which
+make fewer assumptions \cite{Qi:2011tc}.
+The Wilcoxan rank sums test uses combinatorics
+to calculate how unusual the locations of treatment groups are when
+ranking microarrays by expression values for each gene.
+In another approach called RankProd, genes are ranked by fold change for all
+two-array treatment group comparisons (e.g., $3\times3=9$ comparisons for triplicate 
+samples in two treatment groups) \cite{Breitling:2004te,Breitling:2005ue,Hong:2006gf}.
+For each gene, the product of its ranking in all comparisons is calculated.
+To determine if
+a rank product is unusual (significant), samples are permuted
+between treatment groups many times to estimate the
+usual distribution of rank products (the null distribution).
+
 
 \subsubsection{Permutation tests}
+Many other statistical tests use permutations to avoid
+making inappropriate assumptions about the data (e.g., \cite{Yan:2005tc, Efron:2001uu}.
+The most popular DEG test (by citation count) is Significant
+Analysis of Microarrays (SAM) \cite{Tusher:2001kk}. SAM calculates moderated t-statistics
+for each permutation and compares this to the actual moderated t-statistic
+to estimate which genes fall below a specified 
+false discovery rate (FDR).
+The greatest limitation of permutation tests is that they
+require much larger sample sizes than is typical in
+costly microarray experiments. For example, the minimum
+two-sided p-value for an 8-sample permutation test with quadruplicates
+is only $2/{8 \choose 4}=0.03$. Hence although permutation tests
+are possible with moderate sample sizes, it is better to have at 
+least ten arrays where the minimum p-value is 0.008.
 
-\subsubsection{Thoughts}
+
+\subsubsection{Machine learning-based tests}
+Many of the previously introduced statistics such as the 
+modified t-statistic violate the assumptions on the significance tests
+are based, or the test statistics are no longer in forms
+that can be used in statistical tests.
+Although these methods depart from the statistical
+theory, they are still useful
+for ranking and prioritizing genes. In this spirit,
+some statisticians have used machine learning algorithms
+to prioritize genes even though the numbers from the
+algorithms are difficult to interpret. For example, Lu et al
+performed PCA on the probes in a probe set to determine
+which probe sets to filter as not DEGs \cite{Lu:2011ba}. They used the
+loading on the first principal component relative to
+all other loadings to set a filtering cutoff.
+Clark et al. use linear discriminant analysis to find
+a hyperplane in n-dimensional space (where n is the number of transcripts)
+that separates treatment groups \cite{Clark:2014du}. 
+The angle between each transcript's axis
+and the hyperplane is used to define how much that gene contributes to the overall
+differential expression between treatment groups.
+
+
+\subsubsection{Fold change-based tests}
+
+The MAQC project found that irreproducibility between
+microarrays was largely due to the analyses, not due to the technology
+or experimental variability \cite{Shi:2006dl}.
+The most basic ranking statistic they tested, the fold change, 
+was the most consistent between laboratories performing the same protocols.
+Other statistics they used such as limma have the problem discussed in the previous
+sections that many low-signal probes are ranked among the most signifanct DEGs.
+It may be that many complex significance tests are biased to
+the data sets on which they were tested. Several statistical
+methods that are based on fold change, yet do not disregard
+the variability in the data, are potential 
+compromises (e.g. \cite{Dembele:2014cn,Yanofsky:2010by,Farztdinov:2012to,
+Theilhaber:2001uc,McCarthy:2009dn,Stevens:2010jk,Deng:2009vh,Hein:2006jo}).
+
+
+\subsection{What test should I use?}
+
+Like with preprocessing, I recommend an exploratory approach
+with significance testing, looking at the results from several tests. 
+The different gene rankings from the same data
+will put into perspective the confidence one should have
+in any follow-up experiments. Since probes with low signals
+are problematic (see previous sections), I also recommend reporting
+expression values and fold changes along with any p-values
+or statistical measures.
+
 
 \section{Caveats of microarrays and alternatives}
 
-Most of the problems with microarrays are low-intensity probes or
-low-abundance transcripts. Discussion.
+As discussed, many of the problems with microarrays are low-intensity probes--
+low-abundance transcripts. The number of statistical tests to correct
+for this problem is exasparating, yet very few studies have
+focused on experimental methods to improve the dynamic range
+of arrays. 
 
-The second problem is that we don't understand how transcripts
-interact with surfaces. These problems can hopefully be avoided
-with RNA sequencing.
+Next generation sequencing of RNA (RNA-seq) is the
+next step to improving variability. RNA-seq offer great
+potential for reducing the uncertainty in transcript levels because
+transcripts are counted. With microarrays, relative abundances
+can only be estimated indirectly. However, RNA-seq presents
+many new challenges as well. For instance, many of the sequenced
+reads cannot be mapped to the genome. There also is not
+a standard way to quantify expression
+levels of entire genes based off of many different transcripts.
 
-\section{Future improvements in transcriptomics analyses}
-
-There are even more caveats to microarrays than the ones presented
-above. Pozhitkov et al. review many of these limitations and go
-so far as stating that ``there is currently no way to design 
-an oligonucleotide microarray such that the probes have 
-fully predictable hybridization'' \cite{Pozhitkov:2007go}.
-
-
-The greatest need is visualization, Culhane et al provide a visualization
-for data sets from different studies and platforms \cite{Culhane:2003it}.
-Le Cao improved upon Culhane et al \cite{Cao:2009dd}.
-Other methods have been made to correct for cross-platform differences \cite{Fan:2011iy}.
-
-Ensemble methods
-It is possible that data from different platforms could be combined
-to provide additional information \cite{Hockley:2009tf}.
-Models may also be combined as they were in predictive models
-of cancer diagnostics \cite{Chen:2011ib}.
-
-very important to have the correct probe annotations \cite{Carter:2005bq}.
-
-\section{Recommendations}
-
-Low-abundance transcripts are the biggest problem. Experimental methods should
-specifically target this problem.
-
-%http://camda.bioinfo.cipf.es/camda07/agenda/pdfs/submission_21.pdf
-Most metrics will work for low and high intensity probes
-
-Make clear the confidence in predictions from gene expression studies
-
-\section{Visualizing results}
+A major hindrance to any 
+research with microarrays or sequencing is the availability
+and reproducibility of analyses. I have taken
+a special interest in reproducible research and will now discuss it briefly.
 
 \section{Reproducibile analyses}
 
@@ -507,7 +683,7 @@ replicate experiments on different days were clearly different when
 visualized with principal components analysis. However, the differences
 were systematic and could be corrected.
 
-Problems may also arise from overexpectations or and misunderstanding 
+Problems may also arise from overexpectations and misunderstandings 
 of what expression values can predict. 
 For example, comparisons of microarray classification
 studies (e.g., \cite{Veer:2002vv,Yeoh:2002wg,Alizadeh:2000tn,Golub:1999fn,
@@ -522,7 +698,7 @@ However, a more rigorous re-evaluation, of a pessimistic study claiming
 that microarray studies cannot predict cancer markers, found that
 markers can indeed be found (see \cite{Michiels:2005tg,Fan:2010cv,Tong:2010ka,Koscielny:2010jd}
 for the debate).
-Hence, one shouldn't jump to conclusions from any one or even a few
+One shouldn't jump to conclusions from any one or even a few
 analytical workflows.
 For instance, two studies may find very different
 list of differentially expressed genes, yet the correlation
@@ -546,15 +722,41 @@ platforms \cite{Petersen:2005by,Yauk:2004fq,
 Park:2004ux,Yuen:2002ha,Canales:2006ts,Shippy:2006uf,
 Patterson:2006hi,Tong:2006cg,Guo:2006wi}.
 
-\subsection{How to make reproducible analyses?}
 
-\subsection{Reproducibility of this dissertation}
+\section{Transcriptomics analyses in this dissertation}
 
-Being wrong as a scientist is expected, but being wrong in a way
-that other
+In my dissertation, the first set of challenges have
+been solving engineering problems---ensuring the reliability
+and reproducibility of all analyses. This behind the scenes work is not highlighted
+in all of the following chapters, yet it is central
+to achieving the goals of each chapter.
+In developing the best analytical strategies, I worked
+through several previous publications. The greatest challenge
+I and others have faced is reproducing these results.
+I have made special efforts to make all computational
+analyses repeatable. 
+
+The next chapter describes a transcriptomics
+analysis where that I have included to ensure reproducibility
+of a clinical trial for which I analyzed the results.
+
+As the hundreds of publications about microarray preprocessing
+and significance tests have shown, engineers
+and statisticians have been very interested in techniques and optimization.
+However, the most difficult part of microarray studies comes
+after the data processing, when biological interpretations need 
+to be made. For example, new techniques may improve the accuracy
+of DEG detection from 80\% to 90\%, but is that better accuracy
+more helpful? Would a biologist find it useful that 9/10 of 
+genes in a list are correct, not just 8/10? Maybe. Maybe not.
+
+The following chapters focus on this transition from statistics
+to biological understanding. In particular, transcriptomics analyses
+of host cells to \textit{C. difficile} toxins are used to elucidate
+changes in the replication of cells and proteins that contribute
+or are markers for inflammation during disease.
 
 
-disput
 
 
 
