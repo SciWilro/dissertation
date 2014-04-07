@@ -1,13 +1,177 @@
-\chapter{BMC Introduction}\label{chapter:intro2}
+\chapter[Functional transcriptomics of toxin response]{Functional transcriptomics of the host response to \textit{C. difficile} toxins}\label{chapter:introbmc}
 
-\section{Clostridium difficile: a dangerous pathogens}
+\textit{C. difficile} causes 300,000+ infections and $\sim$20,000 deaths in the US every year,
+indirectly costing the healthcare system over \${}8 billion \cite{Lucado:2012wl}.
+\textit{C. difficile} strains are only pathogenic if
+they release toxin A or toxin B (TcdA and TcdB).
+The basic structure and enzymatic activities of the toxins
+are understood but the complex host response to the toxins
+is not \cite{Pruitt:2010cy,Pruitt:2012kx,Genisyuerek:2011dr,
+Just:1995kz,Just:1995ei,Sun:2010kt}. 
+Since the severity of illness is determined
+by the the host and not the extent of infection
+or the number of bacteria in the host, it is critical
+to understand detrimental host responses \cite{ElFeghaly:2013gq}.
 
-\subsection{the burden of disease}
+Taking a systems biology approach, I show how transcriptomics
+can be used to infer previously unidentfied host cell responses.
+The field of functional genomics (or transcriptomics), which overlaps
+with systems biology, aims to determine functions related to genetic data
+and characterize interaction between genes and proteins. In the chapter's last section, I
+discuss the concept of ``enrichment'' to identify
+groups of genes or pathways that are altered 
+and are likely to represent larger functional changes within the cell.
 
-\subsection{the cause of disease}
+\section{\textit{C. difficile}: a dangerous pathogen}
 
-\subsection{what we know about toxins}
+\subsection{Historical significance}
 
-\subsection{what we know about the host response to toxins.}
+In 1935, Hall and Otoole isolated a novel gram-positive bacterium from infants which
+they named \textit{Bacillus difficilis} because it was a rod (\textit{Bacillus})
+and was an anaerobe that was difficult to grow (\textit{difficilis}). 
+They also identified a \textit{B. difficilis} toxin that killed mice.
+In 1943, the first rodent model of infection was made unintentionally
+when penicillin induced inflammation in the cecum \cite{Hamre:1943te}.
+Remarkably, these findings from 40 years ago summarize
+much of what we now know: \textit{C. difficile} infection occurs
+when the flora is disrupted by antibiotics and the pathogenic
+effects are due to toxins. Even more interesting, several
+studies over 50 years ago suggested that the most effective treatment
+could be the restoration of the bacterial flora, which
+in the past few years has proved to be the most effective 
+treatment (reviewed in \cite{Bartlett:2008jx}).
+
+After the advent of antibiotics, ``pseudomembranous colitis'' (PMC), a condition
+manifesting as inflammation and diarrhea, became associated
+with antibiotic treatment \cite{Tedesco:1974jo,Bartlett:2008jx}. 
+The etiology of PMC remained unknown
+for several years until a rapid succession of experiments between 1977 and 1981
+found \textit{C. difficile} and its two large protein toxins (TcdA and TcdB)
+ to be the primary cause of PMC 
+\cite{Lusk:1978ub,Chang:1978um,Browne:1977ui,Fekety:1979ul,
+Ebright:1981uj,Taylor:1981uda,Bartlett:1978tj,Bartlett:1977wra,
+Lusk:1977wg,MRKeighley:1978ku}. 
+With increased antibiotic usage and improved surveillance,
+the incidience of \textit{C. difficile} infections has increased 
+nearly every year since \cite{Lucado:2012wl}.
+From 1981 to 1995, 
+studies characterized the broad physiological toxin effects,
+many of which are discussed in the following chapters.
+
+
+\subsection{Toxin molecular biology}
+The enzymatic activity of TcdA and TcdB which is responsible
+for their cytopathic effects was discoverd 
+in 1995 by Just et al. \cite{Just:1995ei,Just:1995kz}.
+Both TcdA and TcdB, with 63\% amino acid
+homology \cite{vonEichelStreiber:1992wu}, have N-terminal
+domains that glucosylate Rho family proteins, disabling
+them from entering their GTP-bound, active state \cite{Just:1995ei,Just:1995kz}.
+The C-terminal of both toxins consists of many ``clostridial
+repetitive oligopeptides'' (CROPs) that are present in 
+other clostridial and streptococcal species 
+\cite{vonEichelStreiber:1990ti,vonEichelStreiber:1992vb}
+that are important for cell binding and 
+entry \cite{Ho:2005vm,Greco:2006wf,Frisch:2003jo}.
+However, it is unclear if the CROPs are entirely necessary
+for cell entry or if the CROPs can alone cause
+cytopathic effects \cite{Yeh:2008hd,Zemljic:2010ub}. Both toxins
+enter cells by endocytosis and rearrange structurally
+in the acidic endosome \cite{Papatheodorou:2010io,QaDan:2000fj}.
+After translocating N-terminal domains to the cytosol through
+self-formed pore in the endosome,
+a cysteine protease domain cleaves off the glucosyltransferase
+domain into the cytosol \cite{Egerer:2007fy,Genisyuerek:2011dr,Pfeifer:2003bx}.
+Although much remains to be understood about the 
+toxins' functions on the molecular level (e.g., no toxin receptors are known and
+a large middle portion of the toxins has no known function), there
+are even more unknowns about the disease pathogenesis disease that
+is most critical to clinical outcome.
+
+\subsection{Physiological toxin responses}
+The external manifestations of \textit{C. difficile} infection 
+are diarrhea, abdominal pain, and sometimes fever.
+Internally, pseudomembranous colitis is characterized by
+an inflamed colon covered with yellow, volcano-shaped 
+pseudomembranes made of cellular debris, exudate,
+and inflammatory cells \cite{Tedesco:1974jo}. 
+Histology reveals an abundance of neutrophils and
+loss of epithelial barrier integrity \cite{Lyerly:1988dk,Kelly:1994cu}.
+Accordingly, many of the hypotheses for \textit{C. difficile}
+and toxin studies have been centered around known inflammatory
+markers. However, how these markers interact together
+is unknown. It is also unknown if any other cell functions
+(e.g., regulation of metabolism) contribute to the pathogenesis
+or the healing process.
+
+
+\section{Functional transcriptomics: enrichment}
+This dissertation presents a systems biology approach
+to the host response to \textit{C. difficile} toxins,
+using genome-wide expression to reveal altered cellular functions.
+Appropriate data processing techniques were chosen to calculate
+expression values and differentially expressed genes (\autoref{chapter:introjtm}).
+
+Many network based algorithms can be used to reconstruct regulatory networks
+and gene interactions. However, many of these methodologies are unproven
+or still in the formative stages. The approach in this dissertation
+is to present the differentially expressed genes using exploratory analyses
+that enable novel hypotheses.
+
+\subsection{Gene set enrichment analysis}
+One of the simplest yet most helpful questions from transcriptomics data is `what
+types of genes changed'. For example, is the number of DEG chemokines 
+greater than expected? If so, then one could say that the data
+set is \textit{enriched} with highly expressed chemokines. Alternatively,
+it is common to say that chemokine genes or chemokine functions
+are \textit{enriched}.
+
+These questions require a test of proportions. For example,
+is there a significantly greater proportion chemokines in the list
+of DEGs compared to the list of non-DEGs?
+The Fisher exact test calculates the significance of such proportions, and it
+is ubiquitous in gene expression studies. The enrichment of hundres
+of predefined sets of genes from public biological databases can be used.
+
+The Fisher test as well as the $\chi^2$ and other tests of proportions
+require a threshold to define DEGs, and the results of the test are
+very sensitive to the threshold chosen. A handful of algorithms have
+tried to solve the threshold problem by scanning many thresholds
+with little success. These tests also assume that genes within the
+gene set are independent, which usually incorrect.
+
+Like with DEG significance tests, the choices are numerous.
+In trying to find the appropriate test, I evaluated over 130 articles
+introducing new tests and software tools to perform enrichment tests, and there
+are probably one hundred more.
+Reviews of these methods can usually discuss a portion of 
+the possible tests \cite{Ackermann:2009bw,Huang:2009be,Abatangelo:2009cc,
+Berg:2009tu,Dinu:2008tv}.
+Also similar to DEG tests, there are many different categories (e.g., 
+parametric tests, permutation tests, machine learning algorithmes)
+that make different statistical assumptions.
+
+Enrichment methods are even more complicated because the hypotheses
+are ill defined. For instance, are there more genes in a gene set
+than all genes outside the gene set? Is the fold change of gene
+in a gene set, on average, different than 1? The first question
+is more restrictive than the second, but neither are wrong questions
+to ask.
+
+In later chapters, I describe some more details of different tests
+and give reasoning to the enrichment tests chosen for
+the transcriptomics data. The tests were chosen based on exploration
+of many methods to find the most consistently highly ranked
+gene sets. 
+
+
+
+
+
+
+
+
+
+
 
 

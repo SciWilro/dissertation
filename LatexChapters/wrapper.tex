@@ -43,13 +43,14 @@
 \usepackage[labelfont=bf]{caption}
 
 % citations
-\usepackage[style=nature, sorting=none, maxbibnames=500, minbibnames=99, backref=true]{biblatex}
+\usepackage[style=nature, sorting=none, maxbibnames=500, minbibnames=99, maxcitenames=99, backref=true]{biblatex}
 \addbibresource{ini/ini.bib}
 \addbibresource{bmc/bmc.bib}
 \addbibresource{trends/trends.bib}
 \addbibresource{jtm/jtm.bib}
 \addbibresource{imp/imp.bib}
 \addbibresource{introjtm/introjtm.bib}
+\addbibresource{introbmc/introbmc.bib}
 \AtEveryBibitem{\clearfield{issn}}
 \AtEveryCitekey{\clearfield{issn}}
 
@@ -126,17 +127,17 @@
 %\listoftables
 
 \doublespacing
-%\include{preface/preface}
+\include{preface/preface}
 
 \let\cleardoublepage\clearpage
 \mainmatter
-%\include{intromain/intromain}
+\include{intromain/intromain}
 
 \include{introjtm/introjtm}
 \include{jtm/jtm}
 
-%\include{introbmc/introbmc}
-%\include{bmc/bmc}
+\include{introbmc/introbmc}
+\include{bmc/bmc}
 
 %\include{introini/introini}
 %\include{ini/ini}
