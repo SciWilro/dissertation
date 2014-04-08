@@ -1,14 +1,453 @@
-\chapter{Wellz chapter}
+\chapter[Multi-well time course software]{Software for time course data from multi-well experiments}
 
-\section{The solution}
-The time
+The data in the previous chapter was generated from thousands of wells
+in multi-well plates. For each well, thousands of data points were recorded.
+To manage these data, I wrote software to organize and visualize the data.
+This software is written in the free, open source R programming language
+so that it is easily accessible and extensible. Here, I briefly describe
+its key features.
 
-\section{Examples}
+
+\section{Concise annotation of multiple wells}
+
+The meta data for all the wells can be input as a spreadsheet or
+table as in \autoref{wellz:tab1}. The format and notation was chosen
+to minimize the amount of effort. All blank cells use the value
+of the next non-blank cell above it. The well identifier also
+allows shorthand (e.g., A-B1-2 refers to wells A1, A2, B1, and B2).
+Each row of the table represents an experimental action that occurred
+directly after the $i^{\text{th}}$ data point. The ``ID'' labels
+that action so that it can be referenced in future data transformations and alignments.
+``rmVol'' and ``adVol''
+are the volume removed, respectively, during an action.
+``name'' and ``concentration'' indicate the compounds in the solution
+being added to each well. Comma-separated values are matched with the
+``wells'' column. In the ``type'' column, ''final'' indicates that
+the indicated concentration is the concentration after the action is
+performed; ``start'' indicates the concentration referse to the solution
+before it is added to the well.
 
 
-\section{Future directions}
-The hardest part was actually just the structure and the ideas
-Porting it shouldn't be too hard, et
-Online access
-Much easier to share and use
+\begin{table}[h!]
+\begin{adjustwidth}{-1cm}{}
+\resizebox{1.12\textwidth}{!}{%
+\begin{tabular}{ l l l c c c l l l l }
+file & wells & ID & i & rmVol & adVol & name & concentration (ng/ml) & type & solvent \\ \toprule
+T84-TcdB.txt & A-H5-6 & start & 1 & 0 & 100 & - & - & - & media \\
+             & A-H5-6 & cellSeed & 2 &  &  & T84 & 30000 & total & \\
+             & B-F6, C5, E-F5 & toxinAdd & 1429 &  &  22.2 &
+             TcdB & 1000, 300, 100, 30, 10, 3, 1, 0.1 & final & \\
+             & D5 & &  &  &  & - & - & - & \\
+CecalCells.txt & A-H3-6 & start & 1 &   & 100 & - & - & - & \\
+& A-H3-6 & cellSeed & 2 &  &  & IMCE & 30000 & total & \\
+             & A-B3, D-H3 & toxinAdd & 449 &  &  22.2 &
+             TcdA & 1000, 100, 10, 1, 0.1, 0.01, 0.001 & final & \\
+& C3 & &  &  &  & - & - & - & \\
+             & A-B3, D-H3 & & 449 &  &  &
+             TcdB & 100, 10, 1, 0.1, 0.01, 0.001, 0.0001 & final & \\
+\end{tabular}
+}
+\end{adjustwidth}
+\caption{Example metadata file}
+\label{wellz:tab1}
+\end{table}
+
+This file is parsed and stored in an object in R.
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Parse and load the data}
+\hlstd{wells} \hlkwb{=} \hlkwd{parse.RTCAanalyze}\hlstd{(}\hlkwc{metadata} \hlstd{=} \hlstr{"./MasterSheet2.csv"}\hlstd{,} \hlkwc{data.dir} \hlstd{=} \hlstr{"./Data2"}\hlstd{)}
+\end{alltt}
+\begin{alltt}
+\hlcom{# Show a summary of the first 8 wells}
+\hlkwd{print}\hlstd{(wells[}\hlnum{1}\hlopt{:}\hlnum{8}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+##      file points hours well   totals    ID.soln
+## 1 CHO.txt  3,461   184  A01 CHO-9000  TcdA-1000
+## 2       -      -     -  B01        -           
+## 3       -      -     -  C01        -   TcdA-100
+## 4       -      -     -  D01        -     TcdA-1
+## 5       -      -     -  E01        -   TcdA-0.1
+## 6       -      -     -  F01        -  TcdA-0.01
+## 7       -      -     -  G01        - TcdA-0.001
+## 8       -      -     -  H01        - TcdA-1e-04
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Show a summary for the first well}
+\hlkwd{print}\hlstd{(wells[[}\hlnum{1}\hlstd{]])}
+\end{alltt}
+\begin{verbatim}
+## Well: CHO.txt, A01
+## 3,461 data points over 184 hours
+## 
+##             ID  t1  t2 rmVol notes     solution       status
+## 1        start   0   1     0       100, lis.... 100, lis....
+## 2     cellSeed   2   3     0       100, lis.... 100, lis....
+## 3        move1 285 286     0       NA, list.... 100, lis....
+## 4 mediaReplace 307 308   100       100, lis.... 100, lis....
+## 5     toxinAdd 611 612     0       100, lis.... 100, lis....
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\doublespacing
+
+\section{Selecting and modifying wells}
+Each well contains several actions. Each action contains
+a \texttt{solution} object.
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Select wells based off metadata}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"IMCE.txt"}\hlstd{,}
+                       \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{,} \hlkwc{max.concentrations} \hlstd{=} \hlnum{50}\hlstd{,}
+                       \hlkwc{controls} \hlstd{=} \hlnum{TRUE} \hlstd{)}
+\hlkwd{print}\hlstd{(subset)}
+\end{alltt}
+\begin{verbatim}
+##        file points hours well     totals    ID.soln
+## 1  IMCE.txt  5,376 119.9  C03 IMCE-30000           
+## 2         -      -     -  B04          -    TcdB-10
+## 3         -      -     -  C04          -     TcdB-1
+## 4         -      -     -  D04          -   TcdB-0.1
+## 5         -      -     -  E04          -  TcdB-0.01
+## 6         -      -     -  F04          - TcdB-0.001
+## 7         -      -     -  G04          - TcdB-1e-04
+## 8         -      -     -  H04          - TcdB-1e-05
+## 9         -      -     -  C05          -           
+## 10        -      -     -  A06          -    TcdB-10
+## 11        -      -     -  B06          -     TcdB-1
+## 12        -      -     -  C06          -   TcdB-0.1
+## 13        -      -     -  D06          -  TcdB-0.01
+## 14        -      -     -  E06          - TcdB-0.001
+## 15        -      -     -  F06          - TcdB-1e-04
+## 16        -      -     -  G06          - TcdB-1e-05
+## 17        -      -     -  H06          -
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Quick look at the actions in the first well}
+\hlkwd{print}\hlstd{(subset[[}\hlnum{1}\hlstd{]])}
+\end{alltt}
+\begin{verbatim}
+## Well: IMCE.txt, C03
+## 5,376 data points over 119.9 hours
+## 
+##         ID  t1  t2 rmVol notes     solution       status
+## 1    start   0   1     0       100, lis.... 100, lis....
+## 2 cellSeed   2   3     0       100, lis.... 100, lis....
+## 3 toxinAdd 449 450     0       100, lis.... 100, lis....
+\end{verbatim}
+\begin{alltt}
+\hlcom{# The solution objects for each action}
+\hlstd{solutions} \hlkwb{=} \hlstd{subset[[}\hlnum{1}\hlstd{]]}\hlopt{$}\hlstd{timeline}\hlopt{$}\hlstd{solution}
+\hlkwd{print}\hlstd{(solutions)}
+\end{alltt}
+\begin{verbatim}
+## [[1]]
+## 100 uL media
+## 
+## [[2]]
+## 100 uL 
+## Solvent: media
+## IMCE 30000 total.
+## 
+## [[3]]
+## 22.2 uL media
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Solutions have compounds and solvents}
+\hlstd{solutions[[}\hlnum{3}\hlstd{]]}\hlopt{$}\hlstd{compounds}
+\end{alltt}
+\begin{verbatim}
+## [1] name conc type
+## <0 rows> (or 0-length row.names)
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Adding and subtracting solutions}
+\hlstd{solutions[[}\hlnum{2}\hlstd{]]} \hlopt{+} \hlstd{solutions[[}\hlnum{3}\hlstd{]]}
+\end{alltt}
+\begin{verbatim}
+## 122.2 uL 
+## Solvent: media
+## IMCE 30000 total.
+\end{verbatim}
+\begin{alltt}
+\hlstd{solutions[[}\hlnum{2}\hlstd{]]} \hlopt{+} \hlstd{solutions[[}\hlnum{3}\hlstd{]]} \hlopt{-} \hlstd{solutions[[}\hlnum{1}\hlstd{]]}
+\end{alltt}
+\begin{verbatim}
+## 22.2 uL 
+## Solvent: media
+## IMCE 30000 total.
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\doublespacing
+
+\section{Visualization}
+
+Lists of well objects can be visualized and plot features can be linked to metadata.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(subset,} \hlkwc{color} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{,} \hlkwc{linetype} \hlstd{=} \hlstr{"by.compounds"}\hlstd{,} \hlkwc{replicates} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=0.8\maxwidth]{wellz/suppRef3} 
+\end{knitrout}
+
+Diagnostic plots can also be made.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(subset,} \hlkwc{color} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{,} \hlkwc{replicates} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{diagnostic} \hlstd{=} \hlnum{1}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=1.1\maxwidth]{wellz/suppRef3b} 
+
+\end{knitrout}
+\section{Independent wells}
+The software was written to be modular so that it can be easily extended.
+Each well is an independent object. Functions are written for well objects
+so they can easily be applied to a list of unrelated wells. Unless the
+wells in the data in a well is modified, the data is passed by reference
+(a copy of the data that would take more memory does \textit{not} need to be created).
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Wells from any experiment can be combined. For example}
+\hlstd{well.list.1} \hlkwb{=} \hlstd{subset[}\hlnum{2}\hlstd{]}
+\hlstd{well.list.2} \hlkwb{=} \hlstd{subset[}\hlnum{10}\hlopt{:}\hlnum{13}\hlstd{]}
+\hlstd{new.list} \hlkwb{=} \hlkwd{c}\hlstd{(well.list.1, well.list.2)}
+\hlkwd{print}\hlstd{(new.list)}
+\end{alltt}
+\begin{verbatim}
+##       file points hours well     totals   ID.soln
+## 1 IMCE.txt  5,376 119.9  B04 IMCE-30000   TcdB-10
+## 2        -      -     -  A06          -         -
+## 3        -      -     -  B06          -    TcdB-1
+## 4        -      -     -  C06          -  TcdB-0.1
+## 5        -      -     -  D06          - TcdB-0.01
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\doublespacing
+
+\section{Data transformations}
+
+Replicates can be averaged, either directly or in the plot function.
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset.averaged} \hlkwb{=} \hlkwd{averageReplicates}\hlstd{(subset)}
+\hlkwd{print}\hlstd{(subset.averaged)}
+\end{alltt}
+\begin{verbatim}
+##       file points hours        well     totals    ID.soln
+## 1 IMCE.txt  5,376 119.9 C03+C05+H06 IMCE-30000           
+## 2        -      -     -     B04+A06          -    TcdB-10
+## 3        -      -     -     C04+B06          -     TcdB-1
+## 4        -      -     -     D04+C06          -   TcdB-0.1
+## 5        -      -     -     E04+D06          -  TcdB-0.01
+## 6        -      -     -     F04+E06          - TcdB-0.001
+## 7        -      -     -     G04+F06          - TcdB-1e-04
+## 8        -      -     -     H04+G06          - TcdB-1e-05
+\end{verbatim}
+\begin{alltt}
+\hlstd{subset.transformed} \hlkwb{=} \hlkwd{transform}\hlstd{(subset,}\hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,}\hlstr{"normalize"}\hlstd{),}\hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{)}
+\hlkwd{plot}\hlstd{(subset.transformed,}\hlkwc{color}\hlstd{=}\hlstr{"by.concentrations"}\hlstd{,}\hlkwc{xlim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,}\hlnum{10}\hlstd{))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{wellz/suppRef5b} 
+\end{knitrout}
+\doublespacing
+
+Because experimental protocols cannot be carried
+simultaneously on all wells, 
+wells can be aligned according to the actions defined in the metadata.
+Data can then be normalized or transformed using times defined
+in the metadata.
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset2} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,}\hlkwc{compounds}\hlstd{=}\hlstr{"HUVEC"}\hlstd{)}
+\hlstd{new.list} \hlkwb{=} \hlkwd{c}\hlstd{(subset[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{],subset2[}\hlnum{3}\hlopt{:}\hlnum{4}\hlstd{])}
+\hlkwd{print}\hlstd{(new.list)}
+\end{alltt}
+\begin{verbatim}
+##          file points hours well     totals  ID.soln
+## 1    IMCE.txt  5,376 119.9  C03 IMCE-30000         
+## 2           -      -     -  B04          -  TcdB-10
+## 3 HUVEC-a.txt  4,979 250.5  C03 HUVEC-5000 TcdA-100
+## 4           -      -     -  D03          -
+\end{verbatim}
+\begin{alltt}
+\hlcom{# plot1 - raw data}
+\hlstd{customplot} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{...}\hlstd{)} \hlkwd{plot}\hlstd{(...,}\hlkwc{color}\hlstd{=}\hlstr{"by.concentrations"}\hlstd{,}
+                                \hlkwc{linetype}\hlstd{=}\hlstr{"by.total.compounds"}\hlstd{)}
+\hlstd{plot1} \hlkwb{=} \hlkwd{customplot}\hlstd{(new.list)}
+
+\hlcom{# plot2 - aligned data}
+\hlstd{centered.wells} \hlkwb{=} \hlkwd{transform}\hlstd{(new.list,}\hlstr{"tcenter"}\hlstd{,}\hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{plot2} \hlkwb{=} \hlkwd{customplot}\hlstd{(centered.wells)}
+
+\hlcom{# plot3 - normalized data}
+\hlstd{norm.wells} \hlkwb{=} \hlkwd{transform}\hlstd{(new.list,}\hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,}\hlstr{"normalize"}\hlstd{),}\hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{plot3} \hlkwb{=} \hlkwd{customplot}\hlstd{(norm.wells)}
+
+\hlcom{# plot4 - take out just a slice of the time course}
+\hlstd{sliced.wells} \hlkwb{=} \hlkwd{transform}\hlstd{(new.list,}\hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,}\hlstr{"normalize"}\hlstd{,}\hlstr{"slice"}\hlstd{),}
+                         \hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{,}\hlkwc{xlim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,}\hlnum{10}\hlstd{))}
+\hlstd{plot4} \hlkwb{=} \hlkwd{customplot}\hlstd{(sliced.wells)}
+
+\hlkwd{grid.arrange}\hlstd{(plot1,plot2,plot3,plot4,}\hlkwc{ncol}\hlstd{=}\hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{wellz/suppRef5} 
+\end{knitrout}
+\doublespacing
+
+
+\section{Interpolation and smoothers}
+
+Common smoothers already available in base R can be applied to multiple
+wells at the same time. However, because these algorithms
+are dependent on the number of data points and not the distance between
+the data points, the time courses will not 
+be uniformly smoothed.
+
+In many cases, different amounts of smoothing is desired at different
+points in a curve. For example, we do not wish to smooth the sharp drop in
+impedance after toxin is added. However, we do wish to smooth all other 
+parts of the curve. In these cases, smoothing algorithms that are local (e.g., loess
+and kernel smoothing) may be preferred over splines that minimize the residuals along
+the entire curve.
+
+In some cases, smoothing with R code took several minutes, so I wrote or attached open source
+C++ and Fortran functions that calculate smoothers in less than one millisecond.
+
+
+\begin{itemize}
+  \item \texttt{smoother\_curfit} fits a cubic spline so that the sum of the residuals
+matches a user-defined value (calls Fortran code from the DIERCKX package)
+  \item \texttt{smoother\_bin} bins the data and averages each bin to reduce the size of the data set
+  \item \texttt{smoother\_maverage} calculates a moving average in C++
+  \item \texttt{smoother\_smooth.spline} is the cubic smoothing spline in the R `stats' package
+  \item \texttt{smoother\_lokern} performs ``kernel regression smoothing with local plug-in bandwidth''
+     as described by Herrman using the `lokern' R package developed by Herrman \cite{Herrmann:1997gx}.
+  \item \texttt{interpolate\_linear} performs linear interpolation
+  \item \texttt{smooth.pchip} calculates a piecewise cubic hermitian interpolating function. This
+     function is used when aligning two curves.
+  \item \texttt{smoother\_composite} is a multi-step smoother that I found was particularly
+     useful for the impedance data in this chapter. First, the derivative
+     of the curve is estimated from \texttt{smoother\_bin}.
+     \texttt{smoother\_maverage} of the absolute value of the derivative is used to weight each data
+     point so that rapidly changing parts of the curve are fit more tightly.
+     The weights are translated to bandwidths with user-defined limits. 
+     Using these bandwidths, local polonymials are fit with \texttt{smoother\_lokern} in order to estimate
+     the residuals that are used in \texttt{smoother\_curfit}. This composite smoother requires
+     more user-defined parameters than any other, but it is very consistent
+     between different curves and different experiments.
+\end{itemize}
+
+The polynomial smoothers can be used to calculate derivatives and
+integrals. Smoothers also have the added benefit of data compression, sometimes
+reducing 10,000+ data points to a spline with less than 20 knots.
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{huvecs.a} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(subset2,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{)}
+\hlstd{huvecs.norm} \hlkwb{=} \hlkwd{transform}\hlstd{(huvecs.a,} \hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,}\hlstr{"normalize"}\hlstd{,}\hlstr{"slice"}\hlstd{),}
+                        \hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{,} \hlkwc{xlim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,}\hlnum{Inf}\hlstd{))}
+\hlstd{huvecs.smth} \hlkwb{=} \hlkwd{add_smoother}\hlstd{(huvecs.norm,} \hlkwc{method}\hlstd{=}\hlstr{"composite"}\hlstd{,} \hlkwc{x.scale}\hlstd{=}\hlnum{2}\hlopt{/}\hlnum{3}\hlstd{,} \hlkwc{y.scale}\hlstd{=}\hlnum{1}\hlstd{,}
+                           \hlkwc{noise.scale}\hlstd{=}\hlnum{1}\hlopt{/}\hlnum{60}\hlstd{,} \hlkwc{deriv.cutoffs}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0.05}\hlstd{,}\hlnum{0.25}\hlstd{) )}
+
+\hlkwd{plot}\hlstd{(huvecs.smth[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{8}\hlstd{,}\hlnum{10}\hlstd{,}\hlnum{17}\hlstd{)],}\hlkwc{xlim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{),}\hlkwc{showpoints}\hlstd{=}\hlnum{TRUE}\hlstd{,}\hlkwc{smoother}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=1.35\maxwidth]{wellz/suppRef6} 
+\end{knitrout}
+\doublespacing
+
+\section{Custom metrics}
+With this framework, it is easy for one to define new functions that calculate
+metrics from the curves. Below is an example of a function (\texttt{max.rate}) that calculates
+the maximum slope of curves. The slopes are then plotted versus toxin concentrations.
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{compounds}\hlstd{=}\hlstr{"IMCE"}\hlstd{)}
+\hlstd{subset.norm} \hlkwb{=} \hlkwd{transform}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,}\hlstr{"normalize"}\hlstd{,}\hlstr{"slice"}\hlstd{),}
+                        \hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{,} \hlkwc{xlim}\hlstd{=}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,}\hlnum{Inf}\hlstd{))}
+\hlstd{subset.smth} \hlkwb{=} \hlkwd{add_smoother}\hlstd{(subset.norm,} \hlkwc{method}\hlstd{=}\hlstr{"composite"}\hlstd{,} \hlkwc{x.scale}\hlstd{=}\hlnum{2}\hlopt{/}\hlnum{3}\hlstd{,} \hlkwc{y.scale}\hlstd{=}\hlnum{1}\hlstd{,}
+                           \hlkwc{noise.scale}\hlstd{=}\hlnum{1}\hlopt{/}\hlnum{60}\hlstd{,} \hlkwc{deriv.cutoffs}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0.05}\hlstd{,}\hlnum{0.25}\hlstd{) )}
+\hlstd{subset.rate} \hlkwb{=} \hlkwd{max.rate}\hlstd{(subset.smth,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{min.diff} \hlstd{=} \hlnum{10}\hlopt{/}\hlnum{60}\hlopt{/}\hlnum{60}\hlstd{,}
+                       \hlkwc{ylim} \hlstd{=} \hlnum{0.8}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{MaxS} \hlkwb{=} \hlkwd{groupMetric}\hlstd{(subset.rate,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{metric} \hlstd{=} \hlstr{"max.rate"}\hlstd{)}
+\hlkwd{plotMetric}\hlstd{(MaxS)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{wellz/suppRef7} 
+\end{knitrout}
+\doublespacing
+
+Here is the code for the function
+
+\singlespacing
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{print}\hlstd{(max.rate.Well)}
+\end{alltt}
+\begin{verbatim}
+## function (well, ID, duration = Inf, nbw = 10, min.diff = NULL, 
+##     ylim = 0.75, xlim = 2, smoother = TRUE) 
+## {
+##     dwell = spline_interpolate(well, deriv = 1, nbw = nbw, smooth = smoother, 
+##         min.diff = min.diff)
+##     times = timesdata(dwell)
+##     dm.deriv = datamat(dwell)
+##     dwell = spline_interpolate(well, deriv = 0, nbw = nbw, smooth = FALSE, 
+##         min.diff = min.diff)
+##     vals = welldata(dwell)
+##     sweep = getrows.by.ID(dwell, ID)$t1
+##     idx = which(sweepdata(dwell) == sweep)
+##     tstart = times[idx]
+##     idx.range = times > tstart & times < (tstart + duration)
+##     idx.spike = times < (tstart + xlim) & vals > ylim
+##     dm.deriv = dm.deriv[idx.range & !idx.spike, ]
+##     id = which.min(dm.deriv$values)
+##     rate = dm.deriv[id, c("time", "values")]
+##     colnames(rate) = c("time", "value")
+##     well$metrics$max.rate = as.data.frame(as.list(rate))
+##     return(well)
+## }
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\doublespacing
+
+\section{Future plans}
+After approval from the maintainers of R packages, this will be
+a standard R package accessible from the Comprehensive R Archive Network (CRAN).
+
+
+
+
 
