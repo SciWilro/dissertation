@@ -7,10 +7,10 @@ of human cells or tissues of mice that have been treated
 with \textit{C. difficile} toxins A and B
 (TcdA and TcdB) in order to determine the pathogenic responses
 of the host at the cellular level. 
-In learning how to process this type of data,
+In deciding how to process this type of data,
 I encountered many limitations and misunderstandings in 
-common gene expression analyses. In this chapter, I describe
-the background of this type of data and data analyses that form 
+common gene expression analyses. In this chapter, I summarize
+the principles of these analyses that form 
 the base of this dissertation, and explain some important considerations
 for interpreting sometimes very different results 
 produced by different data analyses, an overlooked problem in the
@@ -158,8 +158,8 @@ as $\text{E}[S|O=o]$ by the robust multi-array average (RMA) procedure in
 Wu et al. introduced gcRMA, which improved upon RMA by 
 accounting for sequence-specific probe
 affinities that were determined from previous experiments
-($O=S+B+N$ where $N$ is non-specific hybridization due to
-differences in probe sequences) \cite{Wu:2004wh}. gcRMA
+($O=S+B+N$ where $N$ is the differences in hybridization due to
+sequence-specific probe affinities) \cite{Wu:2004wh}. gcRMA
 also modeled mismatch probes by making two equations, one for 
 $O_{\text{mismatch}}$ and one for $O_{\text{perfect}}$, with one common 
 term, the true signal $S$. 
@@ -195,7 +195,7 @@ them to perform `factor analysis'
 where the `factors'
 are mRNA concentrations \cite{Hochreiter:2006ja}. 
 Even more complex models may incorporate 
-background correction , perfect-match correction, and probe set summarization
+background correction, perfect-match correction, and probe set summarization
 into one step (e.g. \cite{Zhang:2003to,Liu:2005ey}), 
 yet each step is typically performed separately.
 
@@ -228,7 +228,7 @@ offset adjustments that are dependent on the intensity of the signal.
 
 Usually, the answer is ``we're not sure'' or ``it depends''. 
 Hundreds of methods have been published.
-Which ones are chosen depends on if the method's assumptions match
+Which ones are chosen depends on if the methods' assumptions match
 the experimental design.
 
 Selecting the full sequence of steps (the \textit{workflow}) is daunting.
@@ -240,7 +240,7 @@ workflows. However, each algorithm has at least one, sometimes
 three or four arbitrarily or heuristically chosen parameters, making
 for over ten million possible workflows (actually real number parameters make 
 for infinite workflows).
-Since there are no easy general guidelines, I present some
+Since there are no general guidelines, I present some
 illustrative examples below. 
 
 \subsubsection{Background correction and perfect-match correction}
@@ -498,7 +498,7 @@ the other hyperparameters using the data. Efron et al.
 assumed a prior distribution of a modified t-statistic
 based on random permutations of microarrays. This ``empirical
 Bayes'' procedure has been used in several other DEG tests \cite{Efron:2001uu}.
-As researches have continued to learn about microarray chemistry so that
+As researchers have continued to learn about microarray chemistry so that
 we may make better prior assumptions, Bayes statistics for DEG detection
 have continued to be published. See
 the aforementioned reviews and citations for more examples 
@@ -531,17 +531,16 @@ t-tests and linear models (types of parametric tests) assume
 the expression values for each gene are normally distributed. However, the
 assumption may not be justified; there usually aren't enough samples to know.
 Additionally, the assumption required by the t-test
-that the mean and variance be independent is usually not true in microarray data.
+that the mean and variance are independent is usually not true in microarray data.
 Nevertheless, parametric tests are often chosen
 for practical reasons. Expensive microarray experiments have small sample sizes, and
-parametric tests are often needed to gain enough statistical power
+parametric tests are needed to gain enough statistical power
 to find DEGs.
 
 However, several non-parametric tests have been developed which
 make fewer assumptions \cite{Qi:2011tc}.
 The Wilcoxan rank sums test uses combinatorics
-to calculate how unusual the locations of treatment groups are when
-ranking microarrays by expression values for each gene.
+to calculate how unusual the rankings of microarrays are for each gene.
 In another approach called RankProd, genes are ranked by fold change for all
 two-array treatment group comparisons (e.g., $3\times3=9$ comparisons for triplicate 
 samples in two treatment groups) \cite{Breitling:2004te,Breitling:2005ue,Hong:2006gf}.
@@ -554,7 +553,7 @@ usual distribution of rank products (the null distribution).
 
 \subsubsection{Permutation tests}
 Many other statistical tests use permutations to avoid
-making inappropriate assumptions about the data (e.g., \cite{Yan:2005tc, Efron:2001uu}.
+making inappropriate assumptions about the data (e.g., \cite{Yan:2005tc, Efron:2001uu}).
 The most popular DEG test (by citation count) is Significant
 Analysis of Microarrays (SAM) \cite{Tusher:2001kk}. SAM calculates moderated t-statistics
 for each permutation and compares this to the actual moderated t-statistic
@@ -571,7 +570,7 @@ least ten arrays where the minimum p-value is 0.008.
 
 \subsubsection{Machine learning-based tests}
 Many of the previously introduced statistics such as the 
-modified t-statistic violate the assumptions on the significance tests
+modified t-statistic violate the assumptions on which the significance tests
 are based, or the test statistics are no longer in forms
 that can be used in statistical tests.
 Although these methods depart from the statistical
@@ -581,7 +580,7 @@ some statisticians have used machine learning algorithms
 to prioritize genes even though the numbers from the
 algorithms are difficult to interpret. For example, Lu et al
 performed PCA on the probes in a probe set to determine
-which probe sets to filter as not DEGs \cite{Lu:2011ba}. They used the
+which probe sets to filter as as not differentially expressed \cite{Lu:2011ba}. They used the
 loading on the first principal component relative to
 all other loadings to set a filtering cutoff.
 Clark et al. use linear discriminant analysis to find
@@ -623,8 +622,8 @@ or statistical measures.
 
 \section{Caveats of microarrays and alternatives}
 
-As discussed, many of the problems with microarrays are low-intensity probes--
-low-abundance transcripts. The number of statistical tests to correct
+As discussed, many of the problems with microarrays are low-intensity probes 
+(low-abundance transcripts). The number of statistical tests to correct
 for this problem is exasperating, yet very few studies have
 focused on experimental methods to improve the dynamic range
 of arrays. 
@@ -634,7 +633,7 @@ next step to improving variability. RNA-seq offer great
 potential for reducing the uncertainty in transcript levels because
 transcripts are counted. With microarrays, relative abundances
 can only be estimated indirectly. However, RNA-seq presents
-many new challenges as well. For instance, many of the sequenced
+new challenges. For instance, many of the sequenced
 reads cannot be mapped to the genome. There also is not
 a standard way to quantify expression
 levels of entire genes based off of many different transcripts.
@@ -667,7 +666,7 @@ scientists protect their integrity and intellectual property in the same
 way that lab notebooks do. They protect their colleagues
 whose careers are dependent on their analyses as well as the patients
 whose health decisions are affected by their research.
-Finally, they increase there chance for mutually beneficial collaborations.
+Finally, they increase their chance for mutually beneficial collaborations.
 
 \subsection{Are microarrays reproducible?}
 
@@ -677,7 +676,7 @@ gene expression experiments
 \cite{Evsikov:2003ic,Fortunel:2003eu,Ivanova:2003bh,RamalhoSantos:2002dy}). 
 Rather than discrediting microarray analysis,
 one should also consider that microarrays
-may reveal differences in \textit{seemingly} same experimental protocols.
+may reveal differences in \textit{seemingly} identical experimental protocols.
 For example, with the data presented in this dissertation, arrays from
 replicate experiments on different days were clearly different when
 visualized with principal components analysis. However, the differences
@@ -694,8 +693,8 @@ may not be as reliable as hoped \cite{Miklos:2004wn,Michiels:2007vs,Koscielny:20
 Hundreds or even thousands of microarrays may be necessary to
 accurately predict cancer 
 outcomes \cite{Ioannidis:2005kd,Michiels:2005tg,EinDor:2006ga,Frantz:2005ur}.
-However, a more rigorous re-evaluation, of a pessimistic study claiming
-that microarray studies cannot predict cancer markers, found that
+However, a more rigorous re-evaluation of a pessimistic study claiming
+that microarray studies cannot predict cancer markers found that
 markers can indeed be found (see \cite{Michiels:2005tg,Fan:2010cv,Tong:2010ka,Koscielny:2010jd}
 for the debate).
 One shouldn't jump to conclusions from any one or even a few
@@ -753,8 +752,8 @@ genes in a list are correct, not just 8/10? Maybe. Maybe not.
 The following chapters focus on this transition from statistics
 to biological understanding. In particular, transcriptomics analyses
 of host cells to \textit{C. difficile} toxins are used to elucidate
-changes in the replication of cells and proteins that contribute
-or are markers for inflammation during disease.
+changes in the replication of cells and proteins that contribute to
+or are markers of pathogenesis.
 
 
 

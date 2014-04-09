@@ -15,12 +15,11 @@ to understand detrimental host responses \cite{ElFeghaly:2013gq}.
 
 Taking a systems biology approach, I show how transcriptomics
 can be used to infer previously unidentfied host cell responses.
-The field of functional genomics (or functional transcriptomics) which overlaps
-with systems biology and aims to determine functions from genetic data
+The field of functional genomics (or functional transcriptomics) overlaps
+with systems biology. They both aim to determine functions from genetic data
 and characterize interactions between genes and proteins. In this chapter's last section, I
 discuss the concept of ``enrichment'' to identify
-groups of genes or pathways that are altered 
-and are likely to represent larger functional changes within the cell.
+groups of genes or pathways that are altered.
 
 \section{\textit{C. difficile}: a dangerous pathogen}
 
@@ -98,7 +97,7 @@ domain into the cytosol \cite{Egerer:2007fy,Genisyuerek:2011dr,Pfeifer:2003bx}.
 Although much remains to be understood about the 
 toxins' functions on the molecular level (e.g., no toxin receptors are known and
 a large middle portion of the toxins has no known function), there
-are even more unknowns about the disease pathogenesis disease that
+are even more unknowns about the disease pathogenesis that
 is most critical to clinical outcome.
 
 \begin{figure}[h!]
@@ -140,14 +139,14 @@ that enable novel hypotheses.
 
 \subsection{Gene set enrichment analysis}
 One of the simplest yet most helpful questions from transcriptomics data is `what
-types of genes changed'. For example, is the number of DEG chemokines 
+types of genes changed'. For example, is the number of differentially expressed chemokines 
 greater than expected? If so, then one could say that the data
 set is \textit{enriched} with highly expressed chemokines. Alternatively,
 it is common to say that chemokine genes or chemokine functions
 are \textit{enriched}.
 
-These questions require a test of proportions. For example,
-is there a significantly greater proportion chemokines in the list
+These questions lead to a hypothesis tests comparing proportions. For example,
+is there a significantly greater proportion of chemokines in the list
 of DEGs compared to the list of non-DEGs?
 The Fisher exact test calculates the significance of such proportions, and it
 is ubiquitous in gene expression studies. The enrichment of hundreds
@@ -156,8 +155,8 @@ of predefined sets of genes from public biological databases can be used.
 The Fisher test as well as the $\chi^2$ and other tests of proportions
 require a threshold to define DEGs, and the results of the test are
 very sensitive to the threshold chosen. A handful of algorithms have
-tried to solve the threshold problem by scanning many thresholds
-with little success. These tests also assume that genes within the
+tried to solve the problem by scanning many thresholds, but they
+have had little success. These proportion tests usually assume that genes within the
 gene set are independent, which usually incorrect.
 
 Like with DEG significance tests, the choices are numerous.
@@ -181,7 +180,7 @@ to ask.
 In later chapters, I describe some more details of different tests
 and give reasoning to the enrichment tests chosen for
 the transcriptomics data. The tests were chosen based on exploration
-of many methods to find the most consistently highly ranked
+of many methods to find the most consistent lists of highly ranked
 gene sets. 
 
 

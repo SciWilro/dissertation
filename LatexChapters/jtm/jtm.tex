@@ -8,7 +8,7 @@ Computational models that use millions of data points
 often require complex, multi-step analyses that few can implement or understand completely, 
 yet the end goal is most always 
 to find simple, fundamental relationships
-that most anyone can intellectually grasp. However, simple, well-designed
+that anyone can intellectually grasp. Simple, well-designed
 summaries and descriptions of the data are, arguably, of equal importance if not
 more important than a predictive or mechanistic model.
 Transitioning from a computer and data to logic and understanding is a
@@ -56,7 +56,7 @@ For example, Molhoek et al. found that dual targeting of VEGF and mTOR
 with bevacizumab and sirolimus synergistically reduced growth
 and caused death in VEGFR-2$^{+}$, patient-derived, melanoma cell lines \cite{Molhoek:2008jx}.
 In a follow-up phase II trial with 17 patients treated with temsirolimus+bevaczimub,
-three patients partially responded, nine had stable disease after 8 weeks,
+three patients partially responded, nine had stable disease after eight weeks,
 four had progressive disease, and one patient could not be 
 evaluated (\autoref{jtm:table1}) \cite{Slingluff:2013ej}. In this clinical study, additional miRNA data
 was taken from patients before and after treatment. This analysis aimed to 
@@ -129,7 +129,7 @@ Wagenseller et al. \cite{Wagenseller:2013fj}.
 (14 of the 17 patients). The row of colors above the heatmap indicate the patient
 from which miRNA samples came. The shapes above each column of the heatmap represent the time
 at which the sample was obtained. Lines indicate pre-treatment samples. Filled circles represent
-samples from patients one day after temsirolimus treatment (day 1). Patients received
+samples from patients one day after temsirolimus treatment (day 1). Patients then received
 bevacizumab+temsirolimus (day 8) and then temsirolimus (day 15). ``Double-circles'' indicate
 post-combination treatment samples
 that were obtained on day 23. The heatmap colors show the expression of each miRNA relative to
@@ -157,8 +157,7 @@ samples from patient 7 (there are five samples
 shown in \autoref{jtm:fig1}). However, the clustering suggested
  that one of the pre-treatment samples for patient
 7, which had been annotated as patient 6, was mislabeled. After checking lab notebooks
-and shipping documents, we rectified the problem. Previous analyses did not visualize these results.
-Only p-values were calculated, and so this mistake had not been identfied. After correcting
+and shipping documents, we rectified the problem. After correcting
 the annotations, the variance of samples from patients 6 and 7 decreased greatly.
 This, in turn, increased statistical power so that additional differentially expressed miRNAs could
 be detected.
@@ -198,7 +197,7 @@ to calculate the statistics.
   \label{jtm:fig2}
 \end{figure}
 
-The volcano plots were used to defines miRNAs of interest, with the cutoffs
+The volcano plots were used to select miRNAs of interest, with the cutoffs
 being $|dLMR|>0.5$ and $p<0.01$ (gray lines in \autoref{jtm:fig2}). 
 No miRNAs met these cutoffs in the
 post-temsirolimus treatment versus pre-treatement comparison. However,
@@ -209,13 +208,13 @@ performed a permutation based statistical test (`Significant Analysis of Microar
 and found the same 15 miRNAs as the most significant. Such close agreement
 between statistical tests is rare. The same findings with two statistical tests
 further supports these miRNAs as truly differentially expressed.
-The expression of the 15 miRNAs was validated by qRT-PCR
-Several of these miRNAs have predicted targets that are known
+The expression of the 15 miRNAs was validated by qRT-PCR.
+Several of the selected miRNAs have predicted targets that are known
 to be oncogenic. For a discussion of these targets, see Wagenseller
 et al. \cite{Wagenseller:2013fj}.
 
 \subsection{Different miRNA expression changes between responders and non-responders}
-Last, we sought to investigate if there are particular miRNAs or sets
+Last, we investigated if there are miRNAs or sets
 of miRNAs whose pre-treatment expression would separate the responders from the non-responders
 (patients with `progressive disease'). This is a two-class
 classification problem (10 total samples) with 1,300 features (1,300 miRNAs). 
@@ -235,11 +234,11 @@ the miRNA data, I decided to present the four miRNAs with $p<0.01$ and $|\text{d
 appropriately selected cutoff, are capable of predicting responders versus non-responders.
 \autoref{jtm:fig4}B shows miRNAs with $|\text{dLMR}|>0.5$ and $p<0.04$ when comparing post-combination
 treatment to pre-treatment expression. Finally, BRAF\textsuperscript{V600E}, BRAF\textsuperscript{WT}, melanomas are 
-treatable with vemurafenib. Since other treatments that target other pathways in BRAF\textsuperscript{WT}
-are needed (e.g. temsirolimus or bevacizumab), we also tried to distinguish 
+treatable with vemurafenib. Since the effectiveness of temsirolimus and
+bevacizumab are dependent on BRAF status, we also tried to distinguish 
 miRNAs that differ between BRAF\textsuperscript{V600E} and BRAF\textsuperscript{WT}.
 The separation of samples based on mutational status is more difficult (\autoref{jtm:fig4}C).
-However, there are a collection of miRNAs that warrant further investigation in the future.
+However, there are a collection of miRNAs that warrant further investigation.
 
 \begin{figure}[h!]
   \centering
