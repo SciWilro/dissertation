@@ -1,0 +1,1121 @@
+\chapter[Reproducing time-course analyses]{Reproducing time-course analyses}
+
+
+\section{Introduction}\label{S:Intro}
+
+This document includes the supplemental data referred to in \ref{chapter:imp}
+as well as instructions for how to reproduce our analyses and explore the
+data further.
+This is a functional document in that scripts (written in the
+R programming languange with the \texttt{knitr} package) are embedded, and they were run during
+PDF creation to produce the figures and output shown. Thus, the analyses can
+be repeated by downloading the source of this document (with the data) or copy-pasting
+all of the code into one's own R console.
+
+\section{ References from \ref{chapter:imp} }\label{S:ReFig}
+
+\subsection{ Reference 1 }
+
+``The impedance curves of cells treated with TcdA (300 ng/ml) 
+and TcdB (10 ng/ml) diverged from controls in 10 and 20 minutes, 
+respectively (Supplement).''
+
+
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{apximp/suppRef1} 
+\end{knitrout} \doublespacing
+
+
+\subsection{ Reference 2 }
+
+``To confirm the low toxin-sensitivity of neutrophils, we did attempt to 
+measure impedance changes of neutrophils in response to toxins, yet 
+the variability in these primarily non-adherent cells (impedance 
+largely measures adherence) was too high to identify 
+differences (Supplement).''
+
+See \ref{S:PMNs}
+
+\section{ Reproducing Figures }\label{S:ReFig}
+
+Below are the scripts to reproduce the figures. The data files
+and annotation file needed for the scripts to work are included in
+the supplemental data folder. The figures below were exported to PDFs.
+Cosmetic alterations (colors, line widths, axes labeling, legends, etc.) were
+made with Adobe Illustrator.
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# A library of functions for processing multi-well data}
+\hlkwd{source}\hlstd{(}\hlstr{"./Scripts2/library.R"}\hlstd{)}
+
+\hlcom{# Custom 'normalize_toxin' and 'smoother_toxin' functions made for this}
+\hlcom{# LaTeX document specifically}
+\hlkwd{source}\hlstd{(}\hlstr{"./Scripts2/latexLibrary.R"}\hlstd{)}
+
+\hlcom{# Parse and load the data}
+\hlstd{wells} \hlkwb{=} \hlkwd{parse.RTCAanalyze}\hlstd{(}\hlkwc{metadata} \hlstd{=} \hlstr{"./MasterSheet2.csv"}\hlstd{,} \hlkwc{data.dir} \hlstd{=} \hlstr{"./Data2"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout} \doublespacing
+
+
+\subsection{ Figure 1 }
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Process data from file HCT8-4.txt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"HCT8-4.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{Inf}\hlstd{,} \hlnum{100}\hlstd{))}
+
+\hlcom{# Select conditions: controls and TcdA 1000 ng/ml}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"TcdA-1000"}\hlstd{)}
+\hlstd{f.subset} \hlkwb{=} \hlstd{t.subset[conditions]}
+
+\hlcom{# Make and organize the two graphs}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(f.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{43}\hlstd{,} \hlnum{10}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(f.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{10}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/figure1} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{ Figure 2 }
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#### Since this figure includes data from multiple experiments and files,}
+\hlcom{#### they must all be processed first}
+
+\hlcom{# Only select wells seeded with at most 6,000 HCT8 cells}
+\hlstd{hct8} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"HCT8.txt"}\hlstd{,} \hlkwc{compounds} \hlstd{=} \hlstr{"HCT8"}\hlstd{,} \hlkwc{max.concentrations} \hlstd{=} \hlnum{6000}\hlstd{)}
+
+\hlcom{# The rest of the wells come from these files}
+\hlstd{files} \hlkwb{=} \hlkwd{list}\hlstd{(} \hlstr{"CHO.txt"}\hlstd{,} \hlstr{"IMCE.txt"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{"HUVEC-a.txt"}\hlstd{,}\hlstr{"HUVEC-b.txt"}\hlstd{),}
+              \hlkwd{c}\hlstd{(}\hlstr{"T84-a.txt"}\hlstd{,}\hlstr{"T84-b.txt"}\hlstd{))}
+\hlstd{subsets} \hlkwb{=} \hlkwd{lapply}\hlstd{(files,} \hlkwa{function}\hlstd{(}\hlkwc{f}\hlstd{)} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{= f))}
+\hlstd{subsets} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlkwd{list}\hlstd{(hct8), subsets)}
+
+\hlcom{# Normalize each subset}
+\hlstd{xlims} \hlkwb{=} \hlkwd{list}\hlstd{(}\hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.1}\hlstd{,} \hlnum{43}\hlstd{),} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{Inf}\hlstd{),} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{Inf}\hlstd{),} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{60}\hlstd{),} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{27}\hlstd{))}
+\hlstd{n.subsets} \hlkwb{=} \hlkwd{mapply}\hlstd{(normalize_toxin, subsets,} \hlkwc{xlim} \hlstd{= xlims)}
+
+\hlcom{# Add a smoother to each subset}
+\hlstd{x.scales} \hlkwb{=} \hlkwd{c}\hlstd{(} \hlnum{2}\hlopt{/}\hlnum{3}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlopt{/}\hlnum{3}\hlstd{,} \hlnum{2}\hlopt{/}\hlnum{3} \hlstd{)}
+\hlstd{s.subsets} \hlkwb{=} \hlkwd{mapply}\hlstd{( smoother_toxin, n.subsets,} \hlkwc{x.scale}\hlstd{=x.scales )}
+
+\hlcom{# Calculate ABC for each subset (with different integration limits)}
+\hlstd{left} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{5}\hlstd{)}
+\hlstd{right} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{43}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{80}\hlstd{,} \hlnum{80}\hlstd{,} \hlnum{27}\hlstd{)}
+\hlstd{i.subsets} \hlkwb{=} \hlkwd{mapply}\hlstd{(integrate, s.subsets, left, right)}
+\hlstd{allwells} \hlkwb{=} \hlkwd{do.call}\hlstd{(c, i.subsets)}
+
+\hlcom{# Calculate MaxS for each well}
+\hlstd{allwells} \hlkwb{=} \hlkwd{max.rate}\hlstd{(allwells,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{min.diff} \hlstd{=} \hlnum{10}\hlopt{/}\hlnum{60}\hlopt{/}\hlnum{60}\hlstd{,}
+                    \hlkwc{ylim} \hlstd{=} \hlnum{0.8}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlnum{2}\hlstd{)}
+
+
+
+\hlcom{######### Panel A. Different cell types. Same concentrations. #########}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(allwells,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,}
+                       \hlkwc{max.concentrations} \hlstd{=} \hlnum{101}\hlstd{,} \hlkwc{min.concentrations} \hlstd{=} \hlnum{99}\hlstd{)}
+\hlstd{panelA} \hlkwb{=} \hlkwd{plot}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{10}\hlstd{),} \hlkwc{se} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{color} \hlstd{=} \hlstr{"by.total.compounds"}\hlstd{,}
+              \hlkwc{linetype} \hlstd{=} \hlstr{"by.compounds"}\hlstd{)}
+
+\hlcom{######### Panel B. Same cell type. Different toxins ############}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(allwells,} \hlkwc{compounds} \hlstd{=} \hlstr{"IMCE"}\hlstd{)}
+\hlstd{subset2} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(subset,} \hlkwc{compounds} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"TcdA"}\hlstd{,} \hlstr{"TcdB"}\hlstd{),} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,}
+                        \hlkwc{max.concentrations} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{101}\hlstd{,} \hlnum{101}\hlstd{),} \hlkwc{min.concentrations} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{99}\hlstd{,} \hlnum{99}\hlstd{))}
+\hlstd{panelB} \hlkwb{=} \hlkwd{plot}\hlstd{(subset2,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.1}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{se} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+
+\hlcom{######## Panel C. MaxS and ABC for IMCE cells ###########}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(allwells,} \hlkwc{compounds} \hlstd{=} \hlstr{"IMCE"}\hlstd{)}
+\hlstd{MaxS} \hlkwb{=} \hlkwd{groupMetric}\hlstd{(subset,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{metric} \hlstd{=} \hlstr{"max.rate"}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plotMetric}\hlstd{(MaxS)}
+\hlstd{ABC} \hlkwb{=} \hlkwd{groupMetric}\hlstd{(subset,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{metric} \hlstd{=} \hlstr{"integral"}\hlstd{)}
+\hlstd{p2} \hlkwb{=} \hlkwd{plotMetric}\hlstd{(ABC)}
+\hlstd{panelC} \hlkwb{=} \hlkwd{arrangeGrob}\hlstd{(p1} \hlopt{+} \hlkwd{theme}\hlstd{(}\hlkwc{legend.position} \hlstd{=} \hlstr{"none"}\hlstd{),}
+                     \hlstd{p2} \hlopt{+} \hlkwd{theme}\hlstd{(}\hlkwc{legend.position} \hlstd{=} \hlstr{"none"}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+
+\hlcom{####### Panel D. The MCC for each cell type ##############}
+\hlcom{# The MCC was found by plotting the ABC of each cell type over}
+\hlcom{# a range of concentrations. The concentration diverging from}
+\hlcom{# controls was considered the MCC}
+\hlstd{ABC} \hlkwb{=} \hlkwd{groupMetric}\hlstd{(allwells,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{metric} \hlstd{=} \hlstr{"integral"}\hlstd{)}
+\hlstd{ABC}\hlopt{$}\hlstd{cells} \hlkwb{=} \hlkwd{groupWells}\hlstd{(allwells,} \hlkwc{group} \hlstd{=} \hlstr{"by.total.compounds"}\hlstd{)}
+\hlkwd{plotMetric}\hlstd{(ABC,} \hlkwc{file} \hlstd{=} \hlnum{FALSE}\hlstd{)} \hlopt{+} \hlkwd{facet_wrap}\hlstd{(}\hlopt{~}\hlstd{cells,} \hlkwc{scales} \hlstd{=} \hlstr{"free_y"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/preFigure2} 
+
+\end{knitrout} \doublespacing
+
+
+After the processing, the four panels can be combined.
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manually enter the MCC for each cell type}
+\hlstd{d} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{type} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"CHO"}\hlstd{,} \hlstr{"HCT8"}\hlstd{,} \hlstr{"HUVEC"}\hlstd{,} \hlstr{"IMCE"}\hlstd{,} \hlstr{"T84"}\hlstd{),} \hlkwc{a} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,}
+    \hlnum{1}\hlstd{,} \hlnum{0.1}\hlstd{,} \hlnum{0.1}\hlstd{),} \hlkwc{b} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0.001}\hlstd{,} \hlnum{0.01}\hlstd{,} \hlnum{0.01}\hlstd{,} \hlnum{1e-04}\hlstd{,} \hlnum{0.1}\hlstd{))}
+\hlstd{panelD} \hlkwb{=} \hlkwd{ggplot}\hlstd{(d,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{=} \hlkwd{log10}\hlstd{(a),} \hlkwc{y} \hlstd{=} \hlkwd{log10}\hlstd{(b),} \hlkwc{label} \hlstd{= type))} \hlopt{+} \hlkwd{geom_text}\hlstd{()} \hlopt{+}
+    \hlkwd{scale_x_reverse}\hlstd{(}\hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{4}\hlstd{))} \hlopt{+} \hlkwd{scale_y_reverse}\hlstd{(}\hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{4}\hlstd{))} \hlopt{+}
+    \hlkwd{geom_abline}\hlstd{(}\hlkwc{slope} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{intercept} \hlstd{=} \hlnum{0}\hlstd{)} \hlopt{+} \hlkwd{coord_equal}\hlstd{()} \hlopt{+} \hlkwd{geom_point}\hlstd{(}\hlkwc{color} \hlstd{=} \hlstr{"red"}\hlstd{)}
+
+\hlcom{# Show the final plot}
+\hlkwd{grid.arrange}\hlstd{(panelA, panelB, panelC, panelD,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/Figure2} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{ Figure 3 }
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{###### Panel A}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"J774-a.txt"}\hlstd{,} \hlstr{"J774-b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{Inf}\hlstd{,} \hlnum{100}\hlstd{))}
+
+\hlcom{# Toxin A curves}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%}
+                 \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlkwd{paste0}\hlstd{(}\hlstr{"TcdA-"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{0.1}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{100}\hlstd{,} \hlnum{1000}\hlstd{)))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.01}\hlstd{,} \hlnum{40}\hlstd{))}
+
+\hlcom{# Toxin B curves}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%}
+                 \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlkwd{paste0}\hlstd{(}\hlstr{"TcdB-"}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{0.1}\hlstd{,} \hlnum{10}\hlstd{,} \hlnum{100}\hlstd{)))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.01}\hlstd{,} \hlnum{15}\hlstd{))}
+
+\hlcom{# TcdA and TcdB curves side by side}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/Figure3top} 
+
+\end{knitrout} \doublespacing
+
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{###### Panel B}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"J774-4.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{Inf}\hlstd{,} \hlnum{100}\hlstd{))}
+
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"TcdA-300"}\hlstd{,}
+    \hlstr{"TcdB-100"}\hlstd{,} \hlstr{"TcdB-1"}\hlstd{)}
+\hlstd{p3} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{))}
+\hlstd{p4} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{5}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p3, p4,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/Figure3bottom} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{ Figure 4 }
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"HCT8-4.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+
+\hlcom{###### Panel A}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.compounds"}\hlstd{)} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{"gdTcdB"}\hlstd{,} \hlstr{""}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions])} \hlopt{+} \hlkwd{ylim}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.2}\hlstd{)}
+
+\hlcom{###### Panel B}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%}
+                 \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"gdTcdB-100"}\hlstd{,} \hlstr{"TcdB-10"}\hlstd{,} \hlstr{"gdTcdB-100.TcdB-10"}\hlstd{)}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.2}\hlstd{,} \hlnum{4}\hlstd{))} \hlopt{+} \hlkwd{ylim}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.2}\hlstd{)}
+
+\hlcom{###### Panel C}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%}
+                 \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"gdTcdB-1000"}\hlstd{,} \hlstr{"TcdA-1000"}\hlstd{,} \hlstr{"gdTcdB-1000.TcdA-1000"}\hlstd{,}
+                                      \hlstr{"TcdA-100"}\hlstd{,} \hlstr{"gdTcdB-1000.TcdA-100"}\hlstd{)}
+\hlstd{p3} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.2}\hlstd{,} \hlnum{10}\hlstd{))} \hlopt{+} \hlkwd{ylim}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.2}\hlstd{)}
+
+\hlkwd{grid.arrange}\hlstd{(p1,p2,p3,}\hlkwc{ncol}\hlstd{=}\hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/Figure4} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{ Figure 5 }
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{##### Panel A}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"J774-4.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.compounds"}\hlstd{)} \hlopt{%in%}
+                 \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"TcdB"}\hlstd{,} \hlstr{"gdTcdB"}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{))}
+
+\hlcom{##### Panel B}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"J774-3a.txt"}\hlstd{,} \hlstr{"J774-3b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%}
+                 \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"TcdB-0.01"}\hlstd{,} \hlstr{"gdTcdB-1.TcdB-0.01"}\hlstd{)}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.2}\hlstd{,} \hlnum{5}\hlstd{))}
+
+\hlcom{##### Panel C}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"J774-5.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{conditions} \hlkwb{=} \hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{)} \hlopt{%in%}
+                  \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"gdTcdB-10"}\hlstd{,} \hlstr{"TcdA-1"}\hlstd{,} \hlstr{"gdTcdB-10.TcdA-1"}\hlstd{)}
+\hlstd{p3} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset[conditions],} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.2}\hlstd{,} \hlnum{24}\hlstd{))}
+
+\hlkwd{grid.arrange}\hlstd{(p1, p2, p3,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/Figure5} 
+
+\end{knitrout} \doublespacing
+
+
+\section{ Exploring the data }
+
+All experiments, each involving several experimental conditions, are summarized
+in the table below. Independent experiments that occurred on different days are
+separated by horizontal lines.
+Diagrams of the physical multi-well plates are displayed in \ref{S:plateLayouts}.
+The number of cells seeded and all the incubation times can be found in the
+csv annotation file in the supplemental data or can be accessed in the \texttt{wells} variable
+within R (as shown in \ref{S:ReFig}).
+
+\subsection{Plate summaries}
+
+\singlespacing
+\begin{longtable}{ l l l l }
+  Cell type & File names & Toxins (ng/ml) & Notes \\ \hline\hline
+   \multirow{22}{*}{HCT8}  & 
+              HCT8.txt & \specialcell{ A (500, 100, 10, 1, 0.1) \\
+                                       B (500, 100, 10, 1, 0.1) } & \\ \cline{2-4}
+   & \specialcell{HCT8-2a.txt\\ HCT8-2b.txt} & \specialcell{ B (1), A (100) \\
+                                     gdTcdB (100, 1000) \\
+                                     B (1) + gdTcdB (100) \\ B (1) + gdTcdB(1000) \\
+                                     A (100) + gdTcdB (1000) } & toxins + gdTcdB \\ \cline{2-4}
+   & HCT8-3.txt & \specialcell{ B (1), A (100) \\
+                       gdTcdB (10, 100, 1000) \\
+                       B (1) + gdTcdB (10) \\
+                       B (1) + gdTcdB (100) \\
+                       A (100) + gdTcdB (1000) } & toxins + gdTcdB \\ \cline{2-4}
+   & HCT8-4.txt & \specialcell{ B (10, 100), A (100, 1000) \\
+                       gdTcdB (100, 1000) \\
+                       B (10) + gdTcdB (100) \\
+                       B (10) + gdTcdB (1000) \\
+                       B (100) + gdTcdB (100) \\
+                       B (100) + gdTcdB (1000) \\
+                       A (10) + gdTcdB (100) \\
+                       A (100) + gdTcdB (100) \\
+                       A (100) + gdTcdB (1000) \\
+                       A (1000) + gdTcdB (1000) } & toxins + gdTcdB \\ \hline
+   CHO & CHO.txt & \specialcell{ A (1000, 100, 1, 0.1, 0.01, 1e-3, 1e-4 ) \\
+                                B (1000, 100, 1, 0.1, 0.01, 1e-3, 1e-4 ) } & \\ \hline
+   IMCE & IMCE.txt & \specialcell{ A (1000, 100, 10, 1, 0.1, 0.01, 0.001 ) \\ 
+                                         B (1000, 100, 10, 1, 0.1, 0.01, 0.001 )} &  \\ \hline
+   HUVEC & \specialcell{HUVEC-a.txt\\ HUVEC-b.txt} &
+           \specialcell{A (1000, 300, 100, 30, 10, 1, 0.1) \\
+                        B (1000, 300, 100, 30, 10, 1, 0.1) } &  \\ \hline
+   T84 & \specialcell{T84-a.txt \\ T84-b.txt } &
+         \specialcell{A (300, 100, 30, 10, 3, 1, 0.1) \\
+                      B (1000, 300, 100, 30, 10, 3, 1, 0.1) } &  \\ \hline
+   \multirow{16}{*}{J774}  & \specialcell{ J774-a.txt \\ J774-b.txt} 
+                          & \specialcell{ A (0.1, 1, 3, 10, 100, 300, 1000) \\
+                                          B (0.1, 1, 3, 10, 100, 300, 1000) } & \\ \cline{2-4}
+                          & J774-2.txt
+                          & B (0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10) & \\ \cline{2-4}
+                          & \specialcell{ J774-3a.txt \\ J774-3b.txt} 
+                          & \specialcell{ A (10), B (0.01) \\
+                                          gdTcdB (0.1, 1, 100) \\
+                                          B (0.01) + gdTcdB (1) \\
+                                          B (0.01) + gdTcdB (0.1) \\
+                                          A (10) + gdTcdB (100) } & toxins + gdTcdB \\ \cline{2-4}
+                          & J774-4.txt
+                          & \specialcell{ A (3, 300), B (1, 100) \\
+                                          gdTcdB (1, 100) \\
+                                          A (10) + gdTcdB (100) } & toxins + gdTcdB \\ \cline{2-4}
+                          & J774-5.txt
+                          & \specialcell{ A (1, 1000), \\
+                                          gdTcdB (10, 100) \\
+                                          A (1) + gdTcdB (10) \\
+                                          A (1000) + gdTcdB (1000) \\
+                                          B (10) + gdTcdB (100) } & toxins + gdTcdB \\ \hline
+   \multirow{8}{*}{PMN} & \specialcell{PMN-a.txt \\ PMN-b.txt} &
+         \specialcell{A (10000, 7000, 5000, 3000, 1000, 500, 100) \\
+                      B (10000, 7000, 5000, 3000, 1000, 500, 100) } & toxins + IL8 \\ \cline{2-4}
+    & \specialcell{PMN-2a.txt \\ PMN-2b.txt} &
+         \specialcell{A (1000, 100, 10, 1, 0.1, 0.01, 0.001) \\
+                      B (1000, 100, 10, 1, 0.1, 0.01, 0.001) } & toxins alone \\ \cline{2-4}
+    & PMN-3.txt &
+         \specialcell{A (10, 100, 1000) \\
+                      B (1, 10, 100, 1000) } & 
+         \specialcell{ toxins alone and \\ toxins + IL8 } \\ \cline{2-4}
+    & PMN-4.txt &
+         \specialcell{A (10, 100, 1000) \\
+                      B (10, 100, 1000) } & 
+         \specialcell{ toxins alone and \\ toxins + IL8 } \\ \hline
+   
+\end{longtable}
+\doublespacing
+
+\subsection{HCT8 cells}
+
+\subsubsection{HCT8.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"HCT8.txt"}\hlstd{,} \hlkwc{compounds} \hlstd{=} \hlstr{"HCT8"}\hlstd{,} \hlkwc{max.concentrations} \hlstd{=} \hlnum{6000}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{10}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/hct8_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{HCT8-2a.txt and HCT8-2b.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"HCT8-2a.txt"}\hlstd{,} \hlstr{"HCT8-2b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{150}\hlstd{))}
+
+\hlstd{t.subset} \hlkwb{=} \hlkwd{smoother_toxin}\hlstd{(t.subset,} \hlkwc{x.scale} \hlstd{=} \hlnum{1.1}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{max.rate}\hlstd{(t.subset,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{min.diff} \hlstd{=} \hlnum{10}\hlopt{/}\hlnum{3600}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlnum{0.88}\hlstd{,}
+    \hlkwc{xlim} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{maxs} \hlkwb{=} \hlkwd{getMetric}\hlstd{(t.subset,} \hlkwc{metric} \hlstd{=} \hlstr{"max.rate"}\hlstd{)}
+\hlstd{labels} \hlkwb{=} \hlkwd{factor}\hlstd{(}\hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{),}
+    \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"gdTcdB-100"}\hlstd{,} \hlstr{"gdTcdB-1000"}\hlstd{,} \hlstr{"gdTcdB-1000.TcdA-100"}\hlstd{,} \hlstr{"TcdA-100"}\hlstd{,}
+        \hlstr{"gdTcdB-100.TcdB-1"}\hlstd{,} \hlstr{"gdTcdB-10.TcdB-1"}\hlstd{,} \hlstr{"TcdB-1"}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{qplot}\hlstd{(labels, maxs}\hlopt{$}\hlstd{value,} \hlkwc{color} \hlstd{= labels)} \hlopt{+} \hlstd{no_x_labels} \hlopt{+} \hlkwd{labs}\hlstd{(}\hlkwc{color} \hlstd{=} \hlstr{"Legend"}\hlstd{)} \hlopt{+}
+    \hlkwd{xlab}\hlstd{(}\hlstr{"group"}\hlstd{)} \hlopt{+} \hlkwd{ylab}\hlstd{(}\hlstr{"MaxS"}\hlstd{)}
+
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/hct8-2_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{HCT8-3.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"HCT8-3.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{58}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset)}
+
+\hlstd{t.subset} \hlkwb{=} \hlkwd{smoother_toxin}\hlstd{(t.subset,} \hlkwc{x.scale} \hlstd{=} \hlnum{1.1}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{max.rate}\hlstd{(t.subset,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{min.diff} \hlstd{=} \hlnum{10}\hlopt{/}\hlnum{3600}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlnum{0.88}\hlstd{,}
+    \hlkwc{xlim} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{maxs} \hlkwb{=} \hlkwd{getMetric}\hlstd{(t.subset,} \hlkwc{metric} \hlstd{=} \hlstr{"max.rate"}\hlstd{)}
+\hlstd{labels} \hlkwb{=} \hlkwd{factor}\hlstd{(}\hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{),}
+    \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"gdTcdB-10"}\hlstd{,} \hlstr{"gdTcdB-100"}\hlstd{,} \hlstr{"gdTcdB-1000"}\hlstd{,} \hlstr{"gdTcdB-100.TcdB-1"}\hlstd{,}
+        \hlstr{"gdTcdB-10.TcdB-1"}\hlstd{,} \hlstr{"TcdB-1"}\hlstd{,} \hlstr{"gdTcdB-1000.TcdA-100"}\hlstd{,} \hlstr{"TcdA-100"}\hlstd{,} \hlstr{"TcdAother-100"}\hlstd{,}
+        \hlstr{"TcdAup-100"}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{qplot}\hlstd{(labels, maxs}\hlopt{$}\hlstd{value,} \hlkwc{color} \hlstd{= labels)} \hlopt{+} \hlstd{no_x_labels} \hlopt{+} \hlkwd{labs}\hlstd{(}\hlkwc{color} \hlstd{=} \hlstr{"Legend"}\hlstd{)} \hlopt{+}
+    \hlkwd{xlab}\hlstd{(}\hlstr{"group"}\hlstd{)} \hlopt{+} \hlkwd{ylab}\hlstd{(}\hlstr{"MaxS"}\hlstd{)}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/hct8-3_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{HCT8-4.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"HCT8-4.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{155}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset)}
+
+\hlstd{t.subset} \hlkwb{=} \hlkwd{smoother_toxin}\hlstd{(t.subset,} \hlkwc{x.scale} \hlstd{=} \hlnum{1.1}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{max.rate}\hlstd{(t.subset,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{,} \hlkwc{min.diff} \hlstd{=} \hlnum{10}\hlopt{/}\hlnum{3600}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlnum{0.88}\hlstd{,}
+    \hlkwc{xlim} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{integrate}\hlstd{(t.subset,} \hlkwc{lower} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{upper} \hlstd{=} \hlnum{10}\hlstd{)}
+
+\hlstd{maxs} \hlkwb{=} \hlkwd{getMetric}\hlstd{(t.subset,} \hlkwc{metric} \hlstd{=} \hlstr{"max.rate"}\hlstd{)}
+\hlstd{labels} \hlkwb{=} \hlkwd{factor}\hlstd{(}\hlkwd{groupWells}\hlstd{(t.subset,} \hlkwc{group} \hlstd{=} \hlstr{"by.concentrations"}\hlstd{,} \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{),}
+    \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{""}\hlstd{,} \hlstr{"gdTcdB-100"}\hlstd{,} \hlstr{"gdTcdB-1000"}\hlstd{,} \hlstr{"gdTcdB-100.TcdA-10"}\hlstd{,} \hlstr{"TcdA-10"}\hlstd{,}
+        \hlstr{"gdTcdB-1000.TcdA-100"}\hlstd{,} \hlstr{"gdTcdB-100.TcdA-100"}\hlstd{,} \hlstr{"TcdA-100"}\hlstd{,} \hlstr{"gdTcdB-1000.TcdA-1000"}\hlstd{,}
+        \hlstr{"TcdA-1000"}\hlstd{,} \hlstr{"gdTcdB-1000.TcdB-10"}\hlstd{,} \hlstr{"gdTcdB-100.TcdB-10"}\hlstd{,} \hlstr{"TcdB-10"}\hlstd{,}
+        \hlstr{"gdTcdB-1000.TcdB-100"}\hlstd{,} \hlstr{"gdTcdB-100.TcdB-100"}\hlstd{,} \hlstr{"TcdB-100"}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{qplot}\hlstd{(labels, maxs}\hlopt{$}\hlstd{value,} \hlkwc{color} \hlstd{= labels)} \hlopt{+} \hlstd{no_x_labels} \hlopt{+} \hlkwd{labs}\hlstd{(}\hlkwc{color} \hlstd{=} \hlstr{"Legend"}\hlstd{)} \hlopt{+}
+    \hlkwd{xlab}\hlstd{(}\hlstr{"group"}\hlstd{)} \hlopt{+} \hlkwd{ylab}\hlstd{(}\hlstr{"MaxS"}\hlstd{)}
+
+\hlcom{# MaxS metrics show unexpected results for TcdB at 100 ng/ml This plot shows}
+\hlcom{# that gdTcdB appears to have only been added to one of the four wells?}
+\hlcom{# Regardless, gdTcdB clearly delayed TcdB at 10 ng/ml}
+\hlstd{aa} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{,} \hlkwc{max.concentrations} \hlstd{=} \hlnum{101}\hlstd{,} \hlkwc{min.concentrations} \hlstd{=} \hlnum{99}\hlstd{)}
+\hlstd{p3} \hlkwb{=} \hlkwd{plot}\hlstd{(aa,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{7}\hlstd{),} \hlkwc{replicates} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+
+\hlkwd{grid.arrange}\hlstd{(}\hlkwd{arrangeGrob}\hlstd{(p1, p3,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{), p2,} \hlkwc{nrow} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/hct8-4_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{CHO cells}
+
+\subsubsection{CHO.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"CHO.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{40}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{20}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/cho_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{IMCE cells}
+
+\subsubsection{IMCE.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"IMCE.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{80}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{80}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/imce_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{HUVECs}
+
+\subsubsection{HUVEC-a.txt and HUVEC-b.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"HUVEC-a.txt"}\hlstd{,} \hlstr{"HUVEC-b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{20}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{20}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/huvec_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{T84 cells}
+
+\subsubsection{T84-a.txt and T84-b.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"T84-a.txt"}\hlstd{,} \hlstr{"T84-b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{20}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{20}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/t84_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsection{J774 cells}
+
+\subsubsection{J774-a.txt and J774-b.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"J774-a.txt"}\hlstd{,} \hlstr{"J774-b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{40}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{40}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/j774_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{J774-2.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"J774-2.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{40}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{5}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/j774-2_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{J774-3a.txt and J774-3b.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"J774-3a.txt"}\hlstd{,} \hlstr{"J774-3b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{24}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{5}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/j774-3_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{J774-4.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"J774-4.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{5}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/j774-4_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{J774-5.txt}
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"J774-5.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{normalize_toxin}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{))}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(t.subset,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{5}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/j774-5_txt} 
+
+\end{knitrout} \doublespacing
+
+
+
+\subsection{PMN leukocytes}\label{S:PMNs}
+
+Consistent response profiles of PMNs to TcdA or TcdB could not be obtained.
+
+\subsubsection{PMN-2a.txt and PMN-2b.txt}
+
+Only TcdA at 1,000 ng/ml was clearly different than control cells. Instead of
+normalizing the impedance at the time toxin was added, the change in impedance
+from the time of toxin addition is shown.
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"PMN-2a.txt"}\hlstd{,} \hlstr{"PMN-2b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{transform}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,} \hlstr{"slice"}\hlstd{,} \hlstr{"level"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{),}
+    \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{24}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{24}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/pmn-2_txt} 
+
+\end{knitrout} \doublespacing
+
+
+
+\subsubsection{PMN-a.txt and PMN-b.txt}
+Cells were seeded in the presence of 100 ng/ml (9.01 nM) of human recombinant IL-8 in
+an attempt to increase impedance before adding toxin.
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"PMN-a.txt"}\hlstd{,} \hlstr{"PMN-b.txt"}\hlstd{))}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{transform}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,} \hlstr{"slice"}\hlstd{,} \hlstr{"level"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{),}
+    \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{24}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{24}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/pmn_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{PMN-3.txt}
+Cells were seeded in the presence of 25 nM (277.45 ng/ml) of IL-8.
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"PMN-3.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{transform}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,} \hlstr{"slice"}\hlstd{,} \hlstr{"level"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{),}
+    \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{),} \hlkwc{replicates} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{),} \hlkwc{replicates} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/pmn-3_txt} 
+
+\end{knitrout} \doublespacing
+
+
+\subsubsection{PMN-4.txt}
+Cells were seeded in the presence of 25 nM (277.45 ng/ml) of IL-8. The
+machine temporarily stopped making impedance measurements from approximately
+five to 20 hours.
+
+\singlespacing \begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{subset} \hlkwb{=} \hlkwd{retrieveWells}\hlstd{(wells,} \hlkwc{file} \hlstd{=} \hlstr{"PMN-4.txt"}\hlstd{)}
+\hlstd{t.subset} \hlkwb{=} \hlkwd{transform}\hlstd{(subset,} \hlkwd{c}\hlstd{(}\hlstr{"tcenter"}\hlstd{,} \hlstr{"slice"}\hlstd{,} \hlstr{"level"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{2}\hlstd{,} \hlnum{Inf}\hlstd{),}
+    \hlkwc{ID} \hlstd{=} \hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{p1} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdA"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{))}
+\hlstd{p2} \hlkwb{=} \hlkwd{plot}\hlstd{(}\hlkwd{retrieveWells}\hlstd{(t.subset,} \hlkwc{compounds} \hlstd{=} \hlstr{"TcdB"}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{))}
+\hlkwd{grid.arrange}\hlstd{(p1, p2,} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{apximp/pmn-4_txt} 
+
+\end{knitrout} \doublespacing
+
+
+
+\subsection{Plate Layouts}\label{S:plateLayouts}
+
+Below are the layouts of all of the plates used.
+
+\singlespacing
+\begin{kframe}
+\begin{alltt}
+\hlstd{fwells} \hlkwb{=} \hlkwd{split}\hlstd{(wells,} \hlkwd{getfiles}\hlstd{(wells))}
+\hlstd{fwells} \hlkwb{=} \hlstd{fwells[}\hlkwd{sort}\hlstd{(}\hlkwd{names}\hlstd{(fwells))]}
+
+\hlkwd{options}\hlstd{(}\hlkwc{xtable.print.results}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\hlstd{fwt} \hlkwb{=} \hlkwd{lapply}\hlstd{(fwells, well_table,} \hlkwc{ID}\hlstd{=}\hlstr{"toxinAdd"}\hlstd{)}
+\hlstd{lt} \hlkwb{=} \hlkwd{lapply}\hlstd{(fwt, print_well_table,} \hlkwc{scalebox}\hlstd{=}\hlnum{0.6}\hlstd{,} \hlkwc{floating}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+
+\hlkwd{do.call}\hlstd{( cat,} \hlkwd{c}\hlstd{(}\hlstr{"\textbackslash{}\textbackslash{}begin\{adjustwidth\}\{0in\}\{3in\}\{"}\hlstd{,lt,}\hlstr{"\} \textbackslash{}\textbackslash{}end\{adjustwidth\}"}\hlstd{) )}
+\end{alltt}
+\end{kframe}\begin{adjustwidth}{0in}{3in}{ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } &  & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-100 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-1 & TcdB-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-0.1 & TcdB-0.01 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-0.01 &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-0.001 & TcdB-0.001 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-1e-04 & TcdB-1e-04 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{CHO.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdB-1, gdTcdB-100 & TcdB-1, gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdB-1, gdTcdB-10 & TcdB-1, gdTcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-100, gdTcdB-1000 & TcdA-100, gdTcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdB-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-100 & TcdA-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & gdTcdB-1000 & gdTcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & gdTcdB-100 & gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } &  &  \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{HCT8-2a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdB-1, gdTcdB-100 & TcdB-1, gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdB-1, gdTcdB-10 & TcdB-1, gdTcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-100, gdTcdB-1000 & TcdA-100, gdTcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdB-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-100 & TcdA-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & gdTcdB-1000 & gdTcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & gdTcdB-100 & gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } &  &  \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{HCT8-2b.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ A } & TcdA-100, gdTcdB-1000 &  & TcdA-100 & gdTcdB-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ B } & gdTcdB-100 & TcdA-100 & TcdA-100, gdTcdB-1000 & TcdAup-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ C } & TcdA-100 & gdTcdB-100 &  & gdTcdB-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ D } &  & TcdA-100, gdTcdB-1000 & gdTcdB-100 & TcdAup-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ E } & TcdB-1 & gdTcdB-1000 & TcdB-1, gdTcdB-10 & gdTcdB-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ F } & TcdB-1, gdTcdB-100 & TcdB-1, gdTcdB-10 & TcdB-1 & TcdAother-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ G } & TcdB-1, gdTcdB-10 & TcdB-1, gdTcdB-100 & gdTcdB-1000 & TcdAother-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ H } & gdTcdB-1000 & TcdB-1 & TcdB-1, gdTcdB-100 &  \\ 
+   \cline{2-5} \multicolumn{1}{c}{} & \multicolumn{4}{c}{HCT8-3.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ A } & TcdA-10 & TcdB-10 & TcdB-100, gdTcdB-1000 & TcdB-100, gdTcdB-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ B } & TcdA-1000 & TcdA-1000 & TcdB-100 & TcdB-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ C } &  &  & TcdA-10, gdTcdB-100 & TcdB-100, gdTcdB-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ D } & gdTcdB-1000 & gdTcdB-1000 & TcdA-100, gdTcdB-100 & TcdA-1000, gdTcdB-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ E } & gdTcdB-100 & TcdA-100 & TcdA-1000, gdTcdB-1000 &  \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ F } & TcdB-10, gdTcdB-100 & gdTcdB-100 & TcdA-10, gdTcdB-100 & TcdA-100, gdTcdB-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ G } & TcdB-10, gdTcdB-100 & TcdA-100 & TcdB-10, gdTcdB-1000 & TcdA-100, gdTcdB-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ H } & TcdB-10, gdTcdB-1000 & TcdB-100 & TcdA-100, gdTcdB-100 & TcdB-100, gdTcdB-100 \\ 
+   \cline{2-5} \multicolumn{1}{c}{} & \multicolumn{4}{c}{HCT8-4.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-100 & TcdA-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & NA-NA & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdB-100 &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-500 & TcdB-500 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.1 & TcdB-0.1 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{HCT8.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-300 & TcdB-300 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } &  &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-30 & TcdB-30 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.1 & TcdB-0.1 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{HUVEC-a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-300 & TcdB-300 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } &  &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-30 & TcdB-30 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.1 & TcdB-0.1 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{HUVEC-b.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-100 & TcdA-1000 & TcdB-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ B } & TcdA-100 & TcdB-10 & TcdA-100 & TcdB-1 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ C } &  & TcdB-1 &  & TcdB-0.1 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ D } & TcdA-10 & TcdB-0.1 & TcdA-10 & TcdB-0.01 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ E } & TcdA-1 & TcdB-0.01 & TcdA-1 & TcdB-0.001 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ F } & TcdA-0.1 & TcdB-0.001 & TcdA-0.1 & TcdB-1e-04 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ G } & TcdA-0.01 & TcdB-1e-04 & TcdA-0.01 & TcdB-1e-05 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ H } & TcdA-0.001 & TcdB-1e-05 & TcdA-0.001 &  \\ 
+   \cline{2-5} \multicolumn{1}{c}{} & \multicolumn{4}{c}{IMCE.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdB-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdB-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdB-0.1 & TcdB-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdB-0.01 & TcdB-0.01 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdB-0.001 & TcdB-0.001 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdB-1e-04 & TcdB-1e-04 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdB-1e-05 & TcdB-1e-05 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } &  &  \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-2.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdB-0.01, gdTcdB-1 & TcdB-0.01, gdTcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdB-0.01, gdTcdB-0.1 & TcdB-0.01, gdTcdB-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-10, gdTcdB-100 & TcdA-10, gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdB-0.01 & TcdB-0.01 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-10 & TcdA-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & gdTcdB-100 & gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & gdTcdB-1 & gdTcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & gdTcdB-0.1 &  \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-3a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdB-0.01, gdTcdB-1 & TcdB-0.01, gdTcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdB-0.01, gdTcdB-0.1 & TcdB-0.01, gdTcdB-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-10, gdTcdB-100 & TcdA-10, gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdB-0.01 & TcdB-0.01 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-10 & TcdA-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & gdTcdB-100 &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } &  & gdTcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & gdTcdB-0.1 & gdTcdB-0.1 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-3b.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdB-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdB-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } &  &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & gdTcdB-1 & gdTcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & gdTcdB-100 & gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-3 & TcdA-3 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-300 & TcdA-300 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & gdTcdB-100, TcdA-10 & gdTcdB-100, TcdA-10 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-4.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & gdTcdB-100, TcdB-10 & gdTcdB-100, TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & gdTcdB-10, TcdA-1 & gdTcdB-10, TcdA-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & gdTcdB-100, TcdA-1000 & gdTcdB-100, TcdA-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-1 & TcdA-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-1000 & TcdA-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & gdTcdB-10 & gdTcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & gdTcdB-100 & gdTcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } &  &  \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-5.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-300 & TcdB-300 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } &  &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-3 & TcdB-3 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.1 & TcdB-0.1 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-300 & TcdB-300 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } &  & Other-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-3 & TcdB-3 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.1 & TcdB-0.1 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{J774-b.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-0.1 & TcdB-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } &  & TcdB-0.01 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-0.01 & TcdB-0.001 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.001 & NA-NA \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{PMN-2a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-1000 & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-100 & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-10 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-1 & TcdB-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-0.1 & TcdB-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } &  & TcdB-0.01 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdA-0.01 & TcdB-0.001 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdA-0.001 &  \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{PMN-2b.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ A } & IL8-110.98, TcdB-1 & IL8-110.98, TcdB-1 & TcdB-1 & TcdB-1 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ B } & IL8-110.98, TcdB-10 & IL8-110.98, TcdB-10 & TcdB-10 & TcdB-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ C } & IL8-110.98 & IL8-110.98 &  &  \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ D } & IL8-110.98, TcdB-100 & IL8-110.98, TcdB-100 & TcdB-100 & TcdB-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ E } & IL8-110.98, TcdB-1000 & IL8-110.98, TcdB-1000 & TcdB-1000 & TcdB-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ F } & IL8-110.98, TcdA-1000 & IL8-110.98, TcdA-1000 & TcdA-1000 & TcdA-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ G } & IL8-110.98, TcdA-100 & IL8-110.98, TcdA-100 & TcdA-100 & TcdA-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ H } & IL8-110.98, TcdA-10 & IL8-110.98, TcdA-10 & TcdA-10 & TcdA-10 \\ 
+   \cline{2-5} \multicolumn{1}{c}{} & \multicolumn{4}{c}{PMN-3.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ A } & IL8-110.98, TcdA-10 & IL8-110.98, TcdA-10 & TcdA-10 & TcdA-10 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ B } & IL8-110.98, TcdA-100 & IL8-110.98, TcdA-100 & TcdA-100 & TcdA-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ C } & IL8-110.98 & IL8-110.98 &  &  \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ D } & IL8-110.98, TcdA-1000 & IL8-110.98, TcdA-1000 & TcdA-1000 & TcdA-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ E } & IL8-110.98, TcdB-1000 & IL8-110.98, TcdB-1000 & TcdB-1000 & TcdB-1000 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ F } & IL8-110.98, TcdB-100 & IL8-110.98, TcdB-100 & TcdB-100 & TcdB-100 \\ 
+  \cline{2-5}\multirow{ 1 }{*}{ G } & IL8-110.98, TcdB-10 & IL8-110.98, TcdB-10 & TcdB-10 & TcdB-10 \\ 
+   \cline{2-5} \multicolumn{1}{c}{} & \multicolumn{4}{c}{PMN-4.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-10000 & TcdB-10000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-7000 & TcdB-7000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-5000 & TcdB-5000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } &  &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdB-3000 & TcdA-3000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdB-1000 & TcdA-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdB-500 & TcdA-500 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdB-100 & TcdA-100 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{PMN-a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & TcdA-10000 & TcdB-10000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-7000 & TcdB-7000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-5000 & TcdB-5000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } &  &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdB-3000 & TcdA-3000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdB-1000 & TcdA-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & TcdB-500 & TcdA-500 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & TcdB-100 & TcdA-100 \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{PMN-b.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & NA-NA & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & TcdA-300 & TcdA-1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdA-100 & TcdA-0.1 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } & TcdA-30 & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdA-10 &  \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdA-3 & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & NA-NA & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & NA-NA & NA-NA \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{T84-a.txt}\end{tabular}
+}
+ % latex table generated in R 3.0.2 by xtable 1.7-1 package
+% Tue Mar  4 16:54:13 2014
+\scalebox{0.6}{
+\begin{tabular}{r|c|c|}
+  \multicolumn{1}{c}{\multirow{ 1 }{*}{  }} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ A } & NA-NA & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ B } & NA-NA & TcdB-1000 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ C } & TcdB-3 & TcdB-300 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ D } &  & TcdB-100 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ E } & TcdB-1 & TcdB-30 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ F } & TcdB-0.1 & TcdB-10 \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ G } & NA-NA & NA-NA \\ 
+  \cline{2-3}\multirow{ 1 }{*}{ H } & NA-NA & NA-NA \\ 
+   \cline{2-3} \multicolumn{1}{c}{} & \multicolumn{2}{c}{T84-b.txt}\end{tabular}
+}
+ } \end{adjustwidth}
+
+\doublespacing
+

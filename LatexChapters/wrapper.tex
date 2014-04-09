@@ -52,6 +52,7 @@
 \addbibresource{introjtm/introjtm.bib}
 \addbibresource{introbmc/introbmc.bib}
 \addbibresource{wellz/wellz.bib}
+\addbibresource{apxini/apxini.bib}
 \AtEveryBibitem{\clearfield{issn}}
 \AtEveryCitekey{\clearfield{issn}}
 
@@ -144,6 +145,9 @@
 \newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
 \newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
 \newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
 
 \usepackage{framed}
 \makeatletter
@@ -174,6 +178,15 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 %%%%%%%%%%%%%%%%%% End of knitr options
 
+% Capitalize autoref's for Chapters
+\renewcommand*{\chapterautorefname}{Chapter}
+
+% Appendices
+\usepackage[toc,page]{appendix}
+
+% Allows longtable environment
+\usepackage{longtable}
+\usepackage{pbox}
 
 
 \begin{document}
@@ -184,33 +197,39 @@
 \tableofcontents
 \listoffigures
 \listoftables
-
+%
 \doublespacing
 \include{preface/preface}
-
+%
 \let\cleardoublepage\clearpage
 \mainmatter
 \include{intromain/intromain}
 
 \include{introjtm/introjtm}
 \include{jtm/jtm}
-
+%
 \include{introbmc/introbmc}
 \include{bmc/bmc}
-
+%
 \include{ini/ini}
-
+%
 \include{imp/imp}
-
+%
 \include{wellz/wellz}
-
+%
 \include{trends/trends}
-
-%\include{conclusion/conclusion}
 
 
 \singlespacing
 \printbibliography
+
+\doublespacing
+\begin{appendices}
+\include{apxini/apxini}
+\include{apximp/apximp}
+\end{appendices}
+
+
 
 
 \end{document}
