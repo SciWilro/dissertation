@@ -128,7 +128,7 @@ estimated (\textit{perfect-match correction}).
 However, mismatch hybridization is complex.
 Usually, more than one third of mismatch probes have a higher
 signal than their perfect match probes \cite{Irizarry:2003ge}. 
-This should theorectically never happen. Several have proposed
+This should theoretically never happen. Several have proposed
 hierarchical models with nonlinear terms that
 better account for mismatch probes 
 \cite{Li:2001jv,Milo:2003tt,Liu:2005ey,Hein:2005ip}, yet algorithms
@@ -155,7 +155,7 @@ After the mean and variance of $S$ and $B$ are estimated from the data,
 the background-corrected signal can be calculated 
 as $\text{E}[S|O=o]$ by the robust multi-array average (RMA) procedure in
 \cite{Irizarry:2003ge}. 
-Wu et al. introcuded gcRMA, which improved upon RMA by 
+Wu et al. introduced gcRMA, which improved upon RMA by 
 accounting for sequence-specific probe
 affinities that were determined from previous experiments
 ($O=S+B+N$ where $N$ is non-specific hybridization due to
@@ -245,7 +245,7 @@ illustrative examples below.
 
 \subsubsection{Background correction and perfect-match correction}
 
-Background correction algorithms essentially deconvolute the observed
+Background correction algorithms decompose the observed
 signal into two signals: the noise and true signal.
 They are most helpful then for low-signal probes where
 the signal to noise ratio is lowest. If researchers are uninterested
@@ -272,7 +272,7 @@ contributing to the observed signal.
 If one is sure of impeccable sample isolation and
 reproducibility, they might decide against normalization. 
 However, since even the slightest differences in one of many experimental factors 
-(e.g., scanner reproducibility, mRNA concentratioin calculations, hybridization
+(e.g., scanner reproducibility, mRNA concentration calculations, hybridization
 temperatures) cause systematic errors, there should be strong 
 justification for skipping normalization.
 
@@ -303,7 +303,7 @@ so robust measures of center are used.
 It is recommended to choose summaries
 that ``borrow'' information from all arrays to identify probe effects.
 Though different summarization techniques may produce significantly
-different expression values, no technicque is necessarily incorrect.
+different expression values, no technique is necessarily incorrect.
 However, the artifacts introduced by some techniques may
 cause incorrect interpretations in downstream analyses (see \ref{introjtm:difgoals}).
 
@@ -316,7 +316,7 @@ at some level if one wants to study genes, not 25-nucleotide stretches of DNA.
 
 \subsubsection{The order of steps}
 There is no required order for each step of the workflow,
-yet there are limitiations. For instance, if probe set summarization were done first,
+yet there are limitations. For instance, if probe set summarization were done first,
 probe values would not be available to estimate the background signal. 
 Perfect-match correction also wouldn't
 be possible. Normalization can be applied before and/or after summarization.
@@ -411,7 +411,7 @@ might all be set to a common threshold.
 Interactive, easy-to-use diagnostic visualizations that allow for these
 decisions are desperately lacking.
 Although developing visualizations is a tremendous technical challenge,
-there is a great oppurtunity for improvement in this area.
+there is a great opportunity for improvement in this area.
 
 \section[Differential expression]{Detecting differentially expressed genes}
 
@@ -424,7 +424,7 @@ the number of possible workflows to well over 100 million.
 
 Conceptually, significance tests for DEGs are simple.
 For each gene, two groups can be compared with a t-test.
-However, signficant p-values are usually found for too many 
+However, significant p-values are usually found for too many 
 lowly expressed transcripts with small effect sizes because of very small
 variances near the microarray detection limit.
 Therefore, filtering of low-abundance transcripts is common, 
@@ -600,7 +600,7 @@ or experimental variability \cite{Shi:2006dl}.
 The most basic ranking statistic they tested, the fold change, 
 was the most consistent between laboratories performing the same protocols.
 Other statistics they used such as limma have the problem discussed in the previous
-sections that many low-signal probes are ranked among the most signifanct DEGs.
+sections that many low-signal probes are ranked among the most significant DEGs.
 It may be that many complex significance tests are biased to
 the data sets on which they were tested. Several statistical
 methods that are based on fold change, yet do not disregard
@@ -625,7 +625,7 @@ or statistical measures.
 
 As discussed, many of the problems with microarrays are low-intensity probes--
 low-abundance transcripts. The number of statistical tests to correct
-for this problem is exasparating, yet very few studies have
+for this problem is exasperating, yet very few studies have
 focused on experimental methods to improve the dynamic range
 of arrays. 
 
@@ -676,7 +676,7 @@ gene expression experiments
 (see example of poor reproducibility in 
 \cite{Evsikov:2003ic,Fortunel:2003eu,Ivanova:2003bh,RamalhoSantos:2002dy}). 
 Rather than discrediting microarray analysis,
-one should also consider that micorarrays
+one should also consider that microarrays
 may reveal differences in \textit{seemingly} same experimental protocols.
 For example, with the data presented in this dissertation, arrays from
 replicate experiments on different days were clearly different when
@@ -710,7 +710,7 @@ raise concerns about experimental reproducibility between
 experimental platforms \cite{Tan:2003be,Kuo:2002cl,
 Mah:2004ia,Rogojina:2003te,Woo:2004wz,Li:2002cz,Kothapalli:2002gz}.
 Many irreproducibility claims were incorrect, first
-dismissed by scientsist at the FDA \cite{Shi:2005ik}.
+dismissed by scientists at the FDA \cite{Shi:2005ik}.
 The FDA and EPA coordinated a Microarray Quality Control (MAQC) project
 to set standards and resolve outstanding questions 
 \cite{Lesko:2004vi,Frueh:2006uy,Dix:2006ty,Shi:2004vh}.
