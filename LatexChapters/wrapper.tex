@@ -200,14 +200,11 @@
 \usepackage{newclude}
 
 % Figures and table fixes for two-column book
-\usepackage{dblfloatfix}
-\usepackage{fixltx2e}
+%\usepackage{dblfloatfix}
+%\usepackage{fixltx2e}
 
 % Two-column table of contents
-\usepackage{multicol}
-\usepackage{ifthen}
-%\usepackage[toc,lof,lot]{multitoc}
-%\twocoltocetc
+%\usepackage{ccaption}
 \makeatletter
 \renewcommand\tableofcontents{%
     \section*{\huge\contentsname
@@ -244,7 +241,6 @@
 
 \include*{preface/preface}
 
-
 \mainmatter
 \include*{intromain/intromain}
 %
@@ -252,11 +248,11 @@
 \include*{jtm/jtm}
 %%
 \include*{introbmc/introbmc}
-%\include{bmc/bmc}
+\include*{bmc/bmc}
 %%
-%\include{ini/ini}
+\include*{ini/ini}
 %%
-%\include{imp/imp}
+\include*{imp/imp}
 %%
 %\include{wellz/wellz}
 %%

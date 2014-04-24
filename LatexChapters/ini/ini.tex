@@ -54,9 +54,9 @@ data revealed novel toxin effects (e.g., altered expression of GTPase-associated
 and metabolic genes) underlying observed physiological responses to 
 \textit{C. difficile} toxins.
 
-\begin{figure}[h!]
+\begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{ini/Figure1}
+  \includegraphics[width=\columnwidth]{ini/Figure1}
   \caption[Study workflow]{
        \textbf{Study workflow}.
   }
@@ -446,9 +446,9 @@ set enrichment method, namely PAGE \cite{Kim:2005fw}.
 
 \subsection{Cytopathic effects on a mouse, cecal, epithelial cell line}
 
-\begin{figure}[b!]
+\begin{figure}
 \centering
-\includegraphics[width=\textwidth]{ini/supplement/cytopathiceffects.png}
+\includegraphics[width=\columnwidth]{ini/supplement/cytopathiceffects.png}
 \caption{Cytopathic effects of TcdA and TcdB on a mouse epithelial cell line.}
 \label{ini:fig:cells}
 \end{figure}
@@ -505,9 +505,9 @@ TcdA thus affects aspects of histopathology at 5 \textmugreek{}g, the lowest
 dose tested. Maximal effects occur with 20 \textmugreek{}g, the dose used in all our
 other experiments.
 
-\begin{figure}[h!]
+\begin{figure}
 \centering
-\includegraphics[width=\textwidth]{ini/supplement/doseresponse.pdf}
+\includegraphics[width=\columnwidth]{ini/supplement/doseresponse.pdf}
 \caption{Histopathology 6h after cecal injection with TcdA.}
 \label{ini:fig:dose}
 \end{figure}
@@ -517,10 +517,10 @@ other experiments.
 In addition to the dose-response experiment, three cecal injection experiments were performed, each on
 different days (\autoref{ini:tab:sizes}). 
 
-\begin{table}[h!]
+\begin{table*}
 \centering
-\begin{adjustwidth}{-1cm}{}
-\resizebox{1.12\textwidth}{!}{%
+%\begin{adjustwidth}{-1cm}{}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{ c | c c c c | c c c c | c c c | c c }
    & \multicolumn{4}{c|}{2 hours} & \multicolumn{4}{c}{6 hours} & 
      \multicolumn{3}{|c|}{16 hours} & TcdA & TcdB \\
@@ -533,7 +533,7 @@ different days (\autoref{ini:tab:sizes}).
    & 86\% & 100\% & 100\% & 100\% & 91\% & 86\% & 33\% & 82\% & 77\% & 75\% & 100\% &  & \\
 \end{tabular}
 }
-\end{adjustwidth}
+%\end{adjustwidth}
 \caption[Survival in cecal injection experiments]
     {\textbf{Survival in cecal injection experiments}
 The ``15/16*'' in the table are the mice shown in
@@ -545,7 +545,7 @@ of the toxins used are given in the last two columns. Mice used for microarrays
 and all protein measurements were from experiments 1 and 2. The numbers
 give the fraction of survivors in each sample group (\# survivors/total mice).}
 \label{ini:tab:sizes}
-\end{table}
+\end{table*}
 
 
 \subsection{ Physiological results of toxin cecal injection }
@@ -574,10 +574,9 @@ in order to determine if there are distant effects from the cecal injection.
 Using the same scoring system, no significant differences in 
 histopathology scores were noted throughout the colon (data not shown).
 
-\sidecaptionvpos{figure}{t}
-\begin{SCfigure}
+\begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{ini/Figure2p1}
+  \includegraphics[width=\columnwidth]{ini/Figure2p1}
   \caption[Physiological and gene expression changes post toxin injection]{
        \textbf{Physiological changes post toxin injection.}
        Panels A, B, and C include data combined from four independent experiments 
@@ -591,20 +590,27 @@ histopathology scores were noted throughout the colon (data not shown).
        tests are indicated beside the lines. \textbf{(A)} Representative 
        examples of H\&{}E-stained cecal tissue sections from the eleven 
        indicated sample groups. \textbf{(B)} Total histopathology score 
-       (see \ref{ini:methods:histology}) from cecal-tissue sections. Except 
+       (see \ref{ini:methods:histology}) from cecal-tissue       
+  }
+  \label{ini:fig2p1}
+\end{figure}
+%\addtocounter{figure}{-1}
+\begin{figure} [t!]
+  \caption*{ \textbf{(caption continued)} sections. Except 
        for the two mice injected with TcdA+B (two mice not used for microarrays), 
        histopathology scores were not measured for mice that did not survive. 
        Since two of three mice injected with TcdA+B did not survive to six 
        hours in our first experiment, we dedicated more mice for TcdA and 
        TcdB at 16h so that no samples were obtained for TcdA+B at 16h. All 
        subsequent experiments also excluded the 16h time point for injection 
-       of TcdA+B. \textbf{(C)} The number of cells within the mucosa and 
-       immediate submucosa which were positive for MPO after immunohistochemical 
-       staining. *p=0.055 by the two-sided t test.      
-  }
-  \label{ini:fig2p1}
-\end{SCfigure}
-
+       of TcdA+B.
+  \textbf{(C)} The number of cells within the mucosa and 
+        immediate submucosa which were positive for MPO after immunohistochemical 
+        staining. *p=0.055 by the two-sided t test.}
+\end{figure}
+%\begin{figure}[t]
+%  \contcaption{ }% Continued caption
+%\end{figure}
 
 The complete blood counts and infiltration of immune cells are also altered 
 by TcdA and TcdB. In blood drawn by cardiac puncture 16h after injection 
@@ -622,11 +628,11 @@ neutrophil infiltration in four of the six animals challenged with TcdA
 was greater than neutrophil infiltration in any sham mouse (\autoref{ini:fig2p1}C).
 
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
-\begin{adjustwidth}{-1cm}{}
-\includegraphics{ini/supplement/cbcs.pdf}
-\end{adjustwidth}
+%\begin{adjustwidth}{-1cm}{}
+\includegraphics[width=\columnwidth]{ini/supplement/cbcs.pdf}
+%\end{adjustwidth}
 \caption[The concentration of circulating
 blood cells was altered during intoxication]
       {\textbf{The concentration of circulating
@@ -642,8 +648,9 @@ similar across all three sample groups and are not shown.
 \label{ini:fig:cbcs}
 \end{figure}
 
-\begin{table}[ht]
+\begin{table}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{ r c c c c }
   Cell type: & Macrophages & Dendritic Cells & Eosinophils &  \\
   Marker: & F4/80 & Ly75 & Congo Red & \emph{n}\\ \hline
@@ -652,6 +659,7 @@ similar across all three sample groups and are not shown.
   Sham, 16h: & + & + & + & 4 \\
   TcdA, 16h: & +++ & +++ & + & 7 \\
 \end{tabular}
+}
 \caption[Infiltration of immune cells 6h and 16h after cecal injection]
           {\textbf{Infiltration of immune cells 6h and 16h after cecal injection}
           To determine if monocytes/macrophages, dendritic cells, and eosinophils
@@ -686,9 +694,9 @@ of all cells, was not characterized by the markers used. The same
 epithelial-layer isolation procedure was used for all gene expression 
 measurements.
 
-\begin{figure}[h!]
+\begin{figure}[t]
   \centering
-    \includegraphics[height=6in]{ini/supplement/flow.pdf}
+    \includegraphics[width=\columnwidth]{ini/supplement/flow.pdf}
   \caption[Cell type proportions as determined by flow cytometry]
   {\textbf{Cell type proportions as determined by flow cytometry}
   The cell type proportions within the epithelial-layer cell isolation
@@ -730,12 +738,12 @@ Hence, in general, gene expression that is affected by TcdA is also
 affected by TcdB but to a lesser extent, suggesting broadly similar 
 in vivo cellular responses to TcdA and TcdB.
 
-\begin{SCfigure}
+\begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{ini/Figure2p2}
+  \includegraphics[width=0.8\columnwidth]{ini/Figure2p2}
   \caption[Gene expression changes post toxin injection]{
        \textbf{Gene expression changes post toxin injection.}.
-       \textbf{(D)} Venn diagrams show the overlap of which microarray 
+       \textbf{(A)} Venn diagrams show the overlap of which microarray 
        probe sets are differentially expressed (comparing toxin-challenged 
        mice versus Sham-challenged mice using a cutoff of q$<$0.01, see 
        \ref{ini:methods:bioinformatics}). All microarray probes are 
@@ -743,7 +751,7 @@ in vivo cellular responses to TcdA and TcdB.
        the expression of one gene or multiple similarly related 
        genes. Since only one microarray was used for TcdA+B at 6h, 
        statistical tests could not be used to determine differentially 
-       expressed genes for that sample group. \textbf{(E)} All probe 
+       expressed genes for that sample group. \textbf{(B)} All probe 
        sets which were differentially expressed for at least one 
        time point were included in the heat map. The Pearson correlation 
        coefficients below the heat map are generated by comparing the 
@@ -752,7 +760,7 @@ in vivo cellular responses to TcdA and TcdB.
        using the correlation coefficients as the distance metric.    
   }
   \label{ini:fig2p2}
-\end{SCfigure}
+\end{figure}
 
 For an initial perspective of which genes are affected, we present 
 genes differentially expressed 2h post toxin challenge 
@@ -774,8 +782,9 @@ but in a coordinated fashion. Therefore, we performed bioinformatics
 analyses to identify other potentially important yet not readily 
 apparent associations that could reflect important functional relationships.
 
-\begin{table}[h!]
+\begin{table}
 \begin{center}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{ l c c c | c c c | c c }
 Time & \multicolumn{3}{c}{2 hours} & \multicolumn{3}{c}{6 hours} & \multicolumn{2}{c}{16 hours}\\
 Toxin & A & B & A+B & A & B & A+B & A & B \\
@@ -803,6 +812,7 @@ Toxin & A & B & A+B & A & B & A+B & A & B \\
 \textit{Mtch2} & -1.5 & -2.0 & -1.7 & -1.1 & 2.0 & -1.6 & -1.5 & -1.2 \\
 \textit{Slc20a1} & -1.9 & -2.1 & -2.5 & -2.5 & 1.7 & -2.7 & -4.4 & -1.5 \\
 \end{tabular}
+}%end resizebox
 \caption[Genes with significantly altered expression 2h after TcdA or TcdB injection]{
  \textbf{Genes with significantly altered expression 2h after TcdA and TcdB injection}
 Average fold changes relative to sham are shown (values of -1.1 and +1.1 
@@ -836,8 +846,9 @@ test for TcdA samples, no functions are enriched at 6h (q$<$0.2) but
 several are enriched at 16h (\autoref{ini:table3}). The genes within 
 these groups are presented below.
 
-\begin{table}[h!]
+\begin{table}
 \begin{center}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{ l c c c }
 TcdA & $-log_{10}(p)$ & q & Database \\ \hline
 Interleukin-1-mediated signaling pathway & 5.3 & 0.003 & BP \\
@@ -853,6 +864,7 @@ Nuclear envelope lumen & 3.6 & 0.045 & CC \\
 Genes involved in apoptotic cleavage of cellular proteins & 4.0 & 0.037 & Reactome \\
 Membrane trafficking & 3.6 & 0.043 & Reactome \\
 \end{tabular}
+} % end resizebox
 \caption[Biological functions and gene sets associated with gene 
          expression changes 2h after TcdA or TcdB injection]{
  \textbf{Biological functions and gene sets associated with 
@@ -869,7 +881,7 @@ database could be used.}
 \end{table}
 
 
-\begin{table}[h!]
+\begin{table}
 \begin{center}
 \begin{tabular}{ l c c c }
 TcdA & $-log_{10}(p)$ & q \\ \hline
@@ -881,7 +893,7 @@ Protein N-terminus binding & 2.5 & 0.205 \\
 Glutathione transferase activity & 2.3 & 0.205 \\
 Steroid binding & 2.3 & 0.205 \\
 Carboxylase activity & 2.2 & 0.205 \\
-RNA polymerase II core promoter sequence-specific DNA binding & 2.2 & 0.205 \\
+RNA polymerase II core promoter... & 2.2 & 0.205 \\
 Protein complex binding & 2.1 & 0.205 \\
 Heme binding & 2.1 & 0.205 \\
 Thiolester hydrolase activity & 2.1 & 0.205 \\
@@ -919,7 +931,7 @@ toxins' glucosylation of small GTPases, the in vivo transcription of
 many GTP and GTPase binding proteins with a wide range of functions 
 is clearly altered in response to TcdA and TcdB.
 
-\begin{figure}[h!]
+\begin{figure*}
   \centering
   \includegraphics[width=\textwidth]{ini/Figure3}
   \caption[Biological functions associated with gene-expression changes]{
@@ -938,7 +950,7 @@ is clearly altered in response to TcdA and TcdB.
        these genes are not included in the line plots.
   }
   \label{ini:fig3}
-\end{figure}
+\end{figure*}
 
 
 We also found an abundance of differentially expressed genes 
@@ -956,9 +968,9 @@ expression of detoxification enzymes and fatty acid metabolic
 enzymes introduces an unexplored aspect of the host response to 
 TcdA and TcdB.
 
-\begin{figure}
+\begin{figure}[t!]
   \centering
-    \includegraphics[height=7.4in]{ini/supplement/inflam.pdf}
+    \includegraphics[width=\columnwidth]{ini/supplement/inflam.pdf}
   \caption[Expression changes of inflammation associated
            and immune regulatory genes]{\textbf{Expression changes of inflammation associated
            and immune regulatory genes}
@@ -1012,9 +1024,9 @@ microarray probes to the appropriate Ensembl gene IDs, we found that TcdA-induce
 changes in gene expression correlated to changes in protein 
 expression (r=0.67, \autoref{ini:fig:geneprotein}A). 
 
-\begin{figure}
+\begin{figure}[t!]
 \centering
-\includegraphics{ini/supplement/cytokines.pdf}
+\includegraphics[width=\columnwidth]{ini/supplement/cytokines.pdf}
 \caption[Cytokine gene and protein expression]
          {\textbf{Cytokine gene and protein expression}
          Our data for Ccl4 is not shown
@@ -1053,36 +1065,11 @@ Hirota \emph{et al.} (\autoref{ini:fig:geneprotein}D).
 
 \subsection{CXCL1 and CXCL2 neutralization alters the host response to 
             TcdA cecal injection}
-To investigate the role of these acutely expressed chemokine genes 
-in response to TcdA challenge, we administered neutralizing antibodies 
-against CXCL2 and the closely related CXCL1. In addition to the high 
-expression of Cxcl2, we also chose Cxcl1 because it is another 
-important primary neutrophil chemoattractant. Anti-CXCL1 and anti-CXCL2 
-(or corresponding isotypes) were administered by intraperitoneal 
-injection (100 \textmugreek{}g/antibody/animal) 16h prior to TcdA cecal 
-injection. TcdA-induced increases in the serum levels of CXCL1 and 
-CXCL2 is significantly reduced in mice pretreated with anti-CXCL1 
-and anti-CXCL2, demonstrating that systemic levels were effectively 
-neutralized compared to isotype controls (\autoref{ini:fig4}A; 
-p$<$0.01 for CXCL1, p$<$0.02 for CXCL2). To test if neutralization 
-of CXCL1 and CXCL2 alters expression of Cxcl1 and Cxcl2, we 
-isolated mRNA from epithelial-layer cells. We found that neutralization 
-does not eliminate the 6h-peak in Cxcl1 and Cxcl2 expression caused by 
-TcdA (\autoref{ini:fig:qrtpcr}). In addition, pathology and neutrophil 
-infiltration in the cecum is not affected by administration of 
-anti-CXCL1 and anti-CXCL2 (\autoref{ini:fig4}C, \autoref{ini:fig:neutralization}). 
-However, 16h after TcdA injection, systemic neutrophil levels are 
-reduced by neutralization (\autoref{ini:fig4}B). A larger percentage 
-of mice survived after CXCL1 and CXCL2 neutralization, though the 
-experiment was not designed to assess survival and more samples would 
-be necessary to determine statistical significance (\autoref{ini:fig4}D). 
-However, higher sera levels of CXCL1 and CXCL2 correlate with a moribund 
-state and administration of anti-CXCL1 and anti-CXCL2 reduces those 
-chemokine elevations.
-
-\begin{figure}
+            
+            
+\begin{figure}[b!]
   \centering
-  \includegraphics[width=\textwidth]{ini/Figure4}
+  \includegraphics[width=\columnwidth]{ini/Figure4}
   \caption[Antibody neutralization of CXCL1 and CXCL2]{
        \textbf{Antibody neutralization of CXCL1 and CXCL2.}
         In each panel, the four sample groups are defined by two binary 
@@ -1111,9 +1098,38 @@ chemokine elevations.
   \label{ini:fig4}
 \end{figure}
 
-\begin{figure}[ht]
+To investigate the role of these acutely expressed chemokine genes 
+in response to TcdA challenge, we administered neutralizing antibodies 
+against CXCL2 and the closely related CXCL1. In addition to the high 
+expression of Cxcl2, we also chose Cxcl1 because it is another 
+important primary neutrophil chemoattractant. Anti-CXCL1 and anti-CXCL2 
+(or corresponding isotypes) were administered by intraperitoneal 
+injection (100 \textmugreek{}g/antibody/animal) 16h prior to TcdA cecal 
+injection. TcdA-induced increases in the serum levels of CXCL1 and 
+CXCL2 is significantly reduced in mice pretreated with anti-CXCL1 
+and anti-CXCL2, demonstrating that systemic levels were effectively 
+neutralized compared to isotype controls (\autoref{ini:fig4}A; 
+p$<$0.01 for CXCL1, p$<$0.02 for CXCL2). To test if neutralization 
+of CXCL1 and CXCL2 alters expression of Cxcl1 and Cxcl2, we 
+isolated mRNA from epithelial-layer cells. We found that neutralization 
+does not eliminate the 6h-peak in Cxcl1 and Cxcl2 expression caused by 
+TcdA (\autoref{ini:fig:qrtpcr}). In addition, pathology and neutrophil 
+infiltration in the cecum is not affected by administration of 
+anti-CXCL1 and anti-CXCL2 (\autoref{ini:fig4}C, \autoref{ini:fig:neutralization}). 
+However, 16h after TcdA injection, systemic neutrophil levels are 
+reduced by neutralization (\autoref{ini:fig4}B). A larger percentage 
+of mice survived after CXCL1 and CXCL2 neutralization, though the 
+experiment was not designed to assess survival and more samples would 
+be necessary to determine statistical significance (\autoref{ini:fig4}D). 
+However, higher sera levels of CXCL1 and CXCL2 correlate with a moribund 
+state and administration of anti-CXCL1 and anti-CXCL2 reduces those 
+chemokine elevations.
+
+
+
+\begin{figure}
 \centering
-\includegraphics{ini/supplement/qrtpcr.pdf}
+\includegraphics[width=\columnwidth]{ini/supplement/qrtpcr.pdf}
 \caption[\emph{Cxcl1} and \emph{Cxcl2} expression after Cxcl1 \& Cxcl2 neutralization]
 { \textbf{\emph{Cxcl1} and \emph{Cxcl2} expression after Cxcl1 \& Cxcl2 neutralization}
 Aside from any possible feedback and regulatory mechanisms, i\@.p\@. administration of anti-Cxcl1 and
@@ -1130,9 +1146,9 @@ geometric mean of the housekeeping genes).
 \label{ini:fig:qrtpcr}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
-\includegraphics{ini/supplement/neutralization.pdf}
+\includegraphics[width=0.6\columnwidth]{ini/supplement/neutralization.pdf}
 \caption[Neutrophil infiltration 6h after TcdA cecal injection 
            of mice pretreated with neutralizing antibodies]
            {\textbf{Neutrophil infiltration 6h after TcdA cecal injection 
@@ -1153,9 +1169,9 @@ least with the method in which we administered the antibodies.
 \subsection{\emph{In vivo} transcriptome response \emph{versus
             in vitro} transcriptome and proteome responses}
 
-\begin{figure}[b!]
+\begin{figure}
 \centering
-\includegraphics{ini/supplement/correlations.pdf}
+\includegraphics[width=\columnwidth]{ini/supplement/correlations.pdf}
 \caption{Correlations between \emph{in vitro} and \emph{in vivo} responses to toxins}
 \label{ini:fig:correlations}
 \end{figure}
@@ -1186,9 +1202,9 @@ and experimental systems. In \autoref{ini:fig:commons}, we show
 13 of the most differentially expressed genes that were similarly 
 expressed in both our \emph{in vivo} and \emph{in vitro} data sets.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
-\includegraphics{ini/supplement/commongenes.pdf}
+\includegraphics[width=\columnwidth]{ini/supplement/commongenes.pdf}
 \caption{Similarly expressed genes \emph{in vitro} and \emph{in vivo}}
 \label{ini:fig:commons}
 \end{figure}
