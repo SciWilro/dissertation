@@ -1,5 +1,5 @@
 % beginning
-\documentclass[11pt,openany]{book}
+\documentclass[9pt,openany,twocolumn]{book}
 
 % For tables with multirow rows
 \usepackage{multirow}
@@ -17,7 +17,7 @@
 \usepackage{wrapfig}
 
 % set the page margins
-\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage[top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
 
 % for color figures
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
@@ -43,7 +43,7 @@
 \usepackage[labelfont=bf]{caption}
 
 % citations
-\usepackage[style=nature, sorting=none, maxbibnames=500, minbibnames=99, maxcitenames=99, backref=true]{biblatex}
+\usepackage[style=nature, sorting=none, maxbibnames=1, minbibnames=1, maxcitenames=99, backref=false]{biblatex}
 %\addbibresource{ini/ini.bib}
 %\addbibresource{bmc/bmc.bib}
 %\addbibresource{trends/trends.bib}
@@ -189,46 +189,68 @@
 \usepackage{longtable}
 \usepackage{pbox}
 
+% Custom chapter titles without a page break
+\usepackage{titlesec}
+\titleclass{\chapter}{straight}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{10pt}{\LARGE}
+\titlespacing*{\chapter} {0pt}{30pt}{10pt}
+
+% No page breaks with include*
+\usepackage{newclude}
+
+% Figures and table fixes for two-column book
+\usepackage{dblfloatfix}
+\usepackage{fixltx2e}
+
+% Two-column table of contents
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage[toc,lof,lot]{multitoc}
+%\twocoltocetc
 
 \begin{document}
 
+\let\cleardoublepage\relax
 \frontmatter
+\begingroup
+%\let\clearpage\relax
 \include{TitlePage/TitlePage2}
-\include{ApprovalSheet/ApprovalSheet}
+\include*{ApprovalSheet/ApprovalSheet}
 \tableofcontents
-\listoffigures
-\listoftables
+%\listoffigures
+%\listoftables
+\endgroup
 
-\doublespacing
-\include{preface/preface}
-%
-\let\cleardoublepage\clearpage
+\include*{preface/preface}
+
+
 \mainmatter
-\include{intromain/intromain}
-
-\include{introjtm/introjtm}
-\include{jtm/jtm}
+\include*{intromain/intromain}
 %
-\include{introbmc/introbmc}
-\include{bmc/bmc}
+\include*{introjtm/introjtm}
+\include*{jtm/jtm}
+%%
+\include*{introbmc/introbmc}
+%\include{bmc/bmc}
+%%
+%\include{ini/ini}
+%%
+%\include{imp/imp}
+%%
+%\include{wellz/wellz}
+%%
+%\include{trends/trends}
 %
-\include{ini/ini}
 %
-\include{imp/imp}
-%
-\include{wellz/wellz}
-%
-\include{trends/trends}
-
-
-\singlespacing
+%\singlespacing
 \printbibliography
 
-\doublespacing
-\begin{appendices}
-\include{apxini/apxini}
-\include{apximp/apximp}
-\end{appendices}
+%\doublespacing
+%\begin{appendices}
+%\include{apxini/apxini}
+%\include{apximp/apximp}
+%\end{appendices}
 
 
 
