@@ -206,20 +206,40 @@
 % Two-column table of contents
 \usepackage{multicol}
 \usepackage{ifthen}
-\usepackage[toc,lof,lot]{multitoc}
+%\usepackage[toc,lof,lot]{multitoc}
 %\twocoltocetc
+\makeatletter
+\renewcommand\tableofcontents{%
+    \section*{\huge\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}
+    \@starttoc{toc}%
+}
+\renewcommand\listoffigures{%
+    \section*{\huge\listfigurename
+        \@mkboth{%
+           \MakeUppercase\listfigurename}{\MakeUppercase\listfigurename}}
+    \@starttoc{lof}%
+}
+\renewcommand\listoftables{%
+    \section*{\huge\listtablename
+        \@mkboth{%
+           \MakeUppercase\listtablename}{\MakeUppercase\listtablename}}
+    \@starttoc{lot}%
+}
+\makeatother
 
 \begin{document}
 
 \let\cleardoublepage\relax
 \frontmatter
 \begingroup
-%\let\clearpage\relax
 \include{TitlePage/TitlePage2}
 \include*{ApprovalSheet/ApprovalSheet}
+\let\clearpage\relax
 \tableofcontents
-%\listoffigures
-%\listoftables
+\listoffigures
+\listoftables
 \endgroup
 
 \include*{preface/preface}
