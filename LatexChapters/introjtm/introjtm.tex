@@ -120,15 +120,21 @@ one gene or exon.
 
 For each probe sequence, Affymetrix made a
 \textit{mismatch} probe with the 13\textsuperscript{th} 
-base changed. 
-By subtracting the mismatch signal from the \textit{perfect-match} signal,
+base changed. The mismatch probes are placed directly
+beside the corresponding mismatch probes and were intended
+to measure how many other transcripts bind to a similar
+sequence as the targeted mRNA (the perfect match probe sequence).
+
+Hence, by subtracting the mismatch signal from the \textit{perfect-match} signal,
 \textit{nonspecific hybridization} (\textit{cross-hybrdization} 
 from other transcripts) may be 
 estimated (\textit{perfect-match correction}).
 However, mismatch hybridization is complex.
 Usually, more than one third of mismatch probes have a higher
-signal than their perfect match probes \cite{Irizarry:2003ge}. 
-This should theoretically never happen. Several have proposed
+signal than their perfect match probes \cite{Irizarry:2003ge}.
+This should theoretically never happen, but presumably is due
+to nonspecific binding of other transcripts or low signal to
+noise ratios. Several have proposed
 hierarchical models with nonlinear terms that
 better account for mismatch probes 
 \cite{Li:2001jv,Milo:2003tt,Liu:2005ey,Hein:2005ip}, yet algorithms
@@ -207,7 +213,7 @@ all array values by mean, median, or some other measure, yet centering
 doesn't account for different ranges of values.
 Quantile normalization forces two arrays to have the exact same
 statistical distribution \cite{Bolstad:2003ia}. Li and Wong's normalization
-iteratively searches for a group of ``householding genes'' (the invariant 
+iteratively searches for a group of ``housekeeping genes'' (the invariant 
 set of probes) that will be forced to the same expression values in all arrays,
 and all other probes are adjusted accordingly \cite{Li:2001wk}.
 Huber et al. found that the inverse hypberbolic sine transformation
@@ -287,7 +293,7 @@ Loess normalization might be better since it
 modifies each array's values according to similarly expressed 
 probes on other arrays, allowing for slightly different distributions.
 If the primary problem is high variance of low-signal probes, variance
-stabilization may be best. If $~$10 ``householding'' genes are known
+stabilization may be best. If $~$10 ``housekeeping'' genes are known
 or can be trusted to be found algorithmically, invariant set normalization
 would work. However, since invariant set normalization assumes probe affinities
 are similar, probe values must be corrected in background correction.
@@ -379,7 +385,7 @@ performed similarly well. Several authors
 noted flaws in the experimental design and analysis
 causing unrealistic conclusions \cite{Pearson:2008jr,Schuster:2007wr,
 Dabney:2006ud,Irizarry:2006bq,Gaile:2007ei,Fodor:2007wb}, and
-a ``Platinum Spike'' data set was generated to address the flaws \cite{Zhu:2010jxa}.
+a ``Platinum Spike'' data set was generated to address the flaws \cite{Zhu:2010tr}.
 Conflicting recommendations from various authors that stemmed from
 these data suggests 
 that there will likely never be one ``best'' workflow, yet the analyses
@@ -399,7 +405,7 @@ using diagnostic tools (e.g., correlation matrices, clustering,
 principal components analysis (PCA), and MA plots).
 For example, one may find, as I did in one case, that invariant set
 normalization causes outlier arrays (identified by PCA) because
-of the automatically selected ``householding genes''.
+of the automatically selected ``housekeeping genes''.
 Using an MA plot, they may then notice extraordinarily
 high variance in the fold changes of low-signal probes, and then decide
 on a workflow (e.g., mmGmos) that propagates this error to
@@ -488,7 +494,7 @@ mention the assumptions on which the priors are based.
 Lonnstedt et al. derived a statistic equal to the log of the 
 probability a gene is a DEG divided by the probability the gene is not a DEG \cite{Lonnstedt:2002wu}.
 To do so, they made the prior assumptions that (1) only a small proportion, $p$, of 
-genes are DEG, (2) all fold changes of transcripts are normally distributed,
+genes are DEG, (2) all log fold changes of transcripts are normally distributed,
 and (3) the variances of expression values follow an inverse gamma distribution.
 The parameters for prior
 distributions (e.g. the mean and variance of 
@@ -629,7 +635,7 @@ focused on experimental methods to improve the dynamic range
 of arrays. 
 
 Next generation sequencing of RNA (RNA-seq) is the
-next step to improving variability. RNA-seq offer great
+next step to improving variability. RNA-seq offers great
 potential for reducing the uncertainty in transcript levels because
 transcripts are counted. With microarrays, relative abundances
 can only be estimated indirectly. However, RNA-seq presents
@@ -659,8 +665,10 @@ in previous paragraphs).
 Authors of disputed studies are most always well-intentioned, yet 
 irreproducible analyses or poorly presented data raise suspicions.
 
-In my opinion, analysts shouldn't fear being wrong; most researchers
-are wrong most of the time. They must fear being overconfident or misleading. 
+In my opinion, analysts shouldn't fear being wrong.
+As researchers, we must speculate and make
+hypotheses that, when tested, are very often found to be wrong.
+Instead, researchers should fear being overconfident or misleading. 
 By making data and code open to criticism,
 scientists protect their integrity and intellectual property in the same
 way that lab notebooks do. They protect their colleagues

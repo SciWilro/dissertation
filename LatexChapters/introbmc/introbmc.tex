@@ -1,7 +1,9 @@
 \chapter[Functional transcriptomics of toxin response]{Functional transcriptomics of the host response to \textit{C. difficile} toxins}\label{chapter:introbmc}
 
-\textit{C. difficile} causes 300,000+ infections and $\sim$20,000 deaths in the US every year,
+\textit{C. difficile} causes 300,000+ reported infections and $\sim$20,000 deaths in the US every year,
 indirectly costing the healthcare system over \${}8 billion \cite{Lucado:2012wl}.
+Infections indicate worsened health due to \textit{Clostridium difficile},
+not normal colonization of C. difficile that occurs in healthy individuals.
 \textit{C. difficile} strains are only pathogenic if
 they release toxin A or toxin B (TcdA and TcdB).
 The basic structure and enzymatic activities of the toxins
@@ -31,7 +33,7 @@ and was an anaerobe that was difficult to grow (\textit{difficilis}).
 They also identified a \textit{B. difficilis} toxin that killed mice.
 In 1943, the first rodent model of infection was made unintentionally
 when penicillin induced inflammation in the cecum \cite{Hamre:1943te}.
-Remarkably, these findings from 40 years ago summarize
+Remarkably, these findings from 70 years ago summarize
 much of what we now know: \textit{C. difficile} infection occurs
 when the flora is disrupted by antibiotics and the pathogenic
 effects are due to toxins. Even more interesting, several
@@ -43,7 +45,8 @@ treatment (reviewed in \cite{Bartlett:2008jx}).
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{introbmc/cartoon.png}
-  \caption{\textbf{An oversimplified view of \textit{C. difficile} infection}}
+  \caption[An oversimplified view of \textit{C. difficile} infection]
+  {\textbf{An oversimplified view of \textit{C. difficile} infection}}
   \label{introbmc:cartoon}
 \end{figure}
 
@@ -65,10 +68,11 @@ studies characterized the broad physiological toxin effects,
 many of which are discussed in the following chapters.
 
 
-\subsection{Toxin molecular biology}
-TcdA and TcdB are among the most lethal natural substances known.
-Their lethal dose is less than that of strychnine and cyanide.
-However, as proteins, they are more similar to other toxins such as 
+\subsection{Toxin molecular biology}\label{toxmolecbio}
+TcdA and TcdB are extremely potent.
+They are not small molecules like other toxins such as 
+arsenic or cyanide.
+As proteins, they are more similar to other toxins such as 
 ricin, anthrax toxin,
 tetanus toxin, and botulinum toxin (Botox).
 
@@ -76,7 +80,7 @@ The enzymatic activity of TcdA and TcdB which is responsible
 for their cytopathic effects was discoverd 
 in 1995 by Just et al. \cite{Just:1995ei,Just:1995kz}.
 Both TcdA and TcdB, with 63\% amino acid
-homology \cite{vonEichelStreiber:1992wu}, have N-terminal
+homology \cite{vonEichelStreiber:1992tg}, have N-terminal
 domains that glucosylate Rho family proteins, disabling
 them from entering their GTP-bound, active state \cite{Just:1995ei,Just:1995kz}.
 The C-terminal of both toxins consists of many ``clostridial
@@ -84,7 +88,7 @@ repetitive oligopeptides'' (CROPs) that are present in
 other clostridial and streptococcal species 
 \cite{vonEichelStreiber:1990ti,vonEichelStreiber:1992vb}
 that are important for cell binding and 
-entry \cite{Ho:2005vm,Greco:2006wf,Frisch:2003jo}.
+entry \cite{Ho:2005vm,Greco:2006wf,Frisch:2003ul}.
 However, it is unclear if the CROPs are entirely necessary
 for cell entry or if the CROPs can alone cause
 cytopathic effects \cite{Yeh:2008hda,Zemljic:2010ub}. Both toxins
@@ -103,7 +107,8 @@ is most critical to clinical outcome.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\textwidth]{introbmc/steps.png}
-  \caption{\textbf{Sequence, structure, and functioin of TcdA and TcdB}}
+  \caption[Sequence, structure, and functioin of TcdA and TcdB]
+  {\textbf{Sequence, structure, and functioin of TcdA and TcdB}}
   \label{introbmc:steps}
 \end{figure}
 
@@ -145,7 +150,8 @@ set is \textit{enriched} with highly expressed chemokines. Alternatively,
 it is common to say that chemokine genes or chemokine functions
 are \textit{enriched}.
 
-These questions lead to a hypothesis tests comparing proportions. For example,
+These questions lead to a hypothesis tests in which the significance
+of the difference between two different proportions is determined. For example,
 is there a significantly greater proportion of chemokines in the list
 of DEGs compared to the list of non-DEGs?
 The Fisher exact test calculates the significance of such proportions, and it

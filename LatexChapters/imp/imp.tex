@@ -31,6 +31,16 @@ types to wide ranges of toxin concentrations.
 To compare the response in a reproducible and consistent manner,
 I decided to track broad structural changes by measuring how electrical
 impedance across the surface of a cell culture as described in this chapter.
+From this method, the potency of toxins can be determined.
+The ``potency'' and ``rapidity of onset'' of the toxins are linked.
+In the way I use the terms here, high potency means faster acting
+effects in cells. Since the toxins are enzymes, they can continue
+their activity until all Rho proteins are glucosylated. This was indeed
+the case for nearly all experiments. TcdA and TcdB, at all concentrations,
+eventually caused the same degree of cytopathic effects. The couple of exceptions
+where only a proportion of cells were affected may
+indicate limiting concentrations of toxins in which not all cells
+are intoxicated.
 This precise quantification system had the added benefit as a
 quality control to compare the potency of labeled versus unlabeled toxin
 as well as different toxin purifications.
@@ -143,13 +153,20 @@ types to respond directly to toxin during an infection.
 Impedance curves that profile cell responses also provide 
 insight into the toxins' molecular functions. TcdA and 
 TcdB have glucosyltransferase domains that inactivate small 
-GTPases. With the use of engineered mutant toxins, 
+GTPases (see \ref{toxmolecbio} for a discussion of other domains and molecular activities). 
+With the use of engineered mutant toxins, 
 glucosyltransferase activity has been found necessary 
 for cell rounding \cite{Teichert:2006jo}. However, evidence that some 
 glucosyltransferase-deficient mutants of TcdB (gdTcdB) 
 are cytotoxic has raised questions about whether there 
-are other, previously unknown toxin activities \cite{Chumbler:2012co}. In 
-order to identify changes dependent and independent of 
+are other, previously unknown toxin activities \cite{Chumbler:2012co}. 
+The mutant in particular has two amino acids in the ``DxD'' motif
+that is important for the toxins binding to their UDP-glucose
+substrate \cite{Teichert:2006jo}. Teichert et al. showed
+that the gluocysltransferase activity of the DxD motif in
+a solution with all necessary substrates was reduced 6,900-fold. 
+In cells, no cytopathic effects could be detected \cite{Teichert:2006jo}.
+In order to identify changes dependent and independent of 
 glucosyltransferase activity, we use gdTcdB to evaluate 
 the dynamics of the response of macrophage and epithelial 
 cell lines to gdTcdB, elucidating changes dependent and 
@@ -220,7 +237,7 @@ not replaced after the addition of toxin.
 \subsection{Analyses}
 The protocols, data, computer code, and instructions 
 for running the code that reproduce all results and 
-figures are provided in the \autoref{apx:imp}.
+figures are provided in Appendix \autoref{apx:imp}.
 
 
 \section{Results}
@@ -265,7 +282,7 @@ on toxin and cell type). Together, these metrics allow
 for millions of data points and hundreds of wells to be 
 simultaneously visualized and summarized to dozens of numbers 
 or fewer that can be easily interpreted (e.g., \autoref{imp:fig2}D 
-and \autoref{apx:imp}).
+and Appendix \autoref{apx:imp}).
 
 \begin{figure}[h!]
   \centering
@@ -336,7 +353,7 @@ J774 mouse macrophages were as sensitive and responsive to
 TcdA and TcdB as epithelial cells. The impedance of 
 macrophages treated with TcdA (300 ng/ml) and TcdB (10 ng/ml) 
 diverged from controls in 10 and 20 minutes, respectively 
-(\autoref{apx:imp}). In contrast to epithelial cells, however, the 
+(Appendix \autoref{apx:imp}). In contrast to epithelial cells, however, the 
 impedance of macrophages increased after toxin addition (\autoref{imp:fig3}), 
 and the responses of J774 cells to TcdA and TcdB differed in 
 shape and scale. TcdA caused a rise in impedance at 0.1 ng/ml, 
@@ -346,11 +363,11 @@ higher concentrations (300 and 1000 ng/ml), the slope of
 the rise continued to increase, yet the rise was inhibited, 
 as if stopped prematurely before reaching its peak, and 
 then impedance dropped below that of control cells (Figure \autoref{imp:fig3}A
-and \autoref{apx:imp}). Considering now TcdB, 0.1, 1, and 10 ng/ml 
+and Appendix \autoref{apx:imp}). Considering now TcdB, 0.1, 1, and 10 ng/ml 
 caused impedance to rise and stabilize at approximately double 
 the initial value; only the slope of the rise (not the final 
 height) was affected by toxin concentration (Figure 3A and 
-\autoref{apx:imp}). These curves allowed us to resolve time 
+Appendix \autoref{apx:imp}). These curves allowed us to resolve time 
 points that would be of most interest for cell imaging. 
 Increases in impedance, for TcdA and TcdB, correlated 
 with rapid stretching and arborization of cells (appearance 
@@ -677,7 +694,7 @@ the C-terminal domain (which is believed to be
 necessary for toxin internalization) of TcdA does 
 not inhibit the effects of TcdB and (2) the TcdB 
 C-terminus inhibits neither TcdA or TcdB-induced 
-cell rounding \cite{Frisch:2003jo,Dingle:2008gu}. Hence, at the point of cell 
+cell rounding \cite{Frisch:2003ul,Dingle:2008gu}. Hence, at the point of cell 
 entry, TcdA and TcdB likely do not interfere with one 
 another. Since the glucosyltransferase domains of TcdA 
 and TcdB have many of the same Rho-family proteins as 
@@ -732,7 +749,7 @@ deleterious events involving multiple cells. Neuronal
 signals have been implicated in beginning the disease 
 process, stimulating mast cells or macrophages that may then 
 recruit other cells 
-\cite{Sorensson:2001da,Pothoulakis:1998vca,
+\cite{Sorensson:2001da,Pothoulakis:1998vc,
 Castagliuolo:1998fu,Castagliuolo:1994ta}. 
 Neutrophil infiltration is a 
 hallmark of intoxication, yet neutrophils in vitro require 
@@ -746,7 +763,7 @@ To confirm the low toxin-sensitivity of neutrophils, we
 did attempt to measure impedance changes of neutrophils 
 in response to toxins, yet the variability in these 
 primarily non-adherent cells (impedance largely measures adherence) 
-was too high to identify differences (\autoref{apx:imp}). 
+was too high to identify differences (Appendix \autoref{apx:imp}). 
 Elements of the toxin responses of other cell types 
 (e.g., mast cells \cite{Meyer:2007kj,Calderon:1998tr,Gerhard:2011hm}, 
 dendritic cells \cite{Lee:2008jf,Jafari:2013ji}, 
