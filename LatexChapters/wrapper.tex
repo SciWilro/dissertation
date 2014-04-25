@@ -40,7 +40,7 @@
 \usepackage{amsmath}
 
 % More flexible figure legends
-\usepackage[labelfont=bf]{caption}
+\usepackage[labelfont=bf,font=small]{caption}
 
 % citations
 \usepackage[style=nature, sorting=none, maxbibnames=1, minbibnames=1, maxcitenames=99, backref=false]{biblatex}
@@ -225,6 +225,10 @@
     \@starttoc{lot}%
 }
 \makeatother
+\usepackage{multicol}
+
+% smaller font size for bibliography
+\renewcommand*{\bibfont}{\footnotesize}
 
 \begin{document}
 
@@ -242,27 +246,25 @@
 \include*{preface/preface}
 
 \mainmatter
-\include*{intromain/intromain}
+%\include*{intromain/intromain}
 %
-\include*{introjtm/introjtm}
-\include*{jtm/jtm}
+%\include*{introjtm/introjtm}
+%\include*{jtm/jtm}
 %%
-\include*{introbmc/introbmc}
-\include*{bmc/bmc}
+%\include*{introbmc/introbmc}
+%\include*{bmc/bmc}
 %%
-\include*{ini/ini}
+%\include*{ini/ini}
 %%
-\include*{imp/imp}
+%\include*{imp/imp}
 %%
-\include*{wellz/wellz}
+%\include*{wellz/wellz}
 %%
-%\include{trends/trends}
+%\include*{trends/trends}
 %
 %
-%\singlespacing
 \printbibliography
 
-%\doublespacing
 %\begin{appendices}
 %\include{apxini/apxini}
 %\include{apximp/apximp}
