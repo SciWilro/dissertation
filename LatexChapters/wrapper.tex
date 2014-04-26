@@ -1,5 +1,5 @@
 % beginning
-\documentclass[9pt,openany,twocolumn]{book}
+\documentclass[9pt,openany,twocolumn]{extbook}
 
 % For tables with multirow rows
 \usepackage{multirow}
@@ -17,7 +17,7 @@
 \usepackage{wrapfig}
 
 % set the page margins
-\usepackage[top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+\usepackage[letterpaper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
 
 % for color figures
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
@@ -173,7 +173,7 @@
 \definecolor{messagecolor}{rgb}{0, 0, 0}
 \definecolor{warningcolor}{rgb}{1, 0, 1}
 \definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+\newenvironment{knitrout}{\footnotesize}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -193,8 +193,10 @@
 \usepackage{titlesec}
 \titleclass{\chapter}{straight}
 \titleformat{\chapter}[display]
-  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{10pt}{\LARGE}
-\titlespacing*{\chapter} {0pt}{30pt}{10pt}
+  {\normalfont\Huge\bfseries}{\chaptertitlename\ \thechapter}{5pt}{\huge}
+\titlespacing*{\chapter} {0pt}{15pt}{5pt}
+
+
 
 % No page breaks with include*
 \usepackage{newclude}
@@ -228,7 +230,12 @@
 \usepackage{multicol}
 
 % smaller font size for bibliography
-\renewcommand*{\bibfont}{\footnotesize}
+\renewcommand*{\bibfont}{\scriptsize}
+
+% special page headings
+\usepackage{fancyhdr}
+\headheight 20pt
+\headsep 10pt
 
 \begin{document}
 
@@ -246,17 +253,17 @@
 \include*{preface/preface}
 
 \mainmatter
-%\include*{intromain/intromain}
+\include*{intromain/intromain}
 %
-%\include*{introjtm/introjtm}
-%\include*{jtm/jtm}
+\include*{introjtm/introjtm}
+\include*{jtm/jtm}
 %%
-%\include*{introbmc/introbmc}
-%\include*{bmc/bmc}
+\include*{introbmc/introbmc}
+\include*{bmc/bmc}
 %%
-%\include*{ini/ini}
+\include*{ini/ini}
 %%
-%\include*{imp/imp}
+\include*{imp/imp}
 %%
 %\include*{wellz/wellz}
 %%
@@ -265,10 +272,10 @@
 %
 \printbibliography
 
-%\begin{appendices}
-%\include{apxini/apxini}
-%\include{apximp/apximp}
-%\end{appendices}
+\begin{appendices}
+%\include*{apxini/apxini}
+%\include*{apximp/apximp}
+\end{appendices}
 
 
 
