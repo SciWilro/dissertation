@@ -234,50 +234,55 @@
 
 % special page headings
 \usepackage{fancyhdr}
-\headheight 20pt
+\headheight 25pt
 \headsep 10pt
 
 \begin{document}
 
-\let\cleardoublepage\relax
 \frontmatter
 \begingroup
 \include{TitlePage/TitlePage2}
+\let\cleardoublepage\relax
 \include*{ApprovalSheet/ApprovalSheet}
 \let\clearpage\relax
 \tableofcontents
 \listoffigures
 \listoftables
 \endgroup
+\let\cleardoublepage\relax
 
 \include*{preface/preface}
 
 \mainmatter
 \include*{intromain/intromain}
 %
-\include*{introjtm/introjtm}
-\include*{jtm/jtm}
+%\include*{introjtm/introjtm}
+%\include*{jtm/jtm}
 %%
-\include*{introbmc/introbmc}
-\include*{bmc/bmc}
+%\include*{introbmc/introbmc}
+%\include*{bmc/bmc}
 %%
-\include*{ini/ini}
+%\include*{ini/ini}
 %%
-\include*{imp/imp}
+%\include*{imp/imp}
 %%
-\include*{wellz/wellz}
+%\include*{wellz/wellz}
 %%
-\include*{trends/trends}
+%\include*{trends/trends}
 %
 %
 \printbibliography
 
 \begin{appendices}
-\include*{apxini/apxini}
-\include*{apximp/apximp}
+%\include*{apxini/apxini}
+%\include*{apximp/apximp}
 \end{appendices}
 
-
-
+% create empty pages for back cover
+\onecolumn
+\thispagestyle{empty}
+\null\newpage
+~~
+\thispagestyle{empty}
 
 \end{document}

@@ -1,7 +1,0 @@
-#!/bin/bash
-# Texpad build (.tpbuild) file for plain tex files
-xelatex "$TEXPAD_ROOTFILE"
-biber "$TEXPAD_ROOTFILE_NO_EXT"
-xelatex "$TEXPAD_ROOTFILE"
-xelatex "$TEXPAD_ROOTFILE"
-

@@ -7,6 +7,12 @@
   needs in order to grow (e.g.\ amino acids, lipids and 
   carbohydrates). Correlated reaction sets: groups of reactions 
   whose \glspl{flux} always change in relation to one another}}
+\newglossaryentry{corset}{
+  name={correlated reaction set}, 
+  text={correlated reaction set},
+  symbol={CoSet},
+  description={groups of reactions 
+  whose \glspl{flux} always change in relation to one another}}
 \newglossaryentry{exchangereaction}{
   name={exchange reaction}, 
   description={a reaction that transports metabolites 
@@ -18,10 +24,10 @@
   reaction \glspl{flux}, for example reversible and irreversible 
   reactions}}
 \newacronym
-  [description={the possible combination of allowable 
-  \glspl{flux} given a defined set of constraints which bound 
-  reaction \glspl{flux}, for example reversible and irreversible 
-  reactions},
+  [description={a linear programming problem formulated to maximize
+  the \glspl{flux} through an objective reaction, which the analyst defines, under
+  steady-state flux constraints that are derived from the
+  stoichiometric matrix of the metabolic network},
   name={flux balance analysis (FBA)}]
   {fba}{FBA}{flux balance analysis}
 \newglossaryentry{fluxdistribution}{%
