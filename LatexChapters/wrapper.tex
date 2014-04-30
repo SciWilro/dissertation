@@ -17,7 +17,7 @@
 \usepackage{wrapfig}
 
 % set the page margins
-\usepackage[letterpaper, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+\usepackage[letterpaper, top=0.5in, bottom=0.5in, left=0.85in, right=0.5in]{geometry}
 
 % for color figures
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
@@ -239,21 +239,22 @@
 
 \begin{document}
 
+
 \frontmatter
 \begingroup
-\include{TitlePage/TitlePage2}
-\let\cleardoublepage\relax
+%\include{TitlePage/TitlePage2}
 \include*{ApprovalSheet/ApprovalSheet}
 \let\clearpage\relax
 \tableofcontents
 \listoffigures
 \listoftables
 \endgroup
-\let\cleardoublepage\relax
-
 \include*{preface/preface}
 
 \mainmatter
+\clearpage
+\setcounter{page}{1}
+
 \include*{intromain/intromain}
 %
 \include*{introjtm/introjtm}
@@ -278,11 +279,6 @@
 \include*{apximp/apximp}
 \end{appendices}
 
-% create empty pages for back cover
-\onecolumn
-\thispagestyle{empty}
-\null\newpage
-~~
-\thispagestyle{empty}
+
 
 \end{document}
